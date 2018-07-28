@@ -1,3 +1,4 @@
+# Contributing <!-- omit in toc -->
 - [Starting up](#starting-up)
 - [Workflow](#workflow)
     - [Branching](#branching)
@@ -11,7 +12,7 @@
 - [Pull-Requests](#pull-requests)
 - [Issues](#issues)
 - [Queries](#queries)
-# Contributing <!-- omit in toc -->
+
 This is a basic outline of how to add code to this repository. Generally, a contributing file on Github is used when people submit [pull requests](#pull-requests) or create [issues](#issues), those functionalities will still be there. However, we will be using this as a way to breakdown the structure of our development pipeline.
 
 ## Starting up

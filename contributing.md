@@ -17,9 +17,9 @@ This is a basic outline of how to add code to this repository. Generally, a cont
 
 ## Starting up
 Go to the folder you want to develop in and run:
-'''
+```
 git clone https://github.com/AngusTheMack/SQLmark.git
-'''
+```
 This will download the files from the SQLmark repository and add them to your working direction. `clone` is simply a method for downloading the repository contents and initializing a repository with the correct git history, and it authorizes the user as well.
 
 This will also set the branch to **master**. In order to check if everything worked you can simply `cd` into SQLmark and run `git status`. And it should look as follows:
@@ -153,7 +153,8 @@ git push origin --delete java-mysql-connector
 ```
 which gives the output:
 ```
-angusm@DESKTOP-QT7DUCM:/mnt/c/Users/gusth/Code/Capstone$ git push origin --delete java-mysql-connectorUsername for 'https://github.com': AngusTheMack
+angusm@DESKTOP-QT7DUCM:/mnt/c/Users/gusth/Code/Capstone$ git push origin --delete java-mysql-connector
+Username for 'https://github.com': AngusTheMack
 Password for 'https://AngusTheMack@github.com':
 To https://github.com/AngusTheMack/SQLmark.git
  - [deleted]         java-mysql-connector

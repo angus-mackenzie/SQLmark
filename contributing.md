@@ -17,7 +17,7 @@ That is the basic startup, now lets get into the workflow.
 
 ## Workflow
 If something is going on the **master** branch it should be:
-* Reviewed by everyone
+* Reviewed by a teammate
 * Unit Tested
 * Compilable
 * Deployable
@@ -67,4 +67,43 @@ angusm@DESKTOP-QT7DUCM:/mnt/c/Users/gusth/Code/Capstone$ git branch
   master
 ```
 
+#### Changing Branches
+Changing branches uses the `checkout` command. The command is pretty descriptive, you basically stop *checking out* the current branch and start *checking out* the branch you want to switch to.
+From the example above, we have two branches and are currently on the `java-mysql-connector` branch. In order to change over to `master` you would run the command.
+```
+git checkout master
+```
+#### Transferring changes from branch to master
+This must only be done if the following requirements have been met.
+* A teammate has reviewed the code to be added.
+* There is 100% path coverage in unit testing.
+* It compiles successfully.
+* It could be deployed.
+
+Ensure that your code is up to date on the remote branch for safety. Then checkout the master branch, run a `pull` on that for safety as well. Then run:
+```
+git checkout <branch-name>
+git rebase master
+```
+Where branch-name is the name of the branch you have been working on. For the above example this will be as follows:
+```
+angusm@DESKTOP-QT7DUCM:/mnt/c/Users/gusth/Code/Capstone$ git checkout java-mysql-connector
+angusm@DESKTOP-QT7DUCM:/mnt/c/Users/gusth/Code/Capstone$ git rebase master
+First, rewinding head to replay your work on top of it...
+Fast-forwarded java-mysql-connector to master.
+```
+You can verify these changes by simply looking at the files you changed to see if they are still there.
+
+**How it works** - From [here](https://git-scm.com/book/en/v2/Git-Branching-Rebasing)
+> It works by going to the common ancestor of the two branches (the one you’re on and the one you’re rebasing onto), getting the diff introduced by each commit of the branch you’re on, saving those diffs to temporary files, resetting the current branch to the same commit as the branch you are rebasing onto, and finally applying each change in turn.
+
+
+**Merges Failures** git is not entirely perfect. If two copies of the same code have different changes it doesn't know which one to choose. There is a chance of this happening on any project. With the `git rebase` command, this can be a problem because you have to sort through every commit you made on the branch and verify if it has any merge conflicts on it before it can rebase. Which can be tedious.
+
+There is another method of adding the branch to `master` and that is via the `git merge` command. You can run:
+```
+git checkout master
+git merge <branch-name>
+```
+However, if there are merge conlifcts this won't necessarily fix them - it just might be a little less painful.
 #### Deleting Branches

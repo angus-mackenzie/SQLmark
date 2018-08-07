@@ -12,7 +12,7 @@ We use JavaDocs in order to make and maintain documentation for our project code
 ### Makefile
 TO DO
 but something like this:
-```
+```Makefile
 LIB = ../lib
 SRCDIR = src
 BINDIR = bin

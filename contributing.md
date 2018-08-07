@@ -13,8 +13,8 @@
 - [Development Environment](#development-environment)
 - [Testing](#testing)
 - [Documentation](#documentation)
-- [Issues](#issues)
-- [Queries](#queries)
+- [Coding Standards](#coding-standards)
+- [Issues & Queries](#issues--queries)
 
 This is a basic outline of how to add code to this repository. Generally, a contributing file on Github is used when people submit [pull requests](#pull-requests) or create [issues](#issues), those functionalities will still be there. However, we will be using this as a way to breakdown the structure of our development pipeline and code conventions.
 
@@ -27,12 +27,12 @@ This will download the files from the SQLmark repository and add them to your wo
 
 This will also set the branch to **master**. In order to check if everything worked you can simply `cd` into SQLmark and run `git status`. And it should look as follows:
 ```
-angusm@DESKTOP-QT7DUCM:/mnt/c/Users/gusth/Code$ cd SQLmark/
-angusm@DESKTOP-QT7DUCM:/mnt/c/Users/gusth/Code/SQLmark$ git status
+capstone@uct:/$ cd SQLmark/
+capstone@uct:/SQLmark$ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 nothing to commit, working directory clean
-angusm@DESKTOP-QT7DUCM:/mnt/c/Users/gusth/Code/SQLmark$
+capstone@uct:/SQLmark$
 ```
 
 That is the basic startup, now lets get into the workflow.
@@ -65,9 +65,9 @@ git checkout -b java-mysql-connector
 ```
 To demonstrate the functionality of the command, here is output from running the example above:
 ```bash
-capstone@uct:/Capstone$ git checkout -b java-mysql-connector
+capstone@uct:/SQLmark$ git checkout -b java-mysql-connector
 Switched to a new branch 'java-mysql-connector'
-capstone@uct:/Capstone$ git status
+capstone@uct:/SQLmark$ git status
 On branch java-mysql-connector
 nothing to commit, working directory clean
 ```
@@ -91,7 +91,7 @@ git branch
 ```
 with no other flags and all the branches will appear. Here is the output from the above example:
 ```
-capstone@uct:/Capstone$ git branch
+capstone@uct:/SQLmark$ git branch
 * java-mysql-connector
   master
 ```
@@ -126,8 +126,8 @@ git rebase master
 
 For the above example this will be as follows:
 ```
-capstone@uct:/Capstone$ git checkout java-mysql-connector
-capstone@uct:/Capstone$ git rebase master
+capstone@uct:/SQLmark$ git checkout java-mysql-connector
+capstone@uct:/SQLmark$ git rebase master
 First, rewinding head to replay your work on top of it...
 Fast-forwarded java-mysql-connector to master.
 ```
@@ -154,7 +154,7 @@ git branch -d java-mysql-connector
 ```
 Which gives the output:
 ```
-capstone@uct:/Capstone$ git branch -d java-mysql-connector
+capstone@uct:/SQLmark$ git branch -d java-mysql-connector
 Deleted branch java-mysql-connector (was a8c39ba).
 ```
 Then for the remote deletion you would run:
@@ -163,7 +163,7 @@ git push origin --delete java-mysql-connector
 ```
 which gives the output:
 ```
-capstone@uct:/Capstone$ git push origin --delete java-mysql-connector
+capstone@uct:/SQLmark$ git push origin --delete java-mysql-connector
 Username for 'https://github.com': AngusTheMack
 Password for 'https://AngusTheMack@github.com':
 To https://github.com/AngusTheMack/SQLmark.git
@@ -231,8 +231,11 @@ There are a few other javadocs keywords we might use, like
 `@exception`, `@see`, etc. Please use them where necessary.
 
 Please take a look at the [docs](/docs) folder for more information.
-## Issues
-If you have any issues, please don't hesitate to create one [here](https://github.com/AngusTheMack/SQLmark/issues) and I will attempt to get back to it as soon as possible.
-## Queries
-If you have any other queries at all, please feel free to contact me [here](mailto:mckang009@myuct.ac.za)
+## Coding Standards
+Add more rules as we go along:
+* Use descriptive variable names
 
+## Issues & Queries
+If you have any issues, please don't hesitate to create one [here](https://github.com/AngusTheMack/SQLmark/issues) and I will attempt to get back to it as soon as possible.
+
+If you have any other queries at all, please feel free to contact me [here](mailto:mckang009@myuct.ac.za)

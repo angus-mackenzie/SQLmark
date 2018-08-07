@@ -181,8 +181,26 @@ If you want to create a pull request for a specific issue, please `fork` the rep
 ## Development Environment
 We are using IntelliJ ultimate in order to create and run our code.
 ## Testing
-TO DO
+`JUnit` is the test framework used for this project. `JUnit` is simple to use and has a vast amount of documentation available. 
 
+**Note:** There are some packages you *may* need to add to the classpath in order to get `JUnit` to work with IntelliJ. [Here](https://www.jetbrains.com/help/idea/configuring-testing-libraries.html) is a walkthrough on how to add them if you run into difficulty.
+
+Here is the basic format of a `JUnit` test:
+```java
+class FirstJUnitTest {
+
+    @Test
+    void myFirstTest() {
+        assertEquals(2, 1 + 1);
+    }
+
+}
+```
+
+Here are some resources to help!
+* [User Guide](https://junit.org/junit5/docs/current/user-guide/)
+* [Documentation](https://junit.org/junit5/docs/current/api/overview-summary.html)
+* [Vogella Tutorial](http://www.vogella.com/tutorials/JUnit/article.html#junittesting)
 ## Documentation
 We will use javadocs in order to create and maintain documentation for all our code. Please use the javadocs [notation](https://www.oracle.com/technetwork/java/javase/tech/index-137868.html) when writing all your code. For example:
 ```java
@@ -196,7 +214,7 @@ public class foo{
 }
 ```
 
-The beginnig of the class has a brief description, (*Lorem ipsum* etc), the writer of the class (`@author`) and the version, which is the date
+The beginnig of the class has a brief description - *Lorem ipsum* etc, the writer of the class - `@author`, and the version - `07/08/2018` which is the date
 
 ```java
 /**

@@ -1,8 +1,8 @@
 # Test Plan
-| Test Case | Inputs | Behaviour Tested | Expected Outcomes|
-| --- | --- | --- | --- |
-| 1 | Valid filename; invalid filename; filename without an extension; no files at all |Application's file input |  With a valid filename the application will run as expected. With an invalid filename the application should output an error message. With a filename without an extension, the application should append the extension and find the file. If there are no files the application should ask the user to input files. | 
-| 2 | User input: blank input, incorrect query, correct query | User Input | With blank input the system should realize that it is incorrect and inform the user, with an incorrect query the system should tell the user that their query does not meet the requirements |
-| 3 | Incorrect username, incorrect password, blank fields | Student Login | If the username is incorrect the student must be prompted to enter in the correct username. If their password is incorrect, the student must be prompted to enter in the correct password. If the fields are blank the user must be informed. |
-| 4 | Incorrect DB location 
-| 5 | 
+| Test Case | Behaviour Tested | Inputs | Expected Outcomes
+|---|---|---|---|
+|1|Application’s Filename Input|Valid filename, Invalid filename, Filename w/o extension, No files|Application runs as expected, Application will output an error, Application will append extension and run as expected, Application will prompt for file |
+|2|User Query Input|Blank Input, Malformed query, Incorrect Query, Correct Query|Application prompts the user for input, Application informs the user that their query is not formed correctly, Application informs the user that their query results did not meet the requirements, Application informs the user that their result is correct, their mark increments|
+|3|Login Functionality|Incorrect username, Blank username, Correct username|User prompted that their username is incorrect. Username field will clear, User prompted to enter a username, User logged in |
+|4|CSV Reader|Incorrect input format, Blank file, No comas, Correct input format|Application will output an error, Application will inform the user, Application will output an error, CSV data will be loaded into application|
+|5|Database Connection|Invalid DB, Incorrect DB credentials, Correct DB|Application will output an error, Application will prompt user for credentials, Application will connect to database|

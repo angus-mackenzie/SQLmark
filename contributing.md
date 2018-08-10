@@ -102,6 +102,44 @@ From the example above, we have two branches and are currently on the `java-mysq
 ```
 git checkout master
 ```
+
+#### Transferring changes from master to branch
+If you are working on your branch, but master has been updated and you want 
+to work with the most recent code.
+Simply run:
+```
+git merge master
+```
+in order to add the master branch's updates to your code. Here is an example:
+```
+capstone@uct:/SQLmark$ git checkout test-plan
+Switched to branch 'test-plan'
+Your branch is up to date with 'origin/test-plan
+
+capstone@uct:/SQLmark$ git merge master
+Merge made by the 'recursive' strategy.
+README.md                |  31 +++++++++-
+contributing.md          | 153 ++++++++++++++++++++++++++++++++++-------------
+docs/README.md           |  64 ++++++++++++++++++++
+src/README.md            |  19 ++++++
+src/controller/README.md |   8 +++
+src/model/README.md      |   9 +++
+src/view/README.md       |   9 +++
+test/README.md           |  10 ++++
+8 files changed, 261 insertions(+), 42 deletions(-)
+create mode 100644 docs/README.md
+create mode 100644 src/README.md
+create mode 100644 src/controller/README.md
+create mode 100644 src/model/README.md
+create mode 100644 src/view/README.md
+create mode 100644 test/README.md
+```
+You will have to push your code onto the remote again to include the merged changes.
+
+**Note:** if the changes on master are within the same file as a change on your branch
+ there is a high chance of merge failures; so understand that it might not be entirely straightforward, 
+but if you resolve the merge conflicts it should make it easier to push into
+`master` eventually.
 #### Transferring changes from branch to master
 This must only be done if the following requirements have been met.
 * A teammate has reviewed the code to be added

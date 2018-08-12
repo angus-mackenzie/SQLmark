@@ -1,4 +1,6 @@
+import java.io.BufferedReader;
 import java.io.LineNumberReader;
+import java.io.Reader;
 import java.io.Writer;
 import java.util.List;
 import java.util.Vector;

@@ -7,10 +7,20 @@ import java.util.List;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
+/**
+ * Initial testing for the CSVReader
+ * @Author Angus Mackenzie
+ * @Version 12/08/2018
+ */
+
 public class TestCSVReader{
     CSVReader csvReader;
     Reader dataReader;
 
+
+    /**
+     * Sets up test environment
+     */
     @Before
     public void init(){
         String filename = "matricData.csv";
@@ -23,6 +33,11 @@ public class TestCSVReader{
         }
 
     }
+
+    /**
+     * Test that none of the other rows are larger than the initial amount of columns
+     * @throws Exception
+     */
     @Test
     public void testAmountColumns() throws Exception{
         List<String> input = csvReader.parseLine(dataReader);

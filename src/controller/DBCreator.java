@@ -1,4 +1,5 @@
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 /**
@@ -14,8 +15,9 @@ public class DBCreator{
             System.out.println("Connectd");
             // create a Statement
             try (Statement stmt = conn.createStatement()) {
-                int result=stmt.executeUpdate("CREATE DATABASE TEST;");
-                System.out.println(result); //result is "1" for true, "0" for false
+                List<String> tables = new ArrayList<String>();
+                int hey=stmt.executeUpdate("INSERT INTO test "+"VALUES('AHHH');");
+                System.out.println(hey); //result is "1" for true, "0" for false
             }
         }
 

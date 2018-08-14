@@ -5,12 +5,14 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Driver for our demo
  */
 public class Driver {
     public static void main(String[] args) {
         //create reader class
+
         List<String> columnNames = new ArrayList<String>();
         CSVReader csvReader = new CSVReader();
         try{
@@ -24,7 +26,12 @@ public class Driver {
         }catch(Exception e){
             e.printStackTrace();
         }
-        DBCreator db = new DBCreator(columnNames);
+        try{
+            DBCreator db = new DBCreator(columnNames);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
 
     }
 }

@@ -67,3 +67,7 @@ xcuserdata/
 
 # Project Specific #
 /bin
+
+# Vagrant #
+*.vagrant/
+*.log

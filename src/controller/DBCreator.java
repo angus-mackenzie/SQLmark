@@ -8,11 +8,13 @@ import java.sql.*;
  */
 public class DBCreator{
     public DBCreator(List<String> columnNames) throws SQLException {
+        String url = "jdbc:postgresql://localhost:54321/postgres";
         //create connection for a server installed in localhost, with a user "root" with no password
-        try (Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost/", "root", "password")) {
+        try (Connection conn = DriverManager.getConnection(url, "root", "admin")) {
+            System.out.println("Connectd");
             // create a Statement
             try (Statement stmt = conn.createStatement()) {
-                int result=stmt.executeUpdate("CREATE DATABASE TEST");
+                int result=stmt.executeUpdate("CREATE DATABASE TEST;");
                 System.out.println(result); //result is "1" for true, "0" for false
             }
         }

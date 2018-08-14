@@ -1,4 +1,4 @@
-StuID,Prefix,FirstName,LastName,Gender,Citizenship Status,SchoolName,SchoolCode,Year,ExaminingAuthority,OldExAuth,UCTScore
+StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Year,ExaminingAuthority,OldExAuth,UCTScore
 1001,Mr,Aaron,Zwillig,M,C,Private Candidate,1004249,2007,,TR,34
 1002,Mr,Aarthi,Zulu,M,P,Crawford College,1000927,2006,GT,TR,48
 1003,Miss,Abeedah,Zowa,F,P,Parel Vallei High School,1004030,2006,WC,CA,42

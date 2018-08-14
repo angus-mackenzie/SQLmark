@@ -28,24 +28,13 @@ public class DBCreator{
             create.executeUpdate();
             System.out.println("Created a table called demoTable");
         }catch(Exception e){
-            System.out.println("Exception: "+ e.getMessage());
-            System.out.println("Could be because the table already exists, or an incorrect query");
-            System.out.println("Attempting to connect to demoTable if it exists");
+            System.out.println( e.getLocalizedMessage());
+            System.out.println("Getting data from demoTable");
             Statement statement = dbConnection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM demoTable");
             outputResultSet(results);
 
         }
-
-
-
-        // create a Statement
-//            try (Statement stmt = conn.createStatement()) {
-//                List<String> tables = new ArrayList<String>();
-//                int hey=stmt.executeUpdate("INSERT INTO test "+"VALUES('AHHH');");
-//                System.out.println(hey); //result is "1" for true, "0" for false
-//            }
-
     }
 
     public void setup(Connection dbConnection){
@@ -73,6 +62,12 @@ public class DBCreator{
         return  createStatement.toString();
     }
 
+    /**
+     * Prints out current table contents
+     * @param rs
+     * @throws Exception
+     * @see http://www.java2s.com/Tutorial/Java/0340__Database/CreateaTableUsingPreparedStatement.htm
+     */
     public void outputResultSet(ResultSet rs) throws Exception{
         ResultSetMetaData rsMetaData = rs.getMetaData();
         int numberOfColumns = rsMetaData.getColumnCount();
@@ -82,7 +77,7 @@ public class DBCreator{
 
         }
         System.out.println();
-        System.out.println("--------------------------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
 
         while (rs.next()) {
             for (int i = 1; i < numberOfColumns + 1; i++) {

@@ -45,6 +45,7 @@ public class Driver {
         }catch(Exception e){
             e.printStackTrace();
         }
+        StudentInput inputGui = new StudentInput(dbConnection);
 
     }
 }

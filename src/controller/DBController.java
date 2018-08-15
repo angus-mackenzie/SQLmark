@@ -123,7 +123,6 @@ public class DBController {
      * @see http://www.java2s.com/Tutorial/Java/0340__Database/CreateaTableUsingPreparedStatement.htm
      */
     public void outputResultSet(ResultSet rs) throws Exception{
-        //TO Do, make this work for every resultset, not just create and inserts
         ResultSetMetaData rsMetaData = rs.getMetaData();
         int numberOfColumns = rsMetaData.getColumnCount();
         for (int i = 1; i < numberOfColumns + 1; i++) {

@@ -8,11 +8,12 @@ import java.sql.*;
  * @version 14/08/2018
  */
 public class DBCreator{
-
+    Connection dbConnection = null;
+    List<String> columnNames;
     public DBCreator(List<String> columnNames) throws Exception {
+        this.columnNames = columnNames;
         String url = "jdbc:postgresql://localhost:54321/postgres";
         //create connection for the server created with our vagrantfile, with a user "root" with password admin
-        Connection dbConnection = null;
         try{
             dbConnection = DriverManager.getConnection(url, "root", "admin");
             System.out.println("Connected to database "+url);
@@ -36,11 +37,40 @@ public class DBCreator{
 
         }
     }
-
-    public void setup(Connection dbConnection){
-
+    public boolean insertRow(List<String> row) throws Exception{
+        Statement statement = dbConnection.createStatement();
+        int result = statement.executeUpdate(createInsertStatement(row));
+        return intToBoolean(result);
     }
-
+    public String createInsertStatement(List<String> row){
+        StringBuilder insertStatement = new StringBuilder();
+        insertStatement.append("INSERT INTO demoTable (");
+        for(int i = 0; i< columnNames.size();i++) {
+            if (i == columnNames.size() - 1) {
+                insertStatement.append(columnNames.get(i));
+                insertStatement.append(" )");
+                insertStatement.append(" VALUES (");
+            } else {
+                insertStatement.append(columnNames.get(i));
+                insertStatement.append(" , ");
+            }
+        }
+        for(int i = 0; i < row.size(); i++){
+            if(i == row.size()-1){
+                insertStatement.append("'");
+                insertStatement.append(row.get(i));
+                insertStatement.append("'");
+                insertStatement.append(" );");
+            }else{
+                insertStatement.append("'");
+                insertStatement.append(row.get(i));
+                insertStatement.append("'");
+                insertStatement.append(", ");
+            }
+        }
+        System.out.println(insertStatement);
+        return insertStatement.toString();
+    }
     /**
      * Change the list of Strings into a prepared statement
      * @param columnNames
@@ -86,5 +116,11 @@ public class DBCreator{
             System.out.println();
         }
 
+    }
+    public boolean intToBoolean(int val){
+        if(val == 1){
+            return true;
+        }
+        return false;
     }
 }

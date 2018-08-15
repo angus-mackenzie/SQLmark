@@ -13,6 +13,7 @@ public class DBController {
 
     /**
      * Constructor, takes in the columnNames for the table and makes database with them.
+     * If the table exists, it continues as normal.
      * @param columnNames
      * @throws Exception
      */
@@ -20,7 +21,7 @@ public class DBController {
         this.columnNames = columnNames;
         String url = "jdbc:postgresql://localhost:54321/postgres";
         //create connection for the server created with our vagrantfile, with a user "root" with password admin
-        //TO DO - get rid of default credentials and have a secret menager
+        //TO DO - get rid of default credentials and have a secret manager
         try{
             dbConnection = DriverManager.getConnection(url, "root", "admin");
             System.out.println("Connected to database "+url);
@@ -46,11 +47,24 @@ public class DBController {
 
         }
     }
-    public boolean insertRow(List<String> row) throws Exception{
+
+    /**
+     * Executes an insert statement
+     * @param row to be insert
+     * @return 1 for true, 0 for false
+     * @throws Exception
+     */
+    public int insertRow(List<String> row) throws Exception{
         Statement statement = dbConnection.createStatement();
         int result = statement.executeUpdate(createInsertStatement(row));
-        return intToBoolean(result);
+        return result;
     }
+
+    /**
+     * creates an insert into statement dependent on the column names, and list of strings given to it
+     * @param row
+     * @return a String of the insert into statement
+     */
     public String createInsertStatement(List<String> row){
         StringBuilder insertStatement = new StringBuilder();
         insertStatement.append("INSERT INTO demoTable (");
@@ -81,11 +95,12 @@ public class DBController {
         return insertStatement.toString();
     }
     /**
-     * Change the list of Strings into a prepared statement
+     * Change the list of Strings into a prepared statement for creating a table
      * @param columnNames
      * @return string value
      */
     public String stringToCreateStatement(List<String> columnNames){
+        //TO DO - make this more generic
         StringBuilder createStatement = new StringBuilder();
         createStatement.append("CREATE TABLE demoTable");
         createStatement.append(" (");
@@ -102,12 +117,13 @@ public class DBController {
     }
 
     /**
-     * Prints out current table contents
+     * Prints out queries content - for testing only, do not use to output queries as it will fail
      * @param rs
      * @throws Exception
      * @see http://www.java2s.com/Tutorial/Java/0340__Database/CreateaTableUsingPreparedStatement.htm
      */
     public void outputResultSet(ResultSet rs) throws Exception{
+        //TO Do, make this work for every resultset, not just create and inserts
         ResultSetMetaData rsMetaData = rs.getMetaData();
         int numberOfColumns = rsMetaData.getColumnCount();
         for (int i = 1; i < numberOfColumns + 1; i++) {
@@ -126,19 +142,26 @@ public class DBController {
         }
 
     }
-    public boolean deleteTableContents() throws SQLException{
+
+    /**
+     * Deletes the table contents
+     * @return a 1 for true a 0 for false
+     * @throws SQLException
+     */
+    public int deleteTableContents() throws SQLException{
+        //TO DO - make this work
         String statement = "DELETE * FROM demoTable;";
         PreparedStatement delete = dbConnection.prepareStatement(statement);
         int result = delete.executeUpdate();
-        return intToBoolean(result);
+        return result;
     }
+
+    /**
+     * Returns a connection to the database which can be used to perform queries in other classes
+     * @return
+     */
     public Connection getDbConnection(){
         return dbConnection;
     }
-    public boolean intToBoolean(int val){
-        if(val == 1){
-            return true;
-        }
-        return false;
-    }
+
 }

@@ -3,17 +3,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 /**
- * Class to create the DB, and work with the data
+ * Class to create the DB, populate it and manipulate the data
  * @author Angus Mackenzie
  * @version 14/08/2018
  */
-public class DBCreator{
+public class DBController {
     Connection dbConnection = null;
     List<String> columnNames;
-    public DBCreator(List<String> columnNames) throws Exception {
+
+    /**
+     * Constructor, takes in the columnNames for the table and makes database with them.
+     * @param columnNames
+     * @throws Exception
+     */
+    public DBController(List<String> columnNames) throws Exception {
         this.columnNames = columnNames;
         String url = "jdbc:postgresql://localhost:54321/postgres";
         //create connection for the server created with our vagrantfile, with a user "root" with password admin
+        //TO DO - get rid of default credentials and have a secret menager
         try{
             dbConnection = DriverManager.getConnection(url, "root", "admin");
             System.out.println("Connected to database "+url);
@@ -23,6 +30,7 @@ public class DBCreator{
         }
         try{
             String query = stringToCreateStatement(columnNames);
+            System.out.println("Using the following create statement:");
             System.out.println(query);
             PreparedStatement create = dbConnection.prepareStatement(query);
 
@@ -32,6 +40,7 @@ public class DBCreator{
             System.out.println( e.getLocalizedMessage());
             System.out.println("Getting data from demoTable");
             Statement statement = dbConnection.createStatement();
+            System.out.println("Outputting the table -> demoTable");
             ResultSet results = statement.executeQuery("SELECT * FROM demoTable");
             outputResultSet(results);
 

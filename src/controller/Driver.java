@@ -13,7 +13,7 @@ import java.util.List;
 public class Driver {
     public static void main(String[] args) {
         //create reader class
-        DBCreator db = null;
+        DBController db = null;
         //to call queries with later
         Connection dbConnection = null;
         List<String> columnNames = new ArrayList<String>();//to create a database with the colum names
@@ -23,7 +23,7 @@ public class Driver {
             Reader dataReader = new BufferedReader(new FileReader(new File("matricData.csv")));
             List<String> input = csvReader.parseLine(dataReader);
             columnNames = input;
-            db = new DBCreator(columnNames);
+            db = new DBController(columnNames);
             while(input !=null){
                 System.out.println("Inserting row "+counter+" into db");
                 input = csvReader.parseLine(dataReader);
@@ -41,7 +41,7 @@ public class Driver {
             Statement query = dbConnection.createStatement();
             ResultSet rs = query.executeQuery("SELECT * FROM demotable");
             db.outputResultSet(rs);
-//            System.out.println(db.deleteTableContents());
+//          System.out.println(db.deleteTableContents());
         }catch(Exception e){
             e.printStackTrace();
         }

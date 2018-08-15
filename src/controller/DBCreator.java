@@ -117,6 +117,12 @@ public class DBCreator{
         }
 
     }
+    public boolean deleteTableContents() throws SQLException{
+        String statement = "DELETE * FROM demoTable;";
+        PreparedStatement delete = dbConnection.prepareStatement(statement);
+        int result = delete.executeUpdate();
+        return intToBoolean(result);
+    }
     public Connection getDbConnection(){
         return dbConnection;
     }

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 /**
- * Class to create the DB
+ * Class to create the DB, and work with the data
  * @author Angus Mackenzie
  * @version 14/08/2018
  */
@@ -22,7 +22,7 @@ public class DBCreator{
             System.exit(-1);
         }
         try{
-            String query = stringToStatement(columnNames);
+            String query = stringToCreateStatement(columnNames);
             System.out.println(query);
             PreparedStatement create = dbConnection.prepareStatement(query);
 
@@ -76,7 +76,7 @@ public class DBCreator{
      * @param columnNames
      * @return string value
      */
-    public String stringToStatement(List<String> columnNames){
+    public String stringToCreateStatement(List<String> columnNames){
         StringBuilder createStatement = new StringBuilder();
         createStatement.append("CREATE TABLE demoTable");
         createStatement.append(" (");
@@ -116,6 +116,9 @@ public class DBCreator{
             System.out.println();
         }
 
+    }
+    public Connection getDbConnection(){
+        return dbConnection;
     }
     public boolean intToBoolean(int val){
         if(val == 1){

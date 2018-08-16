@@ -20,6 +20,10 @@ public class Student {
         }
     }
 
+    public String getStudentNum() {
+        return studentModel.getStudentNum();
+    }
+
     public String loadAssignment() {
         return assignmentModel.toString();
     }
@@ -37,8 +41,8 @@ public class Student {
         return currentSubmission.getNextQuestion().getQuestionText();
     }
 
-    public void answerQuestion(String answer, model.Question question) throws Error {
-        currentSubmission.addAnswer(new model.Answer(answer, question));
+    public void answerQuestion(String answer) throws Error {
+        currentSubmission.addAnswer(new model.Answer(answer, currentSubmission.getNextQuestion()));
     }
 
     public void submitAssignment() {

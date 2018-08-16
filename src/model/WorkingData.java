@@ -15,12 +15,29 @@ public class WorkingData {
         ResultSet rs = db.getResultSet();
 
         while (rs.next()) {
-            String table = rs.getString("table_name");
+            tables.add(rs.getString("table_name"));
         }
 
         db.closeRS();
         db.close();
         return tables;
+    }
+
+    public static List<Student> getStudents() throws SQLException {
+        Database db = new Database();
+        List<Student> students = new ArrayList<>();
+
+        db.prepareSelect("students");
+        db.execute();
+        ResultSet rs = db.getResultSet();
+
+        while (rs.next()) {
+            students.add(new Student(rs.getString("student_num")));
+        }
+
+        db.closeRS();
+        db.close();
+        return students;
     }
 
     public static List<Question> getQuestions() throws SQLException {

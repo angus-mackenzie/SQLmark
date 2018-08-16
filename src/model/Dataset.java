@@ -1,6 +1,5 @@
 package model;
 
-import java.io.File;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -16,16 +15,6 @@ public class Dataset {
 
     public boolean equals(Dataset dataset) {
         return Arrays.deepEquals(dataset.convertList(), convertList());
-    }
-
-    public File exportData() {
-        // TODO: Export data to csv file: use library or text based?
-        throw new UnsupportedOperationException();
-    }
-
-    public File exportDataSQL() {
-        // TODO: Export data to as sql file: use library or text based?
-        throw new UnsupportedOperationException();
     }
 
     public String getCompileMessage() {

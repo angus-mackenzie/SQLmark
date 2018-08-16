@@ -1,3 +1,5 @@
+package model;
+
 import java.sql.ResultSet;
 
 public class Database {

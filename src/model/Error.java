@@ -1,3 +1,5 @@
+package model;
+
 // TODO: Complete error handling class (possible logging too)
 public class Error extends Exception {
     public Error() {

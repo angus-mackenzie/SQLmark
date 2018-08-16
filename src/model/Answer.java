@@ -1,3 +1,5 @@
+package model;
+
 public class Answer {
     private String answer;
     private Dataset output;

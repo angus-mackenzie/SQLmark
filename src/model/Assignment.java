@@ -6,4 +6,8 @@ public class Assignment {
     public List<Question> getQuestions() {
         return questions;
     }
+
+    public Assignment(List<Question> questions) {
+        this.questions = questions;
+    }
 }

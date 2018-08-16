@@ -10,4 +10,12 @@ public class Dataset {
     public File exportData() {
         throw (new UnsupportedOperationException());
     }
+
+    public Dataset(Object dataset) {
+        this.dataset = dataset;
+    }
+
+    public Dataset(String sql) {
+        throw (new UnsupportedOperationException());
+    }
 }

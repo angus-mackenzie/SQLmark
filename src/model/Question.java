@@ -9,4 +9,9 @@ public class Question {
     public Dataset getCorrectAnswer() {
         return correctAnswer;
     }
+
+    public Question(String questionText, String correctAnswer) {
+        this.questionText = questionText;
+        this.correctAnswer = new Dataset(correctAnswer);
+    }
 }

@@ -1,5 +1,7 @@
 package model;
+
 import java.sql.*;
+import java.util.List;
 import java.util.Map;
 
 public class Database {
@@ -8,7 +10,7 @@ public class Database {
     private ResultSet lastResultSet;
     private String currentSQL;
     private Connection dbConnection;
-
+    List<String> columnNames;
     public enum CompileStatus {
         SUCCESS, FAILURE
     }
@@ -33,6 +35,62 @@ public class Database {
         }
     }
 
+    /**
+     * Change a list of Strings into a prepared statement for creating a table
+     * @param columnNames
+     * @return string value
+     */
+    public void prepareCreate(List<String> columnNames){
+        this.columnNames = columnNames;
+        StringBuilder createStatement = new StringBuilder();
+        createStatement.append("CREATE TABLE demoTable");
+        createStatement.append(" (");
+        for(int i = 0; i< columnNames.size();i++){
+            if(i==columnNames.size()-1){
+                createStatement.append(columnNames.get(i));
+                createStatement.append(" VARCHAR(100));");
+            }else{
+                createStatement.append(columnNames.get(i));
+                createStatement.append(" VARCHAR(100), ");
+            }
+        }
+        currentSQL = createStatement.toString();
+    }
+
+    /**
+     * creates an insert into statement dependent on the column names, and list of strings given to it
+     * @param row
+     * @return a String of the insert into statement
+     */
+    public void  prepareInsert(List<String> row){
+        StringBuilder insertStatement = new StringBuilder();
+        insertStatement.append("INSERT INTO demoTable (");
+        for(int i = 0; i< columnNames.size();i++) {
+            if (i == columnNames.size() - 1) {
+                insertStatement.append(columnNames.get(i));
+                insertStatement.append(" )");
+                insertStatement.append(" VALUES (");
+            } else {
+                insertStatement.append(columnNames.get(i));
+                insertStatement.append(" , ");
+            }
+        }
+        for(int i = 0; i < row.size(); i++){
+            if(i == row.size()-1){
+                insertStatement.append("'");
+                insertStatement.append(row.get(i));
+                insertStatement.append("'");
+                insertStatement.append(" );");
+            }else{
+                insertStatement.append("'");
+                insertStatement.append(row.get(i));
+                insertStatement.append("'");
+                insertStatement.append(", ");
+            }
+        }
+        currentSQL= insertStatement.toString();
+    }
+
     public void prepareSelect(String table) {
         prepareSelect(table, null);
     }
@@ -53,6 +111,7 @@ public class Database {
         }
 
     }
+
 
     public String getLastMessage() {
         return lastMessage;

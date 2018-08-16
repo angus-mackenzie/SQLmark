@@ -1,5 +1,6 @@
 package controller;
 
+import model.CSV;
 import model.Error;
 import model.WorkingData;
 
@@ -25,10 +26,18 @@ public class Lecturer {
         // TODO: Clear all data, questions and students
         throw new UnsupportedOperationException();
     }
-
+    //TODO: Add table name
     public void loadData(String filename) {
-        // TODO: Load data from CSV
-        throw new UnsupportedOperationException();
+        CSV csvReader = new CSV(filename);
+        try{
+            List<String> input = csvReader.parseLine();
+            while(input!=null){
+                System.out.println(input.get(0));
+                input = csvReader.parseLine();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void loadQuestions(String filename) {

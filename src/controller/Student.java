@@ -16,7 +16,7 @@ public class Student {
             this.studentModel = new model.Student(studentNum);
             this.randomData = assignmentModel.getRandomData();
         } catch (SQLException e) {
-            // TODO: Error handling
+            throw new Error("Error connecting to database!", e);
         }
     }
 
@@ -29,7 +29,7 @@ public class Student {
     }
 
     public String getData() {
-        // Possibly download as File
+        // Possibly download as File here, or in view
         return randomData;
     }
 

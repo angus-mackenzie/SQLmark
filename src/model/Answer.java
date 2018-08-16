@@ -13,6 +13,7 @@ public class Answer {
             case COMPILE:
                 return this.output.getCompileMessage();
             case VERBOSE:
+                // TODO: Get verbose feedback message
                 return "";
             default:
                 return "";

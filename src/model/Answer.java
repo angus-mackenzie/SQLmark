@@ -29,7 +29,7 @@ public class Answer {
     private int calculateMark() {
         switch (output.getCompileStatus()) {
             case SUCCESS:
-                if (output.compareTo(question.getCorrectAnswer())) {
+                if (output.equals(question.getCorrectAnswer())) {
                     return 2;
                 }
                 return 1;

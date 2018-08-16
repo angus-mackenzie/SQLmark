@@ -2,6 +2,7 @@ package controller;
 
 import model.Error;
 
+import javax.swing.*;
 import java.sql.SQLException;
 
 public class Student {
@@ -55,5 +56,19 @@ public class Student {
 
     public String getFeedback() throws Error {
         return currentSubmission.getFeedback();
+    }
+
+    public static void main(String[] args) {
+        String studentNum = JOptionPane.showInputDialog(null, "Enter your student number:",
+                "Welcome", JOptionPane.QUESTION_MESSAGE);
+
+        try {
+            Student student = new Student(studentNum);
+
+            view.Student studentView = new view.Student(student);
+        } catch (Error error) {
+            // TODO: Show error box
+            error.printStackTrace();
+        }
     }
 }

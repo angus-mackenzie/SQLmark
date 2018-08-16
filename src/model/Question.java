@@ -1,10 +1,15 @@
 public class Question {
+    private int questionNum;
     private String questionText;
     private Dataset correctAnswer;
     private FeedbackType feedbackType;
 
     public enum FeedbackType {
         NONE, COMPILE, VERBOSE
+    }
+
+    public int getQuestionNum() {
+        return questionNum;
     }
 
     public String getQuestionText() {

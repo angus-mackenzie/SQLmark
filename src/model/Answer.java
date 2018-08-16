@@ -4,25 +4,38 @@ public class Answer {
     private int mark;
     private Question question;
 
+    public int getQuestionNum() {
+        return question.getQuestionNum();
+    }
+
     public int getMark() {
         return mark;
     }
 
     public String getFeedback() {
-        switch (this.question.getFeedbackType()) {
+        switch (question.getFeedbackType()) {
             case COMPILE:
-                return this.output.getCompileMessage();
+                return output.getCompileMessage();
             case VERBOSE:
-                // TODO: Get verbose feedback message
-                return "";
+                return String.format("%s\nExpected output:\n%s\nYour output:\n%s",
+                        output.getCompileMessage(),
+                        question.getCorrectAnswer().toString(),
+                        output.toString());
             default:
                 return "";
         }
     }
 
     private int calculateMark() {
-        // TODO: Calculate mark by comparing datasets
-        throw new UnsupportedOperationException();
+        switch (output.getCompileStatus()) {
+            case SUCCESS:
+                if (output.compareTo(question.getCorrectAnswer())) {
+                    return 2;
+                }
+                return 1;
+            default:
+                return 0;
+        }
     }
 
     public Answer(String answer, Question question) {

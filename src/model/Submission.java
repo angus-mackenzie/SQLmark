@@ -21,7 +21,11 @@ public class Submission {
         if (checkComplete()) {
             StringBuilder feedback = new StringBuilder();
             for (Answer answer : answers) {
-                feedback.append(answer.getFeedback()).append("\n");
+                feedback.append("Question ")
+                        .append(answer.getQuestionNum())
+                        .append(":\n")
+                        .append(answer.getFeedback())
+                        .append("\n\n");
             }
             return feedback.toString();
         } else {

@@ -3,6 +3,11 @@ import java.io.File;
 public class Dataset {
     private Object dataset;
     private String compileMessage;
+    private CompileStatus compileStatus;
+
+    public enum CompileStatus {
+        SUCCESS, FAILURE
+    }
 
     public boolean compareTo(Dataset dataset) {
         // TODO: Compare two datasets
@@ -18,6 +23,16 @@ public class Dataset {
         return compileMessage;
     }
 
+    public CompileStatus getCompileStatus() {
+        return compileStatus;
+    }
+
+    @Override
+    public String toString() {
+        // TODO: To string of the dataset
+        throw new UnsupportedOperationException();
+    }
+
     // Is this needed?
     public Dataset(Object dataset) {
         this.compileMessage = null;
@@ -27,6 +42,7 @@ public class Dataset {
     public Dataset(String sql) {
         // TODO: Create dataset by running against database
         // this.compileMessage =
+        // this.compileStatus =
         throw new UnsupportedOperationException();
     }
 }

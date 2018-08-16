@@ -3,15 +3,20 @@ package controller;
 import model.Error;
 
 import java.io.File;
+import java.sql.SQLException;
 
 public class Student {
     private model.Student studentModel;
     private model.Assignment assignmentModel;
     private model.Submission currentSubmission;
 
-    public Student(String studentNum) {
-        this.assignmentModel = new model.Assignment();
-        this.studentModel = new model.Student(studentNum, assignmentModel.getRandomDataset());
+    public Student(String studentNum) throws Error {
+        try {
+            this.assignmentModel = new model.Assignment();
+            this.studentModel = new model.Student(studentNum, assignmentModel.getRandomData());
+        } catch (SQLException e) {
+            // TODO: Error handling
+        }
     }
 
     public String loadAssignment() {
@@ -27,7 +32,7 @@ public class Student {
     }
 
     public String getNextQuestion() {
-        return currentSubmission.getNextQuestion();
+        return currentSubmission.getNextQuestion().getQuestionText();
     }
 
     public void answerQuestion(String answer, model.Question question) throws Error {

@@ -4,6 +4,7 @@ import model.CSV;
 import model.Error;
 import model.WorkingData;
 
+import javax.swing.*;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
@@ -56,5 +57,21 @@ public class Lecturer {
             System.out.println(student.getStudentNum() + ": " + student.getHighestMark());
         } */
         throw new UnsupportedOperationException();
+    }
+
+    public static void main(String[] args) {
+        String studentNum = JOptionPane.showInputDialog(null, "Enter admin password:",
+                "Welcome", JOptionPane.QUESTION_MESSAGE);
+
+        // TODO: Check password
+
+        try {
+            Lecturer lecturer = new Lecturer();
+
+            view.Lecturer lecturerView = new view.Lecturer(lecturer);
+        } catch (Error error) {
+            // TODO: Show error box
+            error.printStackTrace();
+        }
     }
 }

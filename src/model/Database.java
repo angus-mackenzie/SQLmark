@@ -62,6 +62,8 @@ public class Database {
 
     public String exportToSQL() {
         // TODO: Return the SQL command to recreate the table and contents of last query (null if no query run)
+        // Use SHOW CREATE TABLE foobar
+        // as well as some loop through the rows to create an insert statement
         throw new UnsupportedOperationException();
     }
 

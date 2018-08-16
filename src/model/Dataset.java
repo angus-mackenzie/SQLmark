@@ -6,12 +6,12 @@ public class Dataset {
 
     public boolean compareTo(Dataset dataset) {
         // TODO: Compare two datasets
-        throw (new UnsupportedOperationException());
+        throw new UnsupportedOperationException();
     }
 
     public File exportData() {
         // TODO: Export data to file
-        throw (new UnsupportedOperationException());
+        throw new UnsupportedOperationException();
     }
 
     public String getCompileMessage() {
@@ -27,6 +27,6 @@ public class Dataset {
     public Dataset(String sql) {
         // TODO: Create dataset by running against database
         // this.compileMessage =
-        throw (new UnsupportedOperationException());
+        throw new UnsupportedOperationException();
     }
 }

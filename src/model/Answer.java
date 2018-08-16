@@ -22,7 +22,7 @@ public class Answer {
 
     private int calculateMark() {
         // TODO: Calculate mark by comparing datasets
-        throw (new UnsupportedOperationException());
+        throw new UnsupportedOperationException();
     }
 
     public Answer(String answer, Question question) {

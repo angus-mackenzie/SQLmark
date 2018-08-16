@@ -2,33 +2,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Submission {
+    private final Assignment assignment;
     private List<Answer> answers;
 
-    public int getTotalMark() {
-        int totalMark = 0;
-        for (Answer answer : answers) {
-            totalMark += answer.getMark();
+    public int getTotalMark() throws Error {
+        if (checkComplete()) {
+            int totalMark = 0;
+            for (Answer answer : answers) {
+                totalMark += answer.getMark();
+            }
+            return totalMark;
+        } else {
+            throw new Error("Assignment not complete!");
         }
-        return totalMark;
     }
 
-    public String getFeedback() {
-        StringBuilder feedback = new StringBuilder();
-        for (Answer answer : answers) {
-            feedback.append(answer.getFeedback()).append("\n");
+    public String getFeedback() throws Error {
+        if (checkComplete()) {
+            StringBuilder feedback = new StringBuilder();
+            for (Answer answer : answers) {
+                feedback.append(answer.getFeedback()).append("\n");
+            }
+            return feedback.toString();
+        } else {
+            throw new Error("Assignment not complete!");
         }
-        return feedback.toString();
     }
 
-    public void addAnswer(Answer answer) {
-        answers.add(answer);
+    public boolean checkComplete() {
+        return assignment.getTotalQuestions() == answers.size();
     }
 
-    public Submission(List<Answer> answers) {
+    public void addAnswer(Answer answer) throws Error {
+        if (!checkComplete()) {
+            answers.add(answer);
+        } else {
+            throw new Error("Too many answers submitted!");
+        }
+    }
+
+    public Submission(Assignment assignment, List<Answer> answers) {
+        this.assignment = assignment;
         this.answers = answers;
     }
 
-    public Submission() {
+    public Submission(Assignment assignment) {
+        this.assignment = assignment;
         this.answers = new ArrayList<>();
     }
 }

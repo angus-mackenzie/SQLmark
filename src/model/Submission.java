@@ -53,7 +53,11 @@ public class Submission {
     }
 
     public Question getNextQuestion() {
-        return assignment.getQuestion(currentQuestion);
+        try {
+            return assignment.getQuestion(currentQuestion);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            return null;
+        }
     }
 
     public void addAnswer(Answer answer) throws Error {

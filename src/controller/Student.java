@@ -16,8 +16,12 @@ public class Student {
             this.studentModel = new model.Student(studentNum);
             this.randomData = assignmentModel.getRandomData();
         } catch (SQLException e) {
-            // TODO: Error handling
+            throw new Error("Error connecting to database!", e);
         }
+    }
+
+    public String getStudentNum() {
+        return studentModel.getStudentNum();
     }
 
     public String loadAssignment() {
@@ -25,7 +29,7 @@ public class Student {
     }
 
     public String getData() {
-        // Possibly download as File
+        // Possibly download as File here, or in view
         return randomData;
     }
 
@@ -37,8 +41,8 @@ public class Student {
         return currentSubmission.getNextQuestion().getQuestionText();
     }
 
-    public void answerQuestion(String answer, model.Question question) throws Error {
-        currentSubmission.addAnswer(new model.Answer(answer, question));
+    public void answerQuestion(String answer) throws Error {
+        currentSubmission.addAnswer(new model.Answer(answer, currentSubmission.getNextQuestion()));
     }
 
     public void submitAssignment() {

@@ -1,6 +1,7 @@
 package controller;
 
 import model.Error;
+import model.WorkingData;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -14,7 +15,7 @@ public class Lecturer {
         try {
             this.assignmentModel = new model.Assignment();
 
-            // TODO: Load all students
+            this.studentModels = WorkingData.getStudents();
         } catch (SQLException e) {
             throw new Error("Error connecting to database!", e);
         }
@@ -42,6 +43,9 @@ public class Lecturer {
 
     public File exportStudents() {
         // TODO: Export students and marks to CSV
+        /* for(model.Student student : studentModels) {
+            System.out.println(student.getStudentNum() + ": " + student.getHighestMark());
+        } */
         throw new UnsupportedOperationException();
     }
 }

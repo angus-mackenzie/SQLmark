@@ -1,19 +1,13 @@
 package model;
 
-import java.io.File;
 import java.util.List;
 
 public class Student {
     private String studentNum;
     private List<Submission> submissions;
-    private Dataset personalDataset;
 
     public String getStudentNum() {
         return studentNum;
-    }
-
-    public File getPersonalDataset() {
-        return personalDataset.exportDataSQL();
     }
 
     public List<Submission> getSubmissions() {
@@ -34,9 +28,8 @@ public class Student {
         return mark;
     }
 
-    public Student(String studentNum, Dataset personalDataset) {
+    public Student(String studentNum) {
         this.studentNum = studentNum;
-        this.personalDataset = personalDataset;
     }
 
 }

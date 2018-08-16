@@ -2,10 +2,10 @@ package controller;
 
 import model.Error;
 
-import java.io.File;
 import java.sql.SQLException;
 
 public class Student {
+    private String randomData;
     private model.Student studentModel;
     private model.Assignment assignmentModel;
     private model.Submission currentSubmission;
@@ -13,7 +13,8 @@ public class Student {
     public Student(String studentNum) throws Error {
         try {
             this.assignmentModel = new model.Assignment();
-            this.studentModel = new model.Student(studentNum, assignmentModel.getRandomData());
+            this.studentModel = new model.Student(studentNum);
+            this.randomData = assignmentModel.getRandomData();
         } catch (SQLException e) {
             // TODO: Error handling
         }
@@ -23,8 +24,9 @@ public class Student {
         return assignmentModel.toString();
     }
 
-    public File getData() {
-        return studentModel.getPersonalDataset();
+    public String getData() {
+        // Possibly download as File
+        return randomData;
     }
 
     public void createSubmission() {

@@ -1,4 +1,47 @@
 package controller;
 
+import model.Error;
+
+import java.io.File;
+import java.sql.SQLException;
+import java.util.List;
+
 public class Lecturer {
+    private model.Assignment assignmentModel;
+    private List<model.Student> studentModels;
+
+    public Lecturer() throws Error {
+        try {
+            this.assignmentModel = new model.Assignment();
+
+            // TODO: Load all students
+        } catch (SQLException e) {
+            throw new Error("Error connecting to database!", e);
+        }
+    }
+
+    public void clear() {
+        // TODO: Clear all data, questions and students
+        throw new UnsupportedOperationException();
+    }
+
+    public void loadData(String filename) {
+        // TODO: Load data from CSV
+        throw new UnsupportedOperationException();
+    }
+
+    public void loadQuestions(String filename) {
+        // TODO: Load questions and answers from CSV
+        throw new UnsupportedOperationException();
+    }
+
+    public void loadStudents(String filename) {
+        // TODO: Load students from CSV
+        throw new UnsupportedOperationException();
+    }
+
+    public File exportStudents() {
+        // TODO: Export students and marks to CSV
+        throw new UnsupportedOperationException();
+    }
 }

@@ -5,11 +5,19 @@ public class Submission {
     private List<Answer> answers;
 
     public int getTotalMark() {
-        throw (new UnsupportedOperationException());
+        int totalMark = 0;
+        for (Answer answer : answers) {
+            totalMark += answer.getMark();
+        }
+        return totalMark;
     }
 
     public String getFeedback() {
-        throw (new UnsupportedOperationException());
+        StringBuilder feedback = new StringBuilder();
+        for (Answer answer : answers) {
+            feedback.append(answer.getFeedback()).append("\n");
+        }
+        return feedback.toString();
     }
 
     public void addAnswer(Answer answer) {

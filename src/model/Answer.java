@@ -2,7 +2,6 @@ public class Answer {
     private String answer;
     private Dataset output;
     private int mark;
-    private String feedback;
     private Question question;
 
     public int getMark() {
@@ -10,10 +9,18 @@ public class Answer {
     }
 
     public String getFeedback() {
-        return feedback;
+        switch (this.question.getFeedbackType()) {
+            case COMPILE:
+                return this.output.getCompileMessage();
+            case VERBOSE:
+                return "";
+            default:
+                return "";
+        }
     }
 
     private int calculateMark() {
+        // TODO: Calculate mark by comparing datasets
         throw (new UnsupportedOperationException());
     }
 
@@ -22,7 +29,6 @@ public class Answer {
         this.question = question;
 
         this.output = new Dataset(answer);
-
-        throw (new UnsupportedOperationException());
+        this.mark = calculateMark();
     }
 }

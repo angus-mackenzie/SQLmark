@@ -7,6 +7,10 @@ public class Assignment {
         return questions;
     }
 
+    public int getTotalQuestions() {
+        return questions.size();
+    }
+
     public Assignment(List<Question> questions) {
         this.questions = questions;
     }

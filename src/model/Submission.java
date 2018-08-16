@@ -6,6 +6,7 @@ import java.util.List;
 public class Submission {
     private final Assignment assignment;
     private List<Answer> answers;
+    private int currentQuestion;
 
     public int getTotalMark() throws Error {
         if (checkComplete()) {
@@ -35,25 +36,36 @@ public class Submission {
         }
     }
 
-    public boolean checkComplete() {
-        return assignment.getTotalQuestions() == answers.size();
-    }
-
-    public void addAnswer(Answer answer) throws Error {
-        if (!checkComplete()) {
-            answers.add(answer);
-        } else {
-            throw new Error("Too many answers submitted!");
-        }
-    }
-
+    // Might not be needed
     public Submission(Assignment assignment, List<Answer> answers) {
         this.assignment = assignment;
         this.answers = answers;
     }
 
+    public boolean checkComplete() {
+        return assignment.getTotalQuestions() == answers.size();
+    }
+
     public Submission(Assignment assignment) {
         this.assignment = assignment;
         this.answers = new ArrayList<>();
+        this.currentQuestion = 1;
+    }
+
+    public Question getNextQuestion() {
+        return assignment.getQuestion(currentQuestion);
+    }
+
+    public void addAnswer(Answer answer) throws Error {
+        if (!checkComplete()) {
+            answers.add(answer);
+            currentQuestion++;
+        } else {
+            throw new Error("Too many answers submitted!");
+        }
+    }
+
+    public void submit() {
+        // TODO: Submit and save to database
     }
 }

@@ -21,6 +21,11 @@ public class Dataset {
         throw new UnsupportedOperationException();
     }
 
+    public File exportDataSQL() {
+        // TODO: Export data to as sql file: use library or text based?
+        throw new UnsupportedOperationException();
+    }
+
     public String getCompileMessage() {
         return compileMessage;
     }

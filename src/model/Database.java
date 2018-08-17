@@ -57,6 +57,7 @@ public class Database {
                 createStatement.append(" VARCHAR(100), ");
             }
         }
+        updateTableList(tableName);
         currentSQL = createStatement.toString();
     }
 
@@ -111,6 +112,7 @@ public class Database {
             lastResultSet = statement.executeQuery(sql);
             lastStatus = CompileStatus.SUCCESS;
         }catch(SQLException e){
+            e.printStackTrace();
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
         }
@@ -183,7 +185,18 @@ public class Database {
             lastMessage = e.getStackTrace().toString();
         }
     }
+    public void createTableList(){
+        String command = "CREATE TABLE table_list (VARCHAR(100) table_name);";
+        currentSQL = command;
+    }
 
+    public void updateTableList(String tableName){
+        StringBuilder insertStatement = new StringBuilder();
+        insertStatement.append("INSERT INTO table_list (table_name) VALUES (");
+        insertStatement.append(tableName);
+        insertStatement.append(");");
+        currentSQL = insertStatement.toString();
+    }
     public void closeRS() {
         try{
             lastResultSet.close();

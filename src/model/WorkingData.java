@@ -47,7 +47,6 @@ public class WorkingData {
         db.prepareSelect("table_list");
         db.execute();
         ResultSet rs = db.getResultSet();
-
         while (rs.next()) {
             Question.FeedbackType feedbackType;
             switch (rs.getInt("feedback_type")) {

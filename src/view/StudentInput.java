@@ -15,10 +15,9 @@ public class StudentInput extends javax.swing.JFrame {
      * Creates new form for users to submit their queries
      */
     Connection dbConnection;
-    public StudentInput(Connection dbConnection) {
+    public StudentInput() {
         initComponents();
         this.setVisible(true);
-        this.dbConnection = dbConnection;
 
     }
     //Don't edit this

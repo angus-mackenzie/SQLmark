@@ -1,8 +1,5 @@
 package view;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Statement;
 
 /**
  * Creates a basic UI for the user to enter in SQL commands
@@ -18,7 +15,6 @@ public class StudentInput extends javax.swing.JFrame {
     public StudentInput() {
         initComponents();
         this.setVisible(true);
-
     }
     //Don't edit this
     @SuppressWarnings("unchecked")
@@ -77,25 +73,8 @@ public class StudentInput extends javax.swing.JFrame {
 
         pack();
     }
-    public void appendTextArea(ResultSet rs) throws Exception{
-            ResultSetMetaData rsMetaData = rs.getMetaData();
-            StringBuilder output = new StringBuilder();
-            int numberOfColumns = rsMetaData.getColumnCount();
-            for (int i = 1; i < numberOfColumns + 1; i++) {
-                String columnName = rsMetaData.getColumnName(i);
-                output.append(columnName + "   ");
+    public void appendTextArea(String input) throws Exception{
 
-            }
-            output.append("\n");
-            output.append("----------------------------------------------------------------------------------------------------------------------------------------------------");
-
-            while (rs.next()) {
-                for (int i = 1; i < numberOfColumns + 1; i++) {
-                    output.append(rs.getString(i) + "   ");
-                }
-                output.append("\n");
-            }
-        textArea.append(output.toString());
     }
     public String getTextField(){
         return textField.getText();
@@ -104,20 +83,7 @@ public class StudentInput extends javax.swing.JFrame {
         textField.setText("");
     }
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        String input = getTextField();
-        if(input.equals("")){
-            System.out.println("Input blank, ignored");
-        }else{
-            try{
-                Statement query = dbConnection.createStatement();
-                ResultSet results = query.executeQuery(input);
-                appendTextArea(results);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
 
-        }
-        //dbConnection
     }
     public void setTextAreaBlank(){
         textArea.setText("");

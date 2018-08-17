@@ -1,9 +1,14 @@
 package controller;
 
+import model.Database;
 import model.Error;
 
 import javax.swing.*;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Student {
     private String randomData;
@@ -61,7 +66,26 @@ public class Student {
     public static void main(String[] args) {
         String studentNum = JOptionPane.showInputDialog(null, "Enter your student number:",
                 "Welcome", JOptionPane.QUESTION_MESSAGE);
+        Database db = new Database();
+        Map<String,Object> where = new HashMap<>();
 
+        where.put("studentNum",studentNum);
+        db.prepareSelect("studentTable",where);
+        db.execute();
+        ResultSet rs = db.getResultSet();
+        try{
+            while (rs.next()) {
+                ResultSetMetaData rsMetaData = rs.getMetaData();
+                int numberOfColumns = rsMetaData.getColumnCount();
+                for (int i = 1; i < numberOfColumns + 1; i++) {
+                    System.out.println(rs.getString(i)+"\n");
+                    System.out.print(rs.getString(i).equals(studentNum));
+                }
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        System.out.println("It worked??");
         try {
             Student student = new Student(studentNum);
             view.Student studentView = new view.Student(student);

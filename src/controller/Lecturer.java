@@ -46,8 +46,22 @@ public class Lecturer {
     }
 
     public void loadQuestions(String filename) {
-        // TODO: Load questions and answers from CSV
-        throw new UnsupportedOperationException();
+        CSV csvReader = new CSV(filename);
+        try{
+            List<String> columNames = csvReader.parseLine();
+            Database db = new Database();
+            String tableName = "questionTable";
+            db.prepareCreate(columNames, tableName);
+            db.execute();
+            List<String> input = csvReader.parseLine();
+            while(input!=null){
+                db.prepareInsert(input);
+                db.execute();
+                input = csvReader.parseLine();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void loadStudents(String filename) {
@@ -94,6 +108,10 @@ public class Lecturer {
             String studentFile = sc.nextLine();
             lecturer.loadStudents(studentFile);
             System.out.println("Loaded students successfully");
+            System.out.println("Enter question and answer filename:");
+            String qnaFile = sc.nextLine();
+            lecturer.loadQuestions(qnaFile);
+            System.out.println("Successful");
             //view.Lecturer lecturerView = new view.Lecturer(lecturer);
         } catch (Error error) {
             // TODO: Show error box

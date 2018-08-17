@@ -64,7 +64,6 @@ public class Student {
 
         try {
             Student student = new Student(studentNum);
-
             view.Student studentView = new view.Student(student);
         } catch (Error error) {
             // TODO: Show error box

@@ -27,12 +27,12 @@ public class WorkingData {
         Database db = new Database();
         List<Student> students = new ArrayList<>();
 
-        db.prepareSelect("students");
+        db.prepareSelect("studentTable");
         db.execute();
         ResultSet rs = db.getResultSet();
 
         while (rs.next()) {
-            students.add(new Student(rs.getString("student_num")));
+            students.add(new Student(rs.getString("stuid")));
         }
 
         db.closeRS();
@@ -62,8 +62,8 @@ public class WorkingData {
                     break;
             }
             Question question = new Question(
-                    rs.getString("question_text"),
-                    rs.getString("correct_answer"),
+                    rs.getString("Question"),
+                    rs.getString("Answer"),
                     feedbackType);
 
             questions.add(question);

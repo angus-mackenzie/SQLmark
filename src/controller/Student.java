@@ -2,7 +2,9 @@ package controller;
 
 import model.Error;
 
-import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 public class Student {
@@ -59,28 +61,14 @@ public class Student {
     }
 
     public static void main(String[] args) {
-        String studentNum = JOptionPane.showInputDialog(null, "Enter your student number:",
-                "Welcome", JOptionPane.QUESTION_MESSAGE);
-//        Database db = new Database();
-//        Map<String,Object> where = new HashMap<>();
-//
-//        where.put("studentNum",studentNum);
-//        db.prepareSelect("studentTable",where);
-//        db.execute();
-//        ResultSet rs = db.getResultSet();
-//        try{
-//            while (rs.next()) {
-//                ResultSetMetaData rsMetaData = rs.getMetaData();
-//                int numberOfColumns = rsMetaData.getColumnCount();
-//                for (int i = 1; i < numberOfColumns + 1; i++) {
-//                    System.out.println(rs.getString(i)+"\n");
-//                    System.out.print(rs.getString(i).equals(studentNum));
-//                }
-//            }
-//        }catch(SQLException e){
-//            e.printStackTrace();
-//        }
-//        System.out.println("It worked??");
+        System.out.print("Enter your student number: ");
+        String studentNum = "";
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+            studentNum = br.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try {
             Student student = new Student(studentNum);
             view.Student studentView = new view.Student(student);

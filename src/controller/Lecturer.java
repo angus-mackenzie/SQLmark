@@ -3,10 +3,8 @@ package controller;
 import model.CSV;
 import model.Database;
 import model.Error;
-import model.WorkingData;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,13 +13,13 @@ public class Lecturer {
     private List<model.Student> studentModels;
 
     public Lecturer() throws Error {
-        try {
-            this.assignmentModel = new model.Assignment();
-
-            this.studentModels = WorkingData.getStudents();
-        } catch (SQLException e) {
-            throw new Error("Error connecting to database!", e);
-        }
+//        try {
+////            this.assignmentModel = new model.Assignment();
+////
+////            this.studentModels = WorkingData.getStudents();
+//        } catch (SQLException e) {
+//            throw new Error("Error connecting to database!", e);
+//        }
     }
 
     public void clear() {
@@ -34,7 +32,7 @@ public class Lecturer {
         try{
             List<String> columNames = csvReader.parseLine();
             Database db = new Database();
-            db.prepareCreate(columNames, "dataTable");
+            db.prepareCreate(columNames, "data_store");
             db.execute();
             List<String> input = csvReader.parseLine();
             while(input!=null){
@@ -52,7 +50,7 @@ public class Lecturer {
         try{
             List<String> columNames = csvReader.parseLine();
             Database db = new Database();
-            String tableName = "questionTable";
+            String tableName = "questions";
             db.prepareCreate(columNames, tableName);
             db.execute();
             List<String> input = csvReader.parseLine();
@@ -71,7 +69,7 @@ public class Lecturer {
         try{
             List<String> columNames = csvReader.parseLine();
             Database db = new Database();
-            String tableName = "studentTable";
+            String tableName = "students";
             db.prepareCreate(columNames, tableName);
             db.execute();
             List<String> input = csvReader.parseLine();

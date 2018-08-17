@@ -48,12 +48,13 @@ public class Student {
     }
 
     private String getReturn() {
+        String line = "";
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            return br.readLine();
+            line = br.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "";
+        return line;
     }
 
     private void runAssignment() {

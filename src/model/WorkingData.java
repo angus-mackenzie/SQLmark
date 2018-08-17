@@ -27,12 +27,12 @@ public class WorkingData {
         Database db = new Database();
         List<Student> students = new ArrayList<>();
 
-        db.prepareSelect("studentTable");
+        db.prepareSelect("students");
         db.execute();
         ResultSet rs = db.getResultSet();
 
         while (rs.next()) {
-            students.add(new Student(rs.getString("stuid")));
+            students.add(new Student(rs.getString("student_num")));
         }
 
         db.closeRS();

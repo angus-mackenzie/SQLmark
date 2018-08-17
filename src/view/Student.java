@@ -53,7 +53,7 @@ public class Student {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return "";
     }
 
     private void runAssignment() {

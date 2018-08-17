@@ -104,7 +104,7 @@ public class Lecturer {
             String filename = sc.nextLine();
             lecturer.loadData(filename);
             System.out.println("Data loaded successfully!");
-            System.out.println("Enter the student marks filename:");
+            System.out.println("Enter the students filename:");
             String studentFile = sc.nextLine();
             lecturer.loadStudents(studentFile);
             System.out.println("Loaded students successfully");

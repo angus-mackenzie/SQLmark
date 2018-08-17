@@ -15,7 +15,9 @@ public class Student {
         boolean running = true;
         while (running) {
             showMenu();
-            switch (getReturn()) {
+            String menu_item = getReturn();
+            System.out.println("You entered: " + menu_item);
+            switch (menu_item) {
                 case "1":
                     System.out.println(this.student.loadAssignment());
                     break;

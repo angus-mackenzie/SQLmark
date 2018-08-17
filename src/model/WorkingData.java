@@ -44,7 +44,7 @@ public class WorkingData {
         Database db = new Database();
         List<Question> questions = new ArrayList<>();
 
-        db.prepareSelect("table_list");
+        db.prepareSelect("questions");
         db.execute();
         ResultSet rs = db.getResultSet();
         while (rs.next()) {
@@ -61,8 +61,8 @@ public class WorkingData {
                     break;
             }
             Question question = new Question(
-                    rs.getString("Question"),
-                    rs.getString("Answer"),
+                    rs.getString("question_text"),
+                    rs.getString("answer"),
                     feedbackType);
 
             questions.add(question);

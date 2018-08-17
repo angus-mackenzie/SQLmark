@@ -32,7 +32,7 @@ public class Lecturer {
         try{
             List<String> columNames = csvReader.parseLine();
             Database db = new Database();
-            db.prepareCreate(columNames);
+            db.prepareCreate(columNames, "dataTable");
             db.execute();
             List<String> input = csvReader.parseLine();
             while(input!=null){
@@ -51,8 +51,22 @@ public class Lecturer {
     }
 
     public void loadStudents(String filename) {
-        // TODO: Load students from CSV
-        throw new UnsupportedOperationException();
+        CSV csvReader = new CSV(filename);
+        try{
+            List<String> columNames = csvReader.parseLine();
+            Database db = new Database();
+            String tableName = "studentTable";
+            db.prepareCreate(columNames, tableName);
+            db.execute();
+            List<String> input = csvReader.parseLine();
+            while(input!=null){
+                db.prepareInsert(input);
+                db.execute();
+                input = csvReader.parseLine();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public File exportStudents() {
@@ -76,6 +90,10 @@ public class Lecturer {
             String filename = sc.nextLine();
             lecturer.loadData(filename);
             System.out.println("Data loaded successfully!");
+            System.out.println("Enter the student marks filename:");
+            String studentFile = sc.nextLine();
+            lecturer.loadStudents(studentFile);
+            System.out.println("Loaded students successfully");
             //view.Lecturer lecturerView = new view.Lecturer(lecturer);
         } catch (Error error) {
             // TODO: Show error box

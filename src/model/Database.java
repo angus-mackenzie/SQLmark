@@ -7,6 +7,7 @@ import java.util.Map;
 public class Database {
     private String lastMessage;
     private CompileStatus lastStatus;
+    private String tableName;
     private ResultSet lastResultSet;
     private String currentSQL;
     private Connection dbConnection;
@@ -40,10 +41,12 @@ public class Database {
      * @param columnNames
      * @return string value
      */
-    public void prepareCreate(List<String> columnNames){
+    public void prepareCreate(List<String> columnNames, String tableName){
         this.columnNames = columnNames;
+        this.tableName = tableName;
         StringBuilder createStatement = new StringBuilder();
-        createStatement.append("CREATE TABLE demoTable");
+        createStatement.append("CREATE TABLE ");
+        createStatement.append(tableName);
         createStatement.append(" (");
         for(int i = 0; i< columnNames.size();i++){
             if(i==columnNames.size()-1){
@@ -64,7 +67,9 @@ public class Database {
      */
     public void  prepareInsert(List<String> row){
         StringBuilder insertStatement = new StringBuilder();
-        insertStatement.append("INSERT INTO demoTable (");
+        insertStatement.append("INSERT INTO ");
+        insertStatement.append(tableName);
+        insertStatement.append(" (");
         for(int i = 0; i< columnNames.size();i++) {
             if (i == columnNames.size() - 1) {
                 insertStatement.append(columnNames.get(i));

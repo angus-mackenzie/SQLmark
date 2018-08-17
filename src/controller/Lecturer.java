@@ -14,9 +14,9 @@ public class Lecturer {
 
     public Lecturer() throws Error {
 //        try {
-////            this.assignmentModel = new model.Assignment();
-////
-////            this.studentModels = WorkingData.getStudents();
+//            this.assignmentModel = new model.Assignment();
+//
+//            this.studentModels = WorkingData.getStudents();
 //        } catch (SQLException e) {
 //            throw new Error("Error connecting to database!", e);
 //        }

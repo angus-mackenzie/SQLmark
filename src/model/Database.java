@@ -112,7 +112,7 @@ public class Database {
             lastResultSet = statement.executeQuery(sql);
             lastStatus = CompileStatus.SUCCESS;
         }catch(SQLException e){
-            e.printStackTrace();
+            //e.printStackTrace();
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
         }

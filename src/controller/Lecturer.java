@@ -3,8 +3,10 @@ package controller;
 import model.CSV;
 import model.Database;
 import model.Error;
+import model.WorkingData;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,13 +15,13 @@ public class Lecturer {
     private List<model.Student> studentModels;
 
     public Lecturer() throws Error {
-//        try {
-//            this.assignmentModel = new model.Assignment();
-//
-//            this.studentModels = WorkingData.getStudents();
-//        } catch (SQLException e) {
-//            throw new Error("Error connecting to database!", e);
-//        }
+        try {
+            this.assignmentModel = new model.Assignment();
+
+            this.studentModels = WorkingData.getStudents();
+        } catch (SQLException e) {
+            throw new Error("Error connecting to database!", e);
+        }
     }
 
     public void clear() {

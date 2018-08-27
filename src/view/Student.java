@@ -7,15 +7,24 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Student {
+    private final BufferedReader br;
     private controller.Student student;
 
     public Student(controller.Student student) {
+        br = new BufferedReader(new InputStreamReader(System.in));
         this.student = student;
 
         boolean running = true;
         while (running) {
             showMenu();
-            switch (getReturn()) {
+            String menu_item = "";
+            try {
+                menu_item = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("You entered: " + menu_item);
+            switch (menu_item) {
                 case "1":
                     System.out.println(this.student.loadAssignment());
                     break;
@@ -47,15 +56,6 @@ public class Student {
         System.out.print("Enter option: ");
     }
 
-    private String getReturn() {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            return br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     private void runAssignment() {
         student.createSubmission();
 
@@ -65,7 +65,12 @@ public class Student {
             System.out.println(question);
             System.out.print("Enter answer: ");
 
-            String answer = getReturn();
+            String answer = "";
+            try {
+                answer = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             try {
                 student.answerQuestion(answer);

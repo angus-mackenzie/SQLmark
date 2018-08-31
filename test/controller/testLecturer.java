@@ -1,0 +1,21 @@
+package controller;
+import org.junit.Before;
+import org.junit.Test;
+
+public class testLecturer{
+    Lecturer lecturer;
+    @Before
+    public void init(){
+        try{
+            lecturer = new Lecturer();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testLoadData(){
+        String filename = "matricData.csv";
+        lecturer.loadData(filename);
+    }
+}

@@ -2,8 +2,11 @@ package model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
 
 /**
@@ -15,7 +18,7 @@ import static junit.framework.TestCase.assertEquals;
 public class TestCSV{
     private CSV csvReader;
     /**
-     * Sets up test environment
+     * Sets up test environment for basic tests
      */
     @Before
     public void init(){
@@ -43,5 +46,41 @@ public class TestCSV{
         }
     }
 
+    @Test
+    public void testNoFile(){
+        String filename = "";
+        try{
+            CSV csvReader = new CSV(filename);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        assertFalse("The file should not be open",csvReader.isOpen());
+    }
+
+    @Test
+    public void testNoSuffix(){
+        String filename = "matricData";
+        try{
+            CSV csvReader = new CSV(filename);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        assertTrue("The CSV should be open",csvReader.isOpen());
+    }
+    //TODO make this more robust
+    @Test
+    public void testWrongFileName(){
+        String filename = "this is not valid";
+        Exception expected = new FileNotFoundException();
+        try{
+            CSV csvReader = new CSV(filename);
+        }catch(Exception e){
+            assertEquals("The two errors be the same",expected.getCause(),e.getCause());
+        }
+
+
+    }
+
     //TODO Test Write Function for Student Marks
+
 }

@@ -2,6 +2,7 @@ package model;
 
 import java.io.*;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Vector;
 /**
  * Simple CSVReader for the Demo -> if we have time, implement SuperCSV
@@ -14,14 +15,27 @@ import java.util.Vector;
 public class CSV {
     private String filename;
     private Reader dataReader;
+    private boolean isOpen = false;
 
-    public CSV(String filename){
+    public CSV(String filename) throws Exception{
         this.filename = filename;
-        try{
-            dataReader = new BufferedReader(new FileReader(new File(filename)));
-        }catch(Exception e){
-            e.printStackTrace();
+        if(filename.equals("")){
+            System.err.println("You did not enter in a filename, please restart and enter one");
+            System.exit(1);
         }
+        if(!filename.contains(".csv")){
+            filename+=".csv";
+        }
+        //try{
+            dataReader = new BufferedReader(new FileReader(new File(filename)));
+            isOpen= true;
+//        }catch(Exception e){
+//            System.err.println(filename + " is not a valid file name.");
+//            System.err.println(e.getMessage());
+//            Throwable throwm = new Throwable(e);
+//
+//            System.exit(-1);
+//        }
     }
     /**
      * Writes a line of a CSV file
@@ -107,5 +121,9 @@ public class CSV {
         }
         store.add(curVal.toString());
         return store;
+    }
+
+    public boolean isOpen(){
+        return isOpen;
     }
 }

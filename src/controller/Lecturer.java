@@ -28,8 +28,9 @@ public class Lecturer {
     }
     //TODO: Add table name
     public void loadData(String filename) {
-        CSV csvReader = new CSV(filename);
+
         try{
+            CSV csvReader = new CSV(filename);
             List<String> columNames = csvReader.parseLine();
             Database db = new Database();
             db.prepareCreate(columNames, "data_store");
@@ -46,8 +47,9 @@ public class Lecturer {
     }
 
     public void loadQuestions(String filename) {
-        CSV csvReader = new CSV(filename);
+
         try{
+            CSV csvReader = new CSV(filename);
             List<String> columNames = csvReader.parseLine();
             Database db = new Database();
             String tableName = "questions";
@@ -65,8 +67,9 @@ public class Lecturer {
     }
 
     public void loadStudents(String filename) {
-        CSV csvReader = new CSV(filename);
+
         try{
+            CSV csvReader = new CSV(filename);
             List<String> columNames = csvReader.parseLine();
             Database db = new Database();
             String tableName = "students";

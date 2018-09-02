@@ -17,19 +17,23 @@ public class Database {
     }
 
     public Database() {
-        String url = "jdbc:postgresql://localhost:54321/postgres";
+        //TODO update this to point to the web server
+            String url = "jdbc:mariadb://localhost:3306/data_store";
         try{
-            dbConnection = DriverManager.getConnection(url, "root", "admin");
+            dbConnection = DriverManager.getConnection(url, "root", "68(MNPq]+_9{fk>q");
         } catch(SQLException e){
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
+            //TODO comment this out once finished finding error
+            e.printStackTrace();
+
         }
     }
 
     public Database(String databaseName) {
-        String url = "jdbc:postgresql://localhost:54321/"+databaseName;
+        String url = "jdbc:mariadb://localhost:3306/"+databaseName;
         try{
-            dbConnection = DriverManager.getConnection(url, "root", "admin");
+            dbConnection = DriverManager.getConnection(url, "root", "68(MNPq]+_9{fk>q");
         } catch(SQLException e){
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();

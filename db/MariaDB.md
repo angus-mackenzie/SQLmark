@@ -7,8 +7,7 @@ This relates to the actual installation of the server.
 
 ## Download
 
-Select host requirements and download installation package from here:
-https://mariadb.com/downloads/mariadb-tx
+Select host requirements and download installation package from [here](https://mariadb.com/downloads/mariadb-tx)
 
 ## Install
 
@@ -18,7 +17,7 @@ Leave all settings as default throughout the installation, except for setting th
 
 Add `C:\Program Files\MariaDB 10.3\bin` to your system PATH variable.
 
-Follow this guide for editing your PATH variable if you are unsure how to: https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/
+Follow [this guide](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/) for editing your PATH variable if you are unsure how to
 
 ## Test
 

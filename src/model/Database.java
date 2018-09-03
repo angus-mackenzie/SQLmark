@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,12 +49,30 @@ public class Database {
      */
     public Database(String databaseName) {
         String url = "jdbc:mariadb://localhost:3306/"+databaseName;
+        System.out.println("Attemptiong "+databaseName);
         try{
             dbConnection = DriverManager.getConnection(url, "root", "68(MNPq]+_9{fk>q");
+            if(dbConnection.getMetaData().getMaxColumnsInTable()==0){
+                //there are no other tables in the database
+                System.out.println("What does this mean");
+            }else {
+                //there are other tables
+                Statement statement = dbConnection.createStatement();
+                prepareSelect(databaseName);
+                lastResultSet = statement.executeQuery(currentSQL);
+                ResultSetMetaData metaData = lastResultSet.getMetaData();
+                int columns = metaData.getColumnCount();
+                columnNames = new ArrayList<String>();
+                for (int i = 0; i < columns; i++) {
+                    columnNames.add(metaData.getColumnName(i));
+                }
+            }
         } catch(SQLException e){
+            System.out.println("FAILED");
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
         }
+
     }
 
     /**
@@ -65,7 +84,7 @@ public class Database {
         this.columnNames = columnNames;
         this.tableName = tableName;
         StringBuilder createStatement = new StringBuilder();
-        createStatement.append("CREATE TABLE ");
+        createStatement.append("CREATE TABLE IF NOT EXISTS ");
         createStatement.append(tableName);
         createStatement.append(" (");
         for(int i = 0; i< columnNames.size();i++){
@@ -77,7 +96,10 @@ public class Database {
                 createStatement.append(" VARCHAR(100), ");
             }
         }
-        updateTableList(tableName);
+        if(!tableName.equals("table_list")){
+            updateTableList(tableName);
+        }
+        System.out.println("USING "+createStatement);
         currentSQL = createStatement.toString();
     }
 
@@ -114,6 +136,7 @@ public class Database {
                 insertStatement.append(", ");
             }
         }
+        System.out.println("INSERTING "+insertStatement);
         currentSQL= insertStatement.toString();
     }
 
@@ -191,15 +214,17 @@ public class Database {
             int size = where.size();
             for(Map.Entry<String,Object> pair : where.entrySet()){
                 if(counter==size-1){
-                    selectStatement.append("'");
+                    //selectStatement.append("'");
                     selectStatement.append(pair.getKey());
-                    selectStatement.append("' = '");
+                    //selectStatement.append("'");
+                    selectStatement.append(" = '");
                     selectStatement.append(pair.getValue());
                     selectStatement.append("'");
                 }else{
-                    selectStatement.append("'");
+                    //selectStatement.append("'");
                     selectStatement.append(pair.getKey());
-                    selectStatement.append("' = '");
+                    //selectStatement.append("'");
+                    selectStatement.append(" = '");
                     selectStatement.append(pair.getValue());
                     selectStatement.append("' AND ");
                 }
@@ -212,6 +237,7 @@ public class Database {
         }
 
         selectStatement.append(";");
+        System.out.println("RUNNING "+selectStatement);
         currentSQL= selectStatement.toString();
     }
 
@@ -229,36 +255,22 @@ public class Database {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * Closes connection to the database
-     */
-    public void close() {
-        try{
-            dbConnection.close();
-        }catch(SQLException e){
-            lastStatus = CompileStatus.FAILURE;
-            lastMessage = e.getStackTrace().toString();
-        }
-    }
 
-    /**
-     * Gets the current list of tables
-     */
-    public void createTableList(){
-        String command = "CREATE TABLE table_list (VARCHAR(100) table_name);";
-        currentSQL = command;
-    }
 
     /**
      * Updates the current list of tables
      * @param tableName
      */
-    public void updateTableList(String tableName){
-        StringBuilder insertStatement = new StringBuilder();
-        insertStatement.append("INSERT INTO table_list (table_name) VALUES (");
-        insertStatement.append(tableName);
-        insertStatement.append(");");
-        currentSQL = insertStatement.toString();
+    private void updateTableList(String tableName){
+        Database tableDB = new Database("admin_data");
+        List<String> header = new ArrayList<String>();
+        header.add("table_name");
+        tableDB.prepareCreate(header,"table_list");
+        tableDB.execute();
+        List<String> row = new ArrayList<String>();
+        row.add(tableName);
+        tableDB.prepareInsert(row);
+        tableDB.execute();
     }
 
     /**
@@ -266,7 +278,21 @@ public class Database {
      */
     public void closeRS() {
         try{
-            lastResultSet.close();
+            if(lastResultSet!=null){
+                lastResultSet.close();
+            }
+        }catch(SQLException e){
+            lastStatus = CompileStatus.FAILURE;
+            lastMessage = e.getStackTrace().toString();
+        }
+    }
+
+    /**
+     * Closes connection to the database
+     */
+    public void close() {
+        try{
+            dbConnection.close();
         }catch(SQLException e){
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();

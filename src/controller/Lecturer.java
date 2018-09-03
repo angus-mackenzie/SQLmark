@@ -27,63 +27,49 @@ public class Lecturer {
         throw new UnsupportedOperationException();
     }
     //TODO: Add table name
-    public void loadData(String filename) {
-
-        try{
-            CSV csvReader = new CSV(filename);
-            List<String> columNames = csvReader.parseLine();
-            Database db = new Database();
-            db.prepareCreate(columNames, "data_store");
+    public void loadData(String filename) throws Exception{
+        CSV csvReader = new CSV(filename);
+        List<String> columNames = csvReader.parseLine();
+        Database db = new Database();
+        db.prepareCreate(columNames, "data_store");
+        db.execute();
+        List<String> input = csvReader.parseLine();
+        while(input!=null){
+            db.prepareInsert(input);
             db.execute();
-            List<String> input = csvReader.parseLine();
-            while(input!=null){
-                db.prepareInsert(input);
-                db.execute();
-                input = csvReader.parseLine();
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+            input = csvReader.parseLine();
         }
     }
 
-    public void loadQuestions(String filename) {
-
-        try{
-            CSV csvReader = new CSV(filename);
-            List<String> columNames = csvReader.parseLine();
-            Database db = new Database();
-            String tableName = "questions";
-            db.prepareCreate(columNames, tableName);
+    public void loadQuestions(String filename) throws Exception{
+        CSV csvReader = new CSV(filename);
+        List<String> columNames = csvReader.parseLine();
+        Database db = new Database("admin_data");
+        String tableName = "questions";
+        db.prepareCreate(columNames, tableName);
+        db.execute();
+        List<String> input = csvReader.parseLine();
+        while(input!=null){
+            db.prepareInsert(input);
             db.execute();
-            List<String> input = csvReader.parseLine();
-            while(input!=null){
-                db.prepareInsert(input);
-                db.execute();
-                input = csvReader.parseLine();
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+            input = csvReader.parseLine();
         }
     }
 
-    public void loadStudents(String filename) {
-
-        try{
-            CSV csvReader = new CSV(filename);
-            List<String> columNames = csvReader.parseLine();
-            Database db = new Database();
-            String tableName = "students";
-            db.prepareCreate(columNames, tableName);
+    public void loadStudents(String filename) throws Exception{
+        CSV csvReader = new CSV(filename);
+        List<String> columNames = csvReader.parseLine();
+        Database db = new Database("admin_data");
+        String tableName = "students";
+        db.prepareCreate(columNames, tableName);
+        db.execute();
+        List<String> input = csvReader.parseLine();
+        while(input!=null){
+            db.prepareInsert(input);
             db.execute();
-            List<String> input = csvReader.parseLine();
-            while(input!=null){
-                db.prepareInsert(input);
-                db.execute();
-                input = csvReader.parseLine();
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+            input = csvReader.parseLine();
         }
+
     }
 
     public File exportStudents() {
@@ -116,9 +102,10 @@ public class Lecturer {
             lecturer.loadQuestions(qnaFile);
             System.out.println("Successful");
             //view.Lecturer lecturerView = new view.Lecturer(lecturer);
-        } catch (Error error) {
+        } catch (Exception error) {
             // TODO: Show error box
             error.printStackTrace();
+            System.exit(-1);
         }
     }
 }

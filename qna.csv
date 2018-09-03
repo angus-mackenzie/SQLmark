@@ -1,2 +1,0 @@
-Question, Answer
-Get all Student Numbers from the data table., SELECT stuid FROM datatable

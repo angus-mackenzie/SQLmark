@@ -14,7 +14,7 @@ public class testLecturer{
     }
 
     @Test
-    public void testLoadData(){
+    public void testLoadData() throws Exception{
         String filename = "matricData.csv";
         lecturer.loadData(filename);
     }

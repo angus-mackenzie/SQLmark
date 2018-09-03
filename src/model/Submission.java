@@ -126,6 +126,7 @@ public class Submission {
      */
     public Submission submit() {
         // TODO: Submit and save to database
+        date = new Date();
         return this;
     }
 

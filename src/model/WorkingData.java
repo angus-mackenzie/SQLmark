@@ -16,17 +16,18 @@ public class WorkingData {
      */
     public static List<String> getTables() throws SQLException {
         Database db = new Database();
-        List<String> tables = new ArrayList<>();
+        List<String> tables = new ArrayList<String>();
 
         db.prepareSelect("table_list");
         db.execute();
         ResultSet rs = db.getResultSet();
-
-        while (rs.next()) {
+        while (rs != null && rs.next()) {
             tables.add(rs.getString("table_name"));
         }
+        if(rs!=null){
+            db.closeRS();
+        }
 
-        db.closeRS();
         db.close();
         return tables;
     }
@@ -59,7 +60,7 @@ public class WorkingData {
      * @throws SQLException
      */
     public static List<Question> getQuestions() throws SQLException {
-        Database db = new Database();
+        Database db = new Database("admin_data");
         List<Question> questions = new ArrayList<>();
 
         db.prepareSelect("questions");

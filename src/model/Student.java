@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The different student's taking the SQL test
+ * The different students taking the SQL test
  * @author Matthew Poulter
  * @version 15/08/2018
  */
@@ -39,7 +39,7 @@ public class Student {
         this.studentNum = studentNum;
         this.submissions = new ArrayList<>();
 
-        Database db = new Database();
+        Database db = new Database("admin_data");
         db.prepareSelect("students", Map.of("student_num", studentNum));
         db.execute();
         ResultSet rs = db.getResultSet();

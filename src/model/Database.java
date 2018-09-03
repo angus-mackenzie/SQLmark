@@ -214,15 +214,17 @@ public class Database {
             int size = where.size();
             for(Map.Entry<String,Object> pair : where.entrySet()){
                 if(counter==size-1){
-                    selectStatement.append("'");
+                    //selectStatement.append("'");
                     selectStatement.append(pair.getKey());
-                    selectStatement.append("' = '");
+                    //selectStatement.append("'");
+                    selectStatement.append(" = '");
                     selectStatement.append(pair.getValue());
                     selectStatement.append("'");
                 }else{
-                    selectStatement.append("'");
+                    //selectStatement.append("'");
                     selectStatement.append(pair.getKey());
-                    selectStatement.append("' = '");
+                    //selectStatement.append("'");
+                    selectStatement.append(" = '");
                     selectStatement.append(pair.getValue());
                     selectStatement.append("' AND ");
                 }
@@ -235,6 +237,7 @@ public class Database {
         }
 
         selectStatement.append(";");
+        System.out.println("RUNNING "+selectStatement);
         currentSQL= selectStatement.toString();
     }
 
@@ -252,17 +255,7 @@ public class Database {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * Closes connection to the database
-     */
-    public void close() {
-        try{
-            dbConnection.close();
-        }catch(SQLException e){
-            lastStatus = CompileStatus.FAILURE;
-            lastMessage = e.getStackTrace().toString();
-        }
-    }
+
 
     /**
      * Updates the current list of tables
@@ -285,7 +278,21 @@ public class Database {
      */
     public void closeRS() {
         try{
-            lastResultSet.close();
+            if(lastResultSet!=null){
+                lastResultSet.close();
+            }
+        }catch(SQLException e){
+            lastStatus = CompileStatus.FAILURE;
+            lastMessage = e.getStackTrace().toString();
+        }
+    }
+
+    /**
+     * Closes connection to the database
+     */
+    public void close() {
+        try{
+            dbConnection.close();
         }catch(SQLException e){
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();

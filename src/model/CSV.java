@@ -17,6 +17,11 @@ public class CSV {
     private Reader dataReader;
     private boolean isOpen = false;
 
+    /**
+     * Constructor - Takes in filename, checks if it is correct otherwise exception
+     * @param filename of the csv file
+     * @throws Exception
+     */
     public CSV(String filename) throws Exception{
         this.filename = filename;
         if(filename.equals("")){
@@ -40,7 +45,7 @@ public class CSV {
     /**
      * Writes a line of a CSV file
      * @param w the writer used
-     * @param values the values to be seperated by commas
+     * @param values the values to be separated by commas
      * @throws Exception
      */
     public static void writeLine(Writer w, List<String> values)
@@ -66,6 +71,7 @@ public class CSV {
     }
 
     /**
+     * Reads a line of the CSV
      * Returns a null when the input stream is empty
      * @throws Exception
      */
@@ -123,6 +129,10 @@ public class CSV {
         return store;
     }
 
+    /**
+     * Checks if the file is open
+     * @return isOpen
+     */
     public boolean isOpen(){
         return isOpen;
     }

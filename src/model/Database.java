@@ -4,6 +4,11 @@ import java.sql.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Creates a connection to the database, and facilitates queries
+ * @author Angus Mackenzie
+ * @version 09/03/2018
+ */
 public class Database {
     private String lastMessage;
     private CompileStatus lastStatus;
@@ -12,10 +17,17 @@ public class Database {
     private String currentSQL;
     private Connection dbConnection;
     List<String> columnNames;
+
+    /**
+     * Enum declaring different compile statuses
+     */
     public enum CompileStatus {
         SUCCESS, FAILURE
     }
 
+    /**
+     * Constructor - creates a database connection with default database
+     */
     public Database() {
         //TODO update this to point to the web server
             String url = "jdbc:mariadb://localhost:3306/data_store";
@@ -30,6 +42,10 @@ public class Database {
         }
     }
 
+    /**
+     * Creates a connection to the specified database
+     * @param databaseName
+     */
     public Database(String databaseName) {
         String url = "jdbc:mariadb://localhost:3306/"+databaseName;
         try{
@@ -101,14 +117,27 @@ public class Database {
         currentSQL= insertStatement.toString();
     }
 
+    /**
+     * Prepares a select statement given a table name
+     * @param table
+     */
     public void prepareSelect(String table) {
         prepareSelect(table, null);
     }
 
+    /**
+     * Prepares a select statement given a table name, a map of columnames and objects for the where clause
+     * @param table
+     * @param where
+     */
     public void prepareSelect(String table, Map<String, Object> where) {
         prepareSelect(table, where, -1);
     }
 
+    /**
+     * Executes a sql query on the database
+     * @param sql
+     */
     public void execute(String sql) {
         currentSQL = sql;
         try{
@@ -116,26 +145,42 @@ public class Database {
             lastResultSet = statement.executeQuery(sql);
             lastStatus = CompileStatus.SUCCESS;
         }catch(SQLException e){
-            //e.printStackTrace();
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
         }
 
     }
 
-
+    /**
+     * Returns the last message back from the database
+     * @return last message
+     */
     public String getLastMessage() {
         return lastMessage;
     }
 
+    /**
+     * Returns whether the last query compiled or not
+     * @return
+     */
     public CompileStatus getLastStatus() {
         return lastStatus;
     }
 
+    /**
+     * Returns whether the last result set
+     * @return
+     */
     public ResultSet getResultSet() {
         return lastResultSet;
     }
 
+    /**
+     * Takes in a table, where clause and a limit creates a query
+     * @param table
+     * @param where
+     * @param limit
+     */
     public void prepareSelect(String table, Map<String, Object> where, int limit) {
         StringBuilder selectStatement = new StringBuilder();
         selectStatement.append("SELECT * FROM ");
@@ -170,6 +215,9 @@ public class Database {
         currentSQL= selectStatement.toString();
     }
 
+    /**
+     * Executes the current query
+     */
     public void execute() {
         execute(currentSQL);
     }
@@ -181,6 +229,9 @@ public class Database {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Closes connection to the database
+     */
     public void close() {
         try{
             dbConnection.close();
@@ -189,11 +240,19 @@ public class Database {
             lastMessage = e.getStackTrace().toString();
         }
     }
+
+    /**
+     * Gets the current list of tables
+     */
     public void createTableList(){
         String command = "CREATE TABLE table_list (VARCHAR(100) table_name);";
         currentSQL = command;
     }
 
+    /**
+     * Updates the current list of tables
+     * @param tableName
+     */
     public void updateTableList(String tableName){
         StringBuilder insertStatement = new StringBuilder();
         insertStatement.append("INSERT INTO table_list (table_name) VALUES (");
@@ -201,6 +260,10 @@ public class Database {
         insertStatement.append(");");
         currentSQL = insertStatement.toString();
     }
+
+    /**
+     * Closes the result set
+     */
     public void closeRS() {
         try{
             lastResultSet.close();

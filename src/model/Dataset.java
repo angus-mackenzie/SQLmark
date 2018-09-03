@@ -7,24 +7,46 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A dataset that holds a result for a question/answer
+ * @author Matthew Poulter
+ * @version 15/09/2018
+ */
 public class Dataset {
     private List<List<Object>> dataset;
     private String compileMessage;
     private Database.CompileStatus compileStatus;
 
 
+    /**
+     * Compares two datasets to one another
+     * @param dataset to be compared to
+     * @return true or false
+     */
     public boolean equals(Dataset dataset) {
         return Arrays.deepEquals(dataset.convertList(), convertList());
     }
 
+    /**
+     * Return the compile time message
+     * @return compile message
+     */
     public String getCompileMessage() {
         return compileMessage;
     }
 
+    /**
+     * Returns the compile status
+     * @return compile status
+     */
     public Database.CompileStatus getCompileStatus() {
         return compileStatus;
     }
 
+    /**
+     * Creates a string representation of the data
+     * @return output
+     */
     @Override
     public String toString() {
         StringBuilder returnString = new StringBuilder();
@@ -40,6 +62,10 @@ public class Dataset {
         return returnString.toString();
     }
 
+    /**
+     * Creates a list of the dataset
+     * @return an Object[][] array
+     */
     private Object[][] convertList() {
         Object[][] array = new Object[dataset.size()][];
         for (int i = 0; i < dataset.size(); i++) {
@@ -49,6 +75,12 @@ public class Dataset {
         return array;
     }
 
+    /**
+     * Converts a result set to a list
+     * @param rs result set
+     * @return a list of the result set
+     * @throws SQLException
+     */
     private List<List<Object>> convertResultSet(ResultSet rs) throws SQLException {
         ResultSetMetaData metaData = rs.getMetaData();
         int columns = metaData.getColumnCount();
@@ -78,6 +110,10 @@ public class Dataset {
         this.dataset = dataset;
     }
 
+    /**
+     * Creates a dataset with the given SQL statement
+     * @param sql
+     */
     public Dataset(String sql) {
         Database db = new Database();
         db.execute(sql);

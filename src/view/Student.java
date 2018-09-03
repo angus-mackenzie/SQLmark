@@ -64,9 +64,11 @@ public class Student {
             System.out.println();
             System.out.println(question);
             System.out.print("Enter answer: ");
-
             String answer = sc.nextLine();
-
+            if(answer.equals("")){
+                System.out.println("You did not enter any input, please enter input");
+                sc.nextLine();
+            }
             try {
                 student.answerQuestion(answer);
             } catch (Error error) {

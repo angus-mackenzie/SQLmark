@@ -45,6 +45,17 @@ public class Assignment {
     }
 
     /**
+     * Gets a string of the questions
+     */
+    public String toString(){
+        String output="";
+        for(int i = 0; i<questions.size();i++){
+            Question question = questions.get(i);
+            output+=question.getQuestionNum()+": "+question.getQuestionText()+"\n";
+        }
+        return output;
+    }
+    /**
      * Creates random data for the user
      * TODO
      * @return

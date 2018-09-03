@@ -58,3 +58,28 @@ Complete the SQL file to do the following:
 ## SQL Importer
 
 Create a Java controller to run and import the SQL file once the root password has been entered.
+
+## Hack until Importer
+Use this until we get the importer setup. Login to your localhost, create the database then logout and use the `< filename.sql` command in order to import your `.sql` files.
+```
+C:\Users\gusth\Code\Capstone\SQLmark\db (angus-testing -> origin)
+λ  mysql -u root -p
+Enter password: ****************
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 37
+Server version: 10.3.9-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> CREATE DATABASE data_store;
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [(none)]> exit
+Bye
+
+C:\Users\gusth\Code\Capstone\SQLmark\db (angus-testing -> origin)
+λ mysql -u root -p data_store < data_store.sql
+Enter password: ****************
+```

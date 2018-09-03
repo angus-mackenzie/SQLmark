@@ -2,40 +2,36 @@ package view;
 
 import model.Error;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class Student {
-    private final BufferedReader br;
+    private final Scanner sc;
     private controller.Student student;
 
-    public Student(controller.Student student) {
-        br = new BufferedReader(new InputStreamReader(System.in));
+    public Student(controller.Student student, Scanner sc) {
         this.student = student;
+        this.sc = sc;
 
-        boolean running = true;
-        while (running) {
-            showMenu();
-            String menu_item = "";
-            try {
-                menu_item = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println("You entered: " + menu_item);
-            switch (menu_item) {
-                case "1":
+        int option = 0;
+        while (option != 9) {
+            option = showMenu();
+            System.out.println();
+            switch (option) {
+                case 1:
                     System.out.println(this.student.loadAssignment());
                     break;
-                case "2":
+                case 2:
                     System.out.println(this.student.getData());
                     break;
-                case "3":
+                case 3:
                     runAssignment();
                     break;
-                case "9":
-                    running = false;
+                case 4:
+                    try {
+                        System.out.println(this.student.getPastSubmissions());
+                    } catch (Error error) {
+                        System.err.println(error.getMessage());
+                    }
                     break;
                 default:
                     System.out.println("Please enter valid option!");
@@ -46,14 +42,18 @@ public class Student {
         System.out.println("Goodbye!");
     }
 
-    private void showMenu() {
+    private int showMenu() {
+        int option = 0;
         System.out.println();
         System.out.println("Menu:");
         System.out.println(" - Get questions (1)");
         System.out.println(" - Get data (2)");
         System.out.println(" - Start submission (3)");
+        System.out.println(" - Get passed submissions (4)");
         System.out.println(" - Exit (9)");
         System.out.print("Enter option: ");
+        option = sc.nextInt();
+        return option;
     }
 
     private void runAssignment() {
@@ -65,12 +65,7 @@ public class Student {
             System.out.println(question);
             System.out.print("Enter answer: ");
 
-            String answer = "";
-            try {
-                answer = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            String answer = sc.nextLine();
 
             try {
                 student.answerQuestion(answer);

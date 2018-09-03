@@ -125,6 +125,7 @@ public class Submission {
 
     /**
      * Submits the student's submission and saves it to the db
+     * @return the current submission
      */
     public Submission submit(String studentNum) {
         Database db = new Database("student_submissions");

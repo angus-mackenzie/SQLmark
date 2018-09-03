@@ -94,7 +94,7 @@ public class Submission {
     public Submission(Assignment assignment) {
         this.assignment = assignment;
         this.answers = new ArrayList<>();
-        this.currentQuestion = 1;
+        this.currentQuestion = 0;
     }
 
     /**

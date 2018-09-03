@@ -5,7 +5,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages the data in the database
+ */
 public class WorkingData {
+    /**
+     * Gets a list of all the tables in the database
+     * @return a list of tables
+     * @throws SQLException
+     */
     public static List<String> getTables() throws SQLException {
         Database db = new Database();
         List<String> tables = new ArrayList<>();
@@ -23,6 +31,11 @@ public class WorkingData {
         return tables;
     }
 
+    /**
+     * Gets the students from the students table
+     * @return a list of students
+     * @throws SQLException
+     */
     public static List<Student> getStudents() throws SQLException {
         Database db = new Database();
         List<Student> students = new ArrayList<>();
@@ -40,6 +53,11 @@ public class WorkingData {
         return students;
     }
 
+    /**
+     * Gets all the questions in the question database
+     * @return a list of questions
+     * @throws SQLException
+     */
     public static List<Question> getQuestions() throws SQLException {
         Database db = new Database();
         List<Question> questions = new ArrayList<>();

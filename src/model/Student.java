@@ -2,18 +2,35 @@ package model;
 
 import java.util.List;
 
+/**
+ * The different student's taking the SQL test
+ * @author Matthew Poulter
+ * @version 15/08/2018
+ */
 public class Student {
     private String studentNum;
     private List<Submission> submissions;
 
+    /**
+     * Returns the student number
+     * @return
+     */
     public String getStudentNum() {
         return studentNum;
     }
 
+    /**
+     * Returns the submissions of the student
+     * @return the submissions
+     */
     public List<Submission> getSubmissions() {
         return submissions;
     }
 
+    /**
+     * Returns the student's highest mark out of all the students
+     * @return highest mark
+     */
     public int getHighestMark() {
         int mark = 0;
         for (Submission submission : submissions) {
@@ -28,29 +45,12 @@ public class Student {
         return mark;
     }
 
+    /**
+     * Creates a student with the given number
+     * @param studentNum
+     */
     public Student(String studentNum) {
         this.studentNum = studentNum;
-
-        //        Database db = new Database();
-//        Map<String,Object> where = new HashMap<>();
-//
-//        where.put("studentNum",studentNum);
-//        db.prepareSelect("studentTable",where);
-//        db.execute();
-//        ResultSet rs = db.getResultSet();
-//        try{
-//            while (rs.next()) {
-//                ResultSetMetaData rsMetaData = rs.getMetaData();
-//                int numberOfColumns = rsMetaData.getColumnCount();
-//                for (int i = 1; i < numberOfColumns + 1; i++) {
-//                    System.out.println(rs.getString(i)+"\n");
-//                    System.out.print(rs.getString(i).equals(studentNum));
-//                }
-//            }
-//        }catch(SQLException e){
-//            e.printStackTrace();
-//        }
-//        System.out.println("It worked??");
     }
 
 }

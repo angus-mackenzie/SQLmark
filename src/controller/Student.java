@@ -1,6 +1,7 @@
 package controller;
 
 import model.Error;
+import model.Submission;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class Student {
     public Student(String studentNum) throws Error {
         try {
             this.assignmentModel = new model.Assignment();
-            this.studentModel = new model.Student(studentNum);
+            this.studentModel = new model.Student(studentNum, assignmentModel);
             this.randomData = assignmentModel.getRandomData();
         } catch (SQLException e) {
             throw new Error("Error connecting to database!", e);
@@ -49,7 +50,7 @@ public class Student {
     }
 
     public void submitAssignment() {
-        currentSubmission.submit();
+        studentModel.addSubmission(currentSubmission.submit());
     }
 
     public int getMark() throws Error {
@@ -58,6 +59,14 @@ public class Student {
 
     public String getFeedback() throws Error {
         return currentSubmission.getFeedback();
+    }
+
+    public String getPastSubmissions() throws Error {
+        String returnString = "";
+        for (Submission submission : studentModel.getSubmissions()) {
+            returnString += String.format("%s: %d\n", submission.getDate(), submission.getTotalMark());
+        }
+        return returnString;
     }
 
     public static void main(String[] args) {

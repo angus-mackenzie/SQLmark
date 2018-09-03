@@ -3,10 +3,8 @@ package controller;
 import model.Error;
 import model.Submission;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class Student {
     private String randomData;
@@ -61,29 +59,25 @@ public class Student {
         return currentSubmission.getFeedback();
     }
 
-    public String getPastSubmissions() throws Error {
-        String returnString = "";
-        for (Submission submission : studentModel.getSubmissions()) {
-            returnString += String.format("%s: %d\n", submission.getDate(), submission.getTotalMark());
-        }
-        return returnString;
-    }
-
     public static void main(String[] args) {
         System.out.print("Enter your student number: ");
-        String studentNum = "";
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            studentNum = br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Scanner sc = new Scanner(System.in);
+        String studentNum = sc.nextLine();
 
         try {
             Student student = new Student(studentNum);
-            view.Student studentView = new view.Student(student);
+            view.Student studentView = new view.Student(student, sc);
         } catch (Error error) {
-            // TODO: Show error box
+            //TODO: Show error box
             error.printStackTrace();
         }
+    }
+
+    public String getPastSubmissions() throws Error {
+        StringBuilder returnString = new StringBuilder();
+        for (Submission submission : studentModel.getSubmissions()) {
+            returnString.append(String.format("%s: %d\n", submission.getDate(), submission.getTotalMark()));
+        }
+        return returnString.toString();
     }
 }

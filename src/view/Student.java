@@ -5,14 +5,17 @@ import model.Error;
 import java.util.Scanner;
 
 public class Student {
+    private final Scanner sc;
     private controller.Student student;
 
-    public Student(controller.Student student) {
+    public Student(controller.Student student, Scanner sc) {
         this.student = student;
+        this.sc = sc;
 
         int option = 0;
         while (option != 9) {
             option = showMenu();
+            System.out.println();
             switch (option) {
                 case 1:
                     System.out.println(this.student.loadAssignment());
@@ -41,7 +44,6 @@ public class Student {
 
     private int showMenu() {
         int option = 0;
-        Scanner sc = new Scanner(System.in);
         System.out.println();
         System.out.println("Menu:");
         System.out.println(" - Get questions (1)");
@@ -51,7 +53,6 @@ public class Student {
         System.out.println(" - Exit (9)");
         System.out.print("Enter option: ");
         option = sc.nextInt();
-        sc.close();
         return option;
     }
 
@@ -64,9 +65,7 @@ public class Student {
             System.out.println(question);
             System.out.print("Enter answer: ");
 
-            Scanner sc = new Scanner(System.in);
             String answer = sc.nextLine();
-            sc.close();
 
             try {
                 student.answerQuestion(answer);

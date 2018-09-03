@@ -2,6 +2,8 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -124,8 +126,15 @@ public class Submission {
     /**
      * Submits the student's submission and saves it to the db
      */
-    public Submission submit() {
-        // TODO: Submit and save to database
+    public Submission submit(String studentNum) {
+        Database db = new Database("student_submissions");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        System.out.println(); //2016/11/16 12:08:43
+        List<String> row = new ArrayList<String>();
+        row.add(studentNum);
+        row.add(dateFormat.format(this.date).toString());
+        db.prepareInsert(row);
+        db.execute();
         return this;
     }
 

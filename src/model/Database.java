@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,10 +51,20 @@ public class Database {
         String url = "jdbc:mariadb://localhost:3306/"+databaseName;
         try{
             dbConnection = DriverManager.getConnection(url, "root", "68(MNPq]+_9{fk>q");
+            Statement statement = dbConnection.createStatement();
+            prepareSelect(databaseName);
+            lastResultSet = statement.executeQuery(currentSQL);
+            ResultSetMetaData metaData = lastResultSet.getMetaData();
+            int columns = metaData.getColumnCount();
+            columnNames = new ArrayList<String>();
+            for (int i = 0; i < columns; i++) {
+                columnNames.add(metaData.getColumnName(i));
+            }
         } catch(SQLException e){
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
         }
+
     }
 
     /**

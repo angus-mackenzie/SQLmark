@@ -5,9 +5,9 @@ import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Testing for the CSV class
@@ -34,7 +34,6 @@ public class TestCSV{
 
     /**
      * Test that none of the other rows are larger than the initial amount of columns
-     * @throws Exception
      */
     @Test
     public void testAmountColumns() throws Exception{
@@ -46,39 +45,37 @@ public class TestCSV{
         }
     }
 
-    @Test
-    public void testNoFile(){
+    /**
+     * Tests no file entered, expects Exception
+     * @throws Exception
+     */
+    @Test(expected = FileNotFoundException.class)
+    public void testNoFile() throws Exception{
         String filename = "";
-        try{
-            CSV csvReader = new CSV(filename);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        CSV csvReader = new CSV(filename);
         assertFalse("The file should not be open",csvReader.isOpen());
     }
 
+    /**
+     * Tests a file with no extension, will run as usual
+     * @throws Exception
+     */
     @Test
-    public void testNoSuffix(){
+    public void testNoExtension() throws Exception{
         String filename = "matricData";
-        try{
-            CSV csvReader = new CSV(filename);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        CSV csvReader = new CSV(filename);
         assertTrue("The CSV should be open",csvReader.isOpen());
     }
-    //TODO make this more robust
-    @Test
-    public void testWrongFileName(){
+
+    /**
+     * Tests if the filename is invalid, expects exception
+     * @throws Exception
+     */
+    @Test(expected = FileNotFoundException.class)
+    public void testWrongFileName() throws Exception{
         String filename = "this is not valid";
-        Exception expected = new FileNotFoundException();
-        try{
-            CSV csvReader = new CSV(filename);
-        }catch(Exception e){
-            assertEquals("The two errors be the same",expected.getCause(),e.getCause());
-        }
-
-
+        CSV csvReader = new CSV(filename);
+        assertFalse("The file should not be open",csvReader.isOpen());
     }
 
     //TODO Test Write Function for Student Marks

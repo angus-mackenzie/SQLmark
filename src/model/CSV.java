@@ -26,21 +26,18 @@ public class CSV {
         this.filename = filename;
         if(filename.equals("")){
             System.err.println("You did not enter in a filename, please restart and enter one");
-            System.exit(1);
+            throw new FileNotFoundException();
         }
         if(!filename.contains(".csv")){
             filename+=".csv";
         }
-        //try{
+        try{
             dataReader = new BufferedReader(new FileReader(new File(filename)));
             isOpen= true;
-//        }catch(Exception e){
-//            System.err.println(filename + " is not a valid file name.");
-//            System.err.println(e.getMessage());
-//            Throwable throwm = new Throwable(e);
-//
-//            System.exit(-1);
-//        }
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+            throw e;
+        }
     }
     /**
      * Writes a line of a CSV file

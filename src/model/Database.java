@@ -49,18 +49,26 @@ public class Database {
      */
     public Database(String databaseName) {
         String url = "jdbc:mariadb://localhost:3306/"+databaseName;
+        System.out.println("Attemptiong "+databaseName);
         try{
             dbConnection = DriverManager.getConnection(url, "root", "68(MNPq]+_9{fk>q");
-            Statement statement = dbConnection.createStatement();
-            prepareSelect(databaseName);
-            lastResultSet = statement.executeQuery(currentSQL);
-            ResultSetMetaData metaData = lastResultSet.getMetaData();
-            int columns = metaData.getColumnCount();
-            columnNames = new ArrayList<String>();
-            for (int i = 0; i < columns; i++) {
-                columnNames.add(metaData.getColumnName(i));
+            if(dbConnection.getMetaData().getMaxColumnsInTable()==0){
+                //there are no other tables in the database
+                System.out.println("What does this mean");
+            }else {
+                //there are other tables
+                Statement statement = dbConnection.createStatement();
+                prepareSelect(databaseName);
+                lastResultSet = statement.executeQuery(currentSQL);
+                ResultSetMetaData metaData = lastResultSet.getMetaData();
+                int columns = metaData.getColumnCount();
+                columnNames = new ArrayList<String>();
+                for (int i = 0; i < columns; i++) {
+                    columnNames.add(metaData.getColumnName(i));
+                }
             }
         } catch(SQLException e){
+            System.out.println("FAILED");
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
         }
@@ -76,7 +84,7 @@ public class Database {
         this.columnNames = columnNames;
         this.tableName = tableName;
         StringBuilder createStatement = new StringBuilder();
-        createStatement.append("CREATE TABLE ");
+        createStatement.append("CREATE TABLE IF NOT EXISTS ");
         createStatement.append(tableName);
         createStatement.append(" (");
         for(int i = 0; i< columnNames.size();i++){
@@ -89,6 +97,7 @@ public class Database {
             }
         }
         updateTableList(tableName);
+        System.out.println("USING "+createStatement);
         currentSQL = createStatement.toString();
     }
 
@@ -125,6 +134,7 @@ public class Database {
                 insertStatement.append(", ");
             }
         }
+        System.out.println("INSERTING "+insertStatement);
         currentSQL= insertStatement.toString();
     }
 

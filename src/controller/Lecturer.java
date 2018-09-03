@@ -44,7 +44,7 @@ public class Lecturer {
     public void loadQuestions(String filename) throws Exception{
         CSV csvReader = new CSV(filename);
         List<String> columNames = csvReader.parseLine();
-        Database db = new Database();
+        Database db = new Database("admin_data");
         String tableName = "questions";
         db.prepareCreate(columNames, tableName);
         db.execute();
@@ -59,7 +59,7 @@ public class Lecturer {
     public void loadStudents(String filename) throws Exception{
         CSV csvReader = new CSV(filename);
         List<String> columNames = csvReader.parseLine();
-        Database db = new Database();
+        Database db = new Database("admin_data");
         String tableName = "students";
         db.prepareCreate(columNames, tableName);
         db.execute();

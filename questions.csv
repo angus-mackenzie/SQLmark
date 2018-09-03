@@ -1,0 +1,2 @@
+question_num,question_text,answer,feedback_type
+3,Get all Student Numbers from the data table., SELECT stuid FROM datatable,2

@@ -96,7 +96,9 @@ public class Database {
                 createStatement.append(" VARCHAR(100), ");
             }
         }
-        updateTableList(tableName);
+        if(!tableName.equals("table_list")){
+            updateTableList(tableName);
+        }
         System.out.println("USING "+createStatement);
         currentSQL = createStatement.toString();
     }
@@ -263,23 +265,19 @@ public class Database {
     }
 
     /**
-     * Gets the current list of tables
-     */
-    public void createTableList(){
-        String command = "CREATE TABLE table_list (VARCHAR(100) table_name);";
-        currentSQL = command;
-    }
-
-    /**
      * Updates the current list of tables
      * @param tableName
      */
-    public void updateTableList(String tableName){
-        StringBuilder insertStatement = new StringBuilder();
-        insertStatement.append("INSERT INTO table_list (table_name) VALUES (");
-        insertStatement.append(tableName);
-        insertStatement.append(");");
-        currentSQL = insertStatement.toString();
+    private void updateTableList(String tableName){
+        Database tableDB = new Database("admin_data");
+        List<String> header = new ArrayList<String>();
+        header.add("table_name");
+        tableDB.prepareCreate(header,"table_list");
+        tableDB.execute();
+        List<String> row = new ArrayList<String>();
+        row.add(tableName);
+        tableDB.prepareInsert(row);
+        tableDB.execute();
     }
 
     /**

@@ -1,7 +1,11 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Tracks submissions for assignments
@@ -12,6 +16,28 @@ public class Submission {
     private final Assignment assignment;
     private List<Answer> answers;
     private int currentQuestion;
+    private Date date;
+
+    public Submission(Assignment assignment, int submissionID) throws Error {
+        this(assignment);
+        Database db = new Database();
+
+        db.prepareSelect("student_answers", Map.of("submission_id", submissionID));
+        db.execute();
+        ResultSet rs = db.getResultSet();
+        try {
+            while (rs.next()) {
+                answers.add(new Answer(rs.getString("answer"), assignment.getQuestion(rs.getInt("question_num"))));
+            }
+        } catch (SQLException e) {
+            db.closeRS();
+            db.close();
+            throw (new Error("Submission load error!", e));
+        }
+        db.closeRS();
+
+        db.close();
+    }
 
     /**
      * returns the total mark for the student's submission
@@ -49,12 +75,6 @@ public class Submission {
         } else {
             throw new Error("Assignment not complete!");
         }
-    }
-
-    // Might not be needed
-    public Submission(Assignment assignment, List<Answer> answers) {
-        this.assignment = assignment;
-        this.answers = answers;
     }
 
     /**
@@ -104,7 +124,12 @@ public class Submission {
     /**
      * Submits the student's submission and saves it to the db
      */
-    public void submit() {
+    public Submission submit() {
         // TODO: Submit and save to database
+        return this;
+    }
+
+    public String getDate() {
+        return date.toString();
     }
 }

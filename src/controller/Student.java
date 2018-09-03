@@ -48,7 +48,7 @@ public class Student {
     }
 
     public void submitAssignment() {
-        studentModel.addSubmission(currentSubmission.submit());
+        studentModel.addSubmission(currentSubmission.submit(getStudentNum()));
     }
 
     public int getMark() throws Error {

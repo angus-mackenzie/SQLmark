@@ -267,15 +267,17 @@ public class Database {
      * @param tableName
      */
     private void updateTableList(String tableName){
-        Database tableDB = new Database("admin_data");
-        List<String> header = new ArrayList<String>();
-        header.add("table_name");
-        tableDB.prepareCreate(header,"table_list");
-        tableDB.execute();
-        List<String> row = new ArrayList<String>();
-        row.add(tableName);
-        tableDB.prepareInsert(row);
-        tableDB.execute();
+        if(tableName.equals("data_store")) {
+            Database tableDB = new Database("admin_data");
+            List<String> header = new ArrayList<String>();
+            header.add("table_name");
+            tableDB.prepareCreate(header, "table_list");
+            tableDB.execute();
+            List<String> row = new ArrayList<String>();
+            row.add(tableName);
+            tableDB.prepareInsert(row);
+            tableDB.execute();
+        }
     }
 
     /**

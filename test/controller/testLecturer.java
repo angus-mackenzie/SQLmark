@@ -18,4 +18,10 @@ public class testLecturer{
         String filename = "matricData.csv";
         lecturer.loadData(filename);
     }
+
+    @Test
+    public void testExportData() throws Exception {
+        String filename = "output.csv";
+        lecturer.exportStudents(filename);
+    }
 }

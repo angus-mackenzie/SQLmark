@@ -38,6 +38,10 @@ public class CSV {
     public CSV(String outputFile, List<String> heading) throws Error{
         this.filename = checkFileName(outputFile);
         try{
+            File file = new File(outputFile);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
             dataWriter = new BufferedWriter(new FileWriter(new File(filename)));
             writeLine(heading);
         }catch(Exception e){
@@ -68,7 +72,7 @@ public class CSV {
      */
     public void writeLine(List<String> values) throws Exception {
         boolean firstVal = true;
-        for (String val : values)  {
+        for (String val : values) {
             if (!firstVal) {
                 dataWriter.write(",");
             }
@@ -84,6 +88,7 @@ public class CSV {
             firstVal = false;
         }
         dataWriter.write("\n");
+        dataWriter.flush();
     }
 
     /**
@@ -151,5 +156,48 @@ public class CSV {
      */
     public boolean isOpen(){
         return isOpen;
+    }
+
+    /**
+     * Returns the number of lines in the specified file
+     * @throws IOException if it cant find the file
+     * @see https://stackoverflow.com/questions/453018/number-of-lines-in-a-file-in-java
+     */
+    public int countLines() throws IOException {
+        InputStream is = new BufferedInputStream(new FileInputStream(filename));
+        try {
+            byte[] c = new byte[1024];
+
+            int readChars = is.read(c);
+            if (readChars == -1) {
+                // bail out if nothing to read
+                return 0;
+            }
+
+            // make it easy for the optimizer to tune this loop
+            int count = 0;
+            while (readChars == 1024) {
+                for (int i=0; i<1024;) {
+                    if (c[i++] == '\n') {
+                        ++count;
+                    }
+                }
+                readChars = is.read(c);
+            }
+
+            // count remaining characters
+            while (readChars != -1) {
+                for (int i=0; i<readChars; ++i) {
+                    if (c[i] == '\n') {
+                        ++count;
+                    }
+                }
+                readChars = is.read(c);
+            }
+
+            return count == 0 ? 1 : count;
+        } finally {
+            is.close();
+        }
     }
 }

@@ -82,6 +82,7 @@ public class Lecturer {
 
     }
 
+    //TODO Fix this
     /**
      * Outputs all the students with their highest mark to the filename inputted
      * @param filename to write to

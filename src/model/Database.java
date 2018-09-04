@@ -1,5 +1,7 @@
 package model;
 
+import controller.Lecturer;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -169,6 +171,7 @@ public class Database {
             Statement statement = dbConnection.createStatement();
             lastResultSet = statement.executeQuery(sql);
             lastStatus = CompileStatus.SUCCESS;
+            lastMessage = "Executed Successfully";
         }catch(SQLException e){
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
@@ -296,6 +299,15 @@ public class Database {
         }
     }
 
+    /**
+     * Pass the table name to be deleted
+     * @param  tableName to be deleted
+     */
+    public String clear(String tableName){
+        String query = "DELETE FROM "+tableName+";";
+        execute(query);
+        return lastMessage;
+    }
     /**
      * Closes connection to the database
      */

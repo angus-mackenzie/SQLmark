@@ -14,6 +14,7 @@ public class Lecturer {
 
     public Lecturer() throws Error {
         //TODO do we need this?
+        System.out.println(clear("data_store"));
 //        try {
 //            this.assignmentModel = new model.Assignment();
 //
@@ -23,10 +24,13 @@ public class Lecturer {
 //        }
     }
 
-    public void clear() {
+    /**
+     * Clears the data from the databases
+     */
+    public String clear(String tableName) {
         // TODO: Clear all data, questions and students
-
-        throw new UnsupportedOperationException();
+        Database db = new Database();
+        return db.clear(tableName);
     }
     //TODO: Add table name
     public void loadData(String filename) throws Exception{

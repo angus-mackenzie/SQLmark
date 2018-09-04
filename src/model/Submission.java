@@ -126,6 +126,7 @@ public class Submission {
      * @return the current submission
      */
     public Submission submit(String studentNum) {
+        //TODO Fix this
         /*Database db = new Database("student_submissions");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         System.out.println(); //2016/11/16 12:08:43

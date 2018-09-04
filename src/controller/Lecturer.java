@@ -13,6 +13,7 @@ public class Lecturer {
     private List<model.Student> studentModels;
 
     public Lecturer() throws Error {
+        //TODO do we need this?
 //        try {
 //            this.assignmentModel = new model.Assignment();
 //
@@ -24,6 +25,7 @@ public class Lecturer {
 
     public void clear() {
         // TODO: Clear all data, questions and students
+
         throw new UnsupportedOperationException();
     }
     //TODO: Add table name

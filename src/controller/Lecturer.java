@@ -10,15 +10,16 @@ import java.util.Scanner;
 
 /**
  * The class the lecturer uses to enter in information pertaining to the assignment
+ * @author Angus Mackenzie
+ * @version 04/09/2018
  */
 public class Lecturer {
     private model.Assignment assignmentModel;
     private List<model.Student> studentModels;
 
-    //TODO Java docs for this
+    //TODO Javadocs for this
     public Lecturer() throws Error {
-        //TODO do we need this?
-        System.out.println(clear("data_store"));
+        //TODO Is this necessary?
 //        try {
 //            this.assignmentModel = new model.Assignment();
 //
@@ -30,14 +31,20 @@ public class Lecturer {
 
     /**
      * Clears the data from the databases
+     * @param tableName to clear data from
      */
     public String clear(String tableName) {
-        // TODO: Clear all data, questions and students
+        // TODO Fix
         Database db = new Database();
         return db.clear(tableName);
     }
-    //TODO: Add table name
-    public void loadData(String filename) throws Exception{
+
+    /**
+     * Takes in a file and loads the data to run the assignment with
+     * @param filename to load in
+     * @throws Exception if the file reader or DB break
+     */
+    private void loadData(String filename) throws Exception{
         CSV csvReader = new CSV(filename);
         List<String> columNames = csvReader.parseLine();
         Database db = new Database();
@@ -51,7 +58,12 @@ public class Lecturer {
         }
     }
 
-    public void loadQuestions(String filename) throws Exception{
+    /**
+     * Takes in the file with questions and answers
+     * @param filename to read
+     * @throws Exception if the file reader or DB break
+     */
+    private void loadQuestions(String filename) throws Exception{
         CSV csvReader = new CSV(filename);
         List<String> columNames = csvReader.parseLine();
         Database db = new Database("admin_data");
@@ -66,7 +78,12 @@ public class Lecturer {
         }
     }
 
-    public void loadStudents(String filename) throws Exception{
+    /**
+     * Takes in the filename for the students
+     * @param filename students to read
+     * @throws Exception if the file reader or DB break
+     */
+    private void loadStudents(String filename) throws Exception{
         CSV csvReader = new CSV(filename);
         List<String> columNames = csvReader.parseLine();
         Database db = new Database("admin_data");
@@ -106,6 +123,10 @@ public class Lecturer {
         }
     }
 
+    /**
+     * The driver that runs when the lecturer starts the application
+     */
+    //TODO We need more options: export data, import data and clear data - some menu is necessary
     public static void main(String[] args) {
         try {
             Lecturer lecturer = new Lecturer();

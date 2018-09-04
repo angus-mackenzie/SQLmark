@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * Creates an assignment of questions
- *
  * @Author Matthew Poulter
  * @Version 13/08/2018
  */
@@ -14,7 +13,6 @@ public class Assignment {
 
     /**
      * Gets the questions from working data
-     *
      * @throws SQLException
      */
     public Assignment() throws SQLException {
@@ -23,7 +21,6 @@ public class Assignment {
 
     /**
      * Gets the questions
-     *
      * @return a list of questions
      */
     public List<Question> getQuestions() {

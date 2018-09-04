@@ -6,12 +6,22 @@ import model.Submission;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+/**
+ * Class for each student, created when the student logs ins
+ * @author Matthew Poulter
+ * @version 04/09/2018
+ */
 public class Student {
     private String randomData;
     private model.Student studentModel;
     private model.Assignment assignmentModel;
     private model.Submission currentSubmission;
 
+    /**
+     * Creates a Student instance given a student number
+     * @param studentNum to create the assignment with
+     * @throws Error if there is a problem connecting to the database
+     */
     public Student(String studentNum) throws Error {
         try {
             this.assignmentModel = new model.Assignment();
@@ -22,23 +32,42 @@ public class Student {
         }
     }
 
+    /**
+     * Gets the student number
+     * @return the given student number
+     */
     public String getStudentNum() {
         return studentModel.getStudentNum();
     }
 
+    /**
+     * Loads the assignment
+     * @return a string representation of the assignment
+     */
     public String loadAssignment() {
         return assignmentModel.toString();
     }
 
+    /**
+     * Get the data given to the student for the assignment
+     * @return a string representation of the data
+     */
     public String getData() {
         // Possibly download as File here, or in view
         return randomData;
     }
 
+    /**
+     * Creates a submission for the student
+     */
     public void createSubmission() {
         currentSubmission = new model.Submission(assignmentModel);
     }
 
+    /**
+     * Gets the next question from the assignment
+     * @return next question or null if there are no more questions
+     */
     public String getNextQuestion() {
         try {
             return currentSubmission.getNextQuestion().getQuestionText();
@@ -47,27 +76,48 @@ public class Student {
         }
     }
 
+    /**
+     * Adds the student's answer to the students, gets the next question
+     * @param answer the student entered
+     * @throws Error if there is an issue getting the next question, or storing the answer
+     */
     public void answerQuestion(String answer) throws Error {
         currentSubmission.addAnswer(new model.Answer(answer, currentSubmission.getNextQuestion()));
     }
 
+    /**
+     * Submits a whole assignment to the student
+     */
     public void submitAssignment() {
         studentModel.addSubmission(currentSubmission.submit(getStudentNum()));
     }
 
+    /**
+     * Gets the total mark for the current submission
+     * @return current mark
+     * @throws Error if there are no submissions
+     */
     public int getMark() throws Error {
         return currentSubmission.getTotalMark();
     }
 
+    /**
+     * Gets the feedback for the answered questions
+     * @return a string representation of the feedback
+     * @throws Error if there is no feedback
+     */
     public String getFeedback() throws Error {
         return currentSubmission.getFeedback();
     }
 
+    /**
+     * The driver for our program
+     * @param args given by commandline, not used
+     */
     public static void main(String[] args) {
         System.out.print("Enter your student number: ");
         Scanner sc = new Scanner(System.in);
         String studentNum = sc.nextLine();
-
         try {
             Student student = new Student(studentNum);
             view.Student studentView = new view.Student(student, sc);
@@ -77,6 +127,11 @@ public class Student {
         }
     }
 
+    /**
+     * Loads the previous submissions
+     * @return string representation of the previous submissions
+     * @throws Error if there are no submissions
+     */
     public String getPastSubmissions() throws Error {
         StringBuilder returnString = new StringBuilder();
         for (Submission submission : studentModel.getSubmissions()) {

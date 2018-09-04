@@ -8,10 +8,14 @@ import java.io.File;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The class the lecturer uses to enter in information
+ */
 public class Lecturer {
     private model.Assignment assignmentModel;
     private List<model.Student> studentModels;
 
+    //TODO Java docs for this
     public Lecturer() throws Error {
         //TODO do we need this?
         System.out.println(clear("data_store"));

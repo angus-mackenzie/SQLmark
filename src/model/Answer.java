@@ -13,7 +13,7 @@ public class Answer {
 
     /**
      * Question number
-     * @return question number
+     * @return the question number
      */
     public int getQuestionNum() {
         return question.getQuestionNum();
@@ -21,7 +21,7 @@ public class Answer {
 
     /**
      * Returns mark for question
-     * @return mark
+     * @return the mark
      */
     public int getMark() {
         return mark;
@@ -47,7 +47,7 @@ public class Answer {
 
     /**
      * Calculates the student's mark for the question
-     * @return value
+     * @return the mark as an int
      */
     private int calculateMark() {
         switch (output.getCompileStatus()) {
@@ -63,8 +63,8 @@ public class Answer {
 
     /**
      * Takes in an answer and a question, stores them
-     * @param answer
-     * @param question
+     * @param answer to be stored
+     * @param question to be stored
      */
     public Answer(String answer, Question question) {
         this.answer = answer;

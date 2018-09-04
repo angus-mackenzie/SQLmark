@@ -49,12 +49,12 @@ public class Database {
      */
     public Database(String databaseName) {
         String url = "jdbc:mariadb://localhost:3306/"+databaseName;
-        System.out.println("Attemptiong "+databaseName);
+        //System.out.println("Attemptiong "+databaseName);
         try{
             dbConnection = DriverManager.getConnection(url, "root", "68(MNPq]+_9{fk>q");
             if(dbConnection.getMetaData().getMaxColumnsInTable()==0){
                 //there are no other tables in the database
-                System.out.println("What does this mean");
+                //System.out.println("What does this mean");
             }else {
                 //there are other tables
                 Statement statement = dbConnection.createStatement();
@@ -99,7 +99,7 @@ public class Database {
         if(!tableName.equals("table_list")){
             updateTableList(tableName);
         }
-        System.out.println("USING "+createStatement);
+        //System.out.println("USING "+createStatement);
         currentSQL = createStatement.toString();
     }
 
@@ -136,7 +136,7 @@ public class Database {
                 insertStatement.append(", ");
             }
         }
-        System.out.println("INSERTING "+insertStatement);
+        //System.out.println("INSERTING "+insertStatement);
         currentSQL= insertStatement.toString();
     }
 
@@ -237,7 +237,7 @@ public class Database {
         }
 
         selectStatement.append(";");
-        System.out.println("RUNNING "+selectStatement);
+        //System.out.println("RUNNING "+selectStatement);
         currentSQL= selectStatement.toString();
     }
 

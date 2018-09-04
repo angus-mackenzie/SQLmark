@@ -12,7 +12,7 @@ public class TestAnswer {
 
     @Before
     public void init(){
-        //TODO finish wheen Answer and Question are implemented
+        //TODO finish when Answer and Question are implemented
     }
 
     @Test

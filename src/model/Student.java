@@ -17,7 +17,7 @@ public class Student {
 
     /**
      * Returns the student number
-     * @return
+     * @return student number
      */
     public String getStudentNum() {
         return studentNum;
@@ -32,8 +32,10 @@ public class Student {
     }
 
     /**
-     * Returns the student's highest mark out of all the students
-     * @return highest mark
+     * Creates a student given a student number and assignment
+     * @param studentNum of the student
+     * @param assignment of questions
+     * @throws Error if cannot select student from table
      */
     public Student(String studentNum, Assignment assignment) throws Error {
         this.studentNum = studentNum;
@@ -78,10 +80,18 @@ public class Student {
         db.close();
     }
 
+    /**
+     * Adds the submission to the submissions list
+     * @param submission to be added
+     */
     public void addSubmission(Submission submission) {
         submissions.add(submission);
     }
 
+    /**
+     * Returns the highest mark for a student
+     * @return highest mark for the student
+     */
     public int getHighestMark() {
         int mark = 0;
         for (Submission submission : submissions) {
@@ -98,7 +108,7 @@ public class Student {
 
     /**
      * Creates a student with the given number
-     * @param studentNum
+     * @param studentNum to create student with
      */
     public Student(String studentNum) {
         this.studentNum = studentNum;

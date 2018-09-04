@@ -64,6 +64,8 @@ public class Database {
     /**
      * Change a list of Strings into a prepared statement for creating a table
      * @param columnNames to create DB from
+     * @param tableName the table to create
+     * @throws Error if it cannot update the table_list table after creating the table
      */
     public void prepareCreate(List<String> columnNames, String tableName) throws Error{
         this.columnNames = columnNames;
@@ -292,6 +294,7 @@ public class Database {
     /**
      * Pass the table name to be deleted
      * @param  tableName to be deleted
+     * @return the last message
      * @throws Error if it query fails
      */
     public String clear(String tableName) throws Error{

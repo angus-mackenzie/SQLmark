@@ -32,6 +32,8 @@ public class Lecturer {
     /**
      * Clears the data from the databases
      * @param tableName to clear data from
+     * @return output from delete query
+     * @throws Error if cannot delete
      */
     public String clear(String tableName) throws Error{
         // TODO Fix
@@ -125,6 +127,7 @@ public class Lecturer {
 
     /**
      * The driver that runs when the lecturer starts the application
+     * @param args for commandline arguments (none)
      */
     //TODO We need more options: export data, import data and clear data - some menu is necessary
     public static void main(String[] args) {

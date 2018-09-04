@@ -65,6 +65,7 @@ public class Answer {
      * Takes in an answer and a question, stores them
      * @param answer to be stored
      * @param question to be stored
+     * @throws Error if cannot store
      */
     public Answer(String answer, Question question) throws Error{
         this.answer = answer;

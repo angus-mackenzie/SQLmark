@@ -44,9 +44,10 @@ public class Dataset {
     }
 
     /**
-     * Creates a dataset with the given SQL statement
-     *
-     * @param sql
+     * Creates a dataSet with the given SQL statement
+     * @param sql to be executed
+     * @param databaseName to execute statement on
+     * @throws Error if it cannot connect to DB
      */
     public Dataset(String sql, String databaseName) throws Error{
         Database db = new Database(databaseName);

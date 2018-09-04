@@ -2,14 +2,13 @@ package model;
 
 import java.io.*;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Vector;
 /**
- * Simple CSVReader for the Demo -> if we have time, implement SuperCSV
+ * Simple CSVReader. if we have time, implement SuperCSV
  * Reads in a CSV value, and understands information with commas
  * @author Angus Mackenzie
  * @version 16/08/2018
- * @see https://agiletribe.wordpress.com/2012/11/23/the-only-class-you-need-for-csv-files/
+ * @see <a href="https://agiletribe.wordpress.com/2012/11/23/the-only-class-you-need-for-csv-files/">https://agiletribe.wordpress.com/2012/11/23/the-only-class-you-need-for-csv-files/</a>
  */
 
 public class CSV {
@@ -34,6 +33,9 @@ public class CSV {
 
     /**
      * Takes in a file path, and writes the firstLine of the CSV
+     * @param outputFile to file
+     * @param heading of the CSV file to be written
+     * @throws Error if can't write to file
      */
     public CSV(String outputFile, List<String> heading) throws Error{
         this.filename = checkFileName(outputFile);
@@ -68,7 +70,7 @@ public class CSV {
     /**
      * Writes a line of a CSV file
      * @param values the values to be separated by commas
-     * @throws Exception
+     * @throws Exception if can't write
      */
     public void writeLine(List<String> values) throws Exception {
         boolean firstVal = true;
@@ -94,7 +96,8 @@ public class CSV {
     /**
      * Reads a line of the CSV
      * Returns a null when the input stream is empty
-     * @throws Exception
+     * @return List of strings
+     * @throws Exception if can't read line
      */
     public List<String> parseLine() throws Exception {
         Reader r = dataReader;
@@ -160,8 +163,9 @@ public class CSV {
 
     /**
      * Returns the number of lines in the specified file
+     * @return number of lines
      * @throws IOException if it cant find the file
-     * @see https://stackoverflow.com/questions/453018/number-of-lines-in-a-file-in-java
+     * @see <a href="https://stackoverflow.com/questions/453018/number-of-lines-in-a-file-in-java">https://stackoverflow.com/questions/453018/number-of-lines-in-a-file-in-java</a>
      */
     public int countLines() throws IOException {
         InputStream is = new BufferedInputStream(new FileInputStream(filename));

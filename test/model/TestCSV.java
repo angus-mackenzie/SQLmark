@@ -12,8 +12,8 @@ import static org.junit.Assert.assertFalse;
 
 /**
  * Testing for the CSV class
- * @Author Angus Mackenzie
- * @Version 12/08/2018
+ * @author Angus Mackenzie
+ * @version 12/08/2018
  */
 
 public class TestCSV{

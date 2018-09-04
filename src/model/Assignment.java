@@ -1,19 +1,18 @@
 package model;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Creates an assignment of questions
- * @Author Matthew Poulter
- * @Version 13/08/2018
+ * @author Matthew Poulter
+ * @version 13/08/2018
  */
 public class Assignment {
     private List<Question> questions;
 
     /**
      * Gets the questions from working data
-     * @throws SQLException it can't fetch the
+     * @throws Error it can't fetch the questions
      */
     public Assignment() throws Error {
         this.questions = WorkingData.getQuestions();
@@ -61,7 +60,7 @@ public class Assignment {
      * Creates random data for the user
      * TODO
      * @return random data
-     * @throws SQLException if something breaks
+     * @throws Error cannot get data from DB
      */
     public String getRandomData() throws Error {
         Database db = new Database();

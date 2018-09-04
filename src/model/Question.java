@@ -52,10 +52,11 @@ public class Question {
 
     /**
      * Creates a question with its text, correct answer and feedback type
-     * @param questionNum
-     * @param questionText
-     * @param correctAnswer
-     * @param feedbackType
+     * @param questionNum of the question
+     * @param questionText of the question
+     * @param correctAnswer answer for the question
+     * @param feedbackType level of feedback
+     * @throws Error if it cannot create the dataSet object for the answer
      */
     public Question(int questionNum, String questionText, String correctAnswer, FeedbackType feedbackType) throws Error{
         this.questionNum = questionNum;

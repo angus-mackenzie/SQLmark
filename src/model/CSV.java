@@ -1,23 +1,48 @@
-import java.io.BufferedReader;
-import java.io.LineNumberReader;
-import java.io.Reader;
-import java.io.Writer;
-import java.util.List;
-import java.util.Vector;
+package model;
 
+import java.io.*;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Vector;
 /**
  * Simple CSVReader for the Demo -> if we have time, implement SuperCSV
  * Reads in a CSV value, and understands information with commas
  * @Author Angus
- * @version 11/08/2018
+ * @version 16/08/2018
  * @see https://agiletribe.wordpress.com/2012/11/23/the-only-class-you-need-for-csv-files/
  */
-public class CSVReader
-{
+
+public class CSV {
+    private String filename;
+    private Reader dataReader;
+    private boolean isOpen = false;
+
+    /**
+     * Constructor - Takes in filename, checks if it is correct otherwise exception
+     * @param filename of the csv file
+     * @throws Exception
+     */
+    public CSV(String filename) throws Exception{
+        this.filename = filename;
+        if(filename.equals("")){
+            System.err.println("You did not enter in a filename, please restart and enter one");
+            throw new FileNotFoundException();
+        }
+        if(!filename.contains(".csv")){
+            filename+=".csv";
+        }
+        try{
+            dataReader = new BufferedReader(new FileReader(new File(filename)));
+            isOpen= true;
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+            throw e;
+        }
+    }
     /**
      * Writes a line of a CSV file
      * @param w the writer used
-     * @param values the values to be seperated by commas
+     * @param values the values to be separated by commas
      * @throws Exception
      */
     public static void writeLine(Writer w, List<String> values)
@@ -43,11 +68,12 @@ public class CSVReader
     }
 
     /**
+     * Reads a line of the CSV
      * Returns a null when the input stream is empty
-     * @param  r the reader that points to the file
      * @throws Exception
      */
-    public static List<String> parseLine(Reader r) throws Exception {
+    public List<String> parseLine() throws Exception {
+        Reader r = dataReader;
         int ch = r.read();
         while (ch == '\r') {
             ch = r.read();
@@ -98,5 +124,13 @@ public class CSVReader
         }
         store.add(curVal.toString());
         return store;
+    }
+
+    /**
+     * Checks if the file is open
+     * @return isOpen
+     */
+    public boolean isOpen(){
+        return isOpen;
     }
 }

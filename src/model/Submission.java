@@ -42,7 +42,7 @@ public class Submission {
     /**
      * returns the total mark for the student's submission
      * @return total mark
-     * @throws Error
+     * @throws Error if assignment not completed
      */
     public int getTotalMark() throws Error {
         if (checkComplete()) {
@@ -59,7 +59,7 @@ public class Submission {
     /**
      * Gets the feedback for the entire submissions
      * @return feedback
-     * @throws Error
+     * @throws Error if assignment not completed
      */
     public String getFeedback() throws Error {
         if (checkComplete()) {
@@ -87,7 +87,7 @@ public class Submission {
 
     /**
      * Creates a submission given an assignment
-     * @param assignment
+     * @param assignment that was submitted
      */
     public Submission(Assignment assignment) {
         this.assignment = assignment;
@@ -97,7 +97,7 @@ public class Submission {
 
     /**
      * Gets the next question
-     * @return
+     * @return the next question, or null if there are no more questions
      */
     public Question getNextQuestion() {
         try {
@@ -109,8 +109,8 @@ public class Submission {
 
     /**
      * Adds the student's answer to the answers
-     * @param answer
-     * @throws Error
+     * @param answer to be added
+     * @throws Error if there are too many answers
      */
     public void addAnswer(Answer answer) throws Error {
         if (!checkComplete()) {
@@ -120,13 +120,14 @@ public class Submission {
             throw new Error("Too many answers submitted!");
         }
     }
-
+    //TODO Fix this
     /**
      * Submits the student's submission and saves it to the db
+     * @param  studentNum to submit
      * @return the current submission
      */
     public Submission submit(String studentNum) {
-        //TODO Fix this
+
         /*Database db = new Database("student_submissions");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         System.out.println(); //2016/11/16 12:08:43

@@ -4,16 +4,22 @@ import model.CSV;
 import model.Database;
 import model.Error;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The class the lecturer uses to enter in information pertaining to the assignment
+ * @author Angus Mackenzie
+ * @version 04/09/2018
+ */
 public class Lecturer {
     private model.Assignment assignmentModel;
     private List<model.Student> studentModels;
 
+    //TODO Javadocs for this
     public Lecturer() throws Error {
-        //TODO do we need this?
+        //TODO Is this necessary?
 //        try {
 //            this.assignmentModel = new model.Assignment();
 //
@@ -23,12 +29,23 @@ public class Lecturer {
 //        }
     }
 
-    public void clear() {
-        // TODO: Clear all data, questions and students
-
-        throw new UnsupportedOperationException();
+    /**
+     * Clears the data from the databases
+     * @param tableName to clear data from
+     * @return output from delete query
+     * @throws Error if cannot delete
+     */
+    public String clear(String tableName) throws Error{
+        // TODO Fix
+        Database db = new Database();
+        return db.clear(tableName);
     }
-    //TODO: Add table name
+
+    /**
+     * Takes in a file and loads the data to run the assignment with
+     * @param filename to load in
+     * @throws Exception if the file reader or DB break
+     */
     public void loadData(String filename) throws Exception{
         CSV csvReader = new CSV(filename);
         List<String> columNames = csvReader.parseLine();
@@ -43,7 +60,12 @@ public class Lecturer {
         }
     }
 
-    public void loadQuestions(String filename) throws Exception{
+    /**
+     * Takes in the file with questions and answers
+     * @param filename to read
+     * @throws Exception if the file reader or DB break
+     */
+    private void loadQuestions(String filename) throws Exception{
         CSV csvReader = new CSV(filename);
         List<String> columNames = csvReader.parseLine();
         Database db = new Database("admin_data");
@@ -58,7 +80,12 @@ public class Lecturer {
         }
     }
 
-    public void loadStudents(String filename) throws Exception{
+    /**
+     * Takes in the filename for the students
+     * @param filename students to read
+     * @throws Exception if the file reader or DB break
+     */
+    private void loadStudents(String filename) throws Exception{
         CSV csvReader = new CSV(filename);
         List<String> columNames = csvReader.parseLine();
         Database db = new Database("admin_data");
@@ -74,20 +101,36 @@ public class Lecturer {
 
     }
 
-    public File exportStudents() {
-        // TODO: Export students and marks to CSV
-        /* for(model.Student student : studentModels) {
-            System.out.println(student.getStudentNum() + ": " + student.getHighestMark());
-        } */
-        throw new UnsupportedOperationException();
+    //TODO Fix this
+    /**
+     * Outputs all the students with their highest mark to the filename inputted
+     * @param filename to write to
+     * @throws Error if there is an issue writing to the file
+     */
+    public void exportStudents(String filename) throws Error{
+        List<String> heading = new ArrayList<>();
+        heading.add("student_num");
+        heading.add("highest_mark");
+        try{
+            CSV csv = new CSV(filename,heading);
+            // TODO: Export students and marks to CSV
+            for(model.Student student : studentModels) {
+                List<String> row = new ArrayList<>();
+                row.add(student.getStudentNum());
+                row.add(student.getHighestMark()+"");
+                csv.writeLine(row);
+            }
+        }catch(Exception e){
+            throw new Error("Couldn't find the file "+filename, e.getCause());
+        }
     }
 
+    /**
+     * The driver that runs when the lecturer starts the application
+     * @param args for commandline arguments (none)
+     */
+    //TODO We need more options: export data, import data and clear data - some menu is necessary
     public static void main(String[] args) {
-//        String studentNum = JOptionPane.showInputDialog(null, "Enter admin password:",
-//                "Welcome", JOptionPane.QUESTION_MESSAGE);
-//
-//        // TODO: Check password
-
         try {
             Lecturer lecturer = new Lecturer();
             Scanner sc = new Scanner(System.in);
@@ -103,9 +146,7 @@ public class Lecturer {
             String qnaFile = sc.nextLine();
             lecturer.loadQuestions(qnaFile);
             System.out.println("Successful");
-            //view.Lecturer lecturerView = new view.Lecturer(lecturer);
         } catch (Exception error) {
-            // TODO: Show error box
             error.printStackTrace();
             System.exit(-1);
         }

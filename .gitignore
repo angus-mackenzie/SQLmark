@@ -67,7 +67,7 @@ xcuserdata/
 # Project Specific #
 /bin
 *super-csv*
-
+docs/docs
 # Vagrant #
 *.vagrant/
 *.log

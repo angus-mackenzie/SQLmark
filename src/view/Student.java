@@ -4,6 +4,9 @@ import model.Error;
 
 import java.util.Scanner;
 
+/**
+ * We are still implementing a better UI, hence this will not contain javadocs
+ */
 public class Student {
     private final Scanner sc;
     private controller.Student student;

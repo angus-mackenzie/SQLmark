@@ -5,7 +5,7 @@ public class TestDatabase {
 
 
     @Test
-    public void testDB(){
+    public void testDB() throws Error{
         Database db = new Database();
         db.execute("SELECT *;");
         System.out.println(db.getLastStatus());

@@ -3,6 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.Assert.assertTrue;
@@ -11,8 +12,8 @@ import static org.junit.Assert.assertFalse;
 
 /**
  * Testing for the CSV class
- * @Author Angus Mackenzie
- * @Version 12/08/2018
+ * @author Angus Mackenzie
+ * @version 12/08/2018
  */
 
 public class TestCSV{
@@ -22,7 +23,7 @@ public class TestCSV{
      */
     @Before
     public void init(){
-        String filename = "matricData.csv";
+        String filename = "data.csv";
         try{
             csvReader = new CSV(filename);
         }catch(Exception e){
@@ -78,6 +79,23 @@ public class TestCSV{
         assertFalse("The file should not be open",csvReader.isOpen());
     }
 
-    //TODO Test Write Function for Student Marks
+    /**
+     * Creates and populates file, checks file size
+     */
+    @Test
+    public void testWriteFile() throws Exception{
+        List<String> testHeadings = new ArrayList<>();
+        testHeadings.add("testHeading1");
+        testHeadings.add("testHeading2");
+        CSV csvWriter = new CSV("testOutput.csv",testHeadings);
+        for(int i = 0; i< 5; i++){
+            List<String> fakeData = new ArrayList<>();
+            fakeData.add("foo "+i);
+            fakeData.add("bar "+i);
+            csvWriter.writeLine(fakeData);
+        }
+        assertEquals("The number of lines in the file should equal 6",6,csvWriter.countLines());
+
+    }
 
 }

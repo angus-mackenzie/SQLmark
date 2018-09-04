@@ -4,12 +4,12 @@ import model.CSV;
 import model.Database;
 import model.Error;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 /**
- * The class the lecturer uses to enter in information
+ * The class the lecturer uses to enter in information pertaining to the assignment
  */
 public class Lecturer {
     private model.Assignment assignmentModel;
@@ -82,20 +82,30 @@ public class Lecturer {
 
     }
 
-    public File exportStudents() {
-        // TODO: Export students and marks to CSV
-        /* for(model.Student student : studentModels) {
-            System.out.println(student.getStudentNum() + ": " + student.getHighestMark());
-        } */
-        throw new UnsupportedOperationException();
+    /**
+     * Outputs all the students with their highest mark to the filename inputted
+     * @param filename to write to
+     * @throws Error if there is an issue writing to the file
+     */
+    public void exportStudents(String filename) throws Error{
+        List<String> heading = new ArrayList<>();
+        heading.add("student_num");
+        heading.add("highest_mark");
+        try{
+            CSV csv = new CSV(filename,heading);
+            // TODO: Export students and marks to CSV
+            for(model.Student student : studentModels) {
+                List<String> row = new ArrayList<>();
+                row.add(student.getStudentNum());
+                row.add(student.getHighestMark()+"");
+                csv.writeLine(row);
+            }
+        }catch(Exception e){
+            throw new Error("Couldn't find the file "+filename, e.getCause());
+        }
     }
 
     public static void main(String[] args) {
-//        String studentNum = JOptionPane.showInputDialog(null, "Enter admin password:",
-//                "Welcome", JOptionPane.QUESTION_MESSAGE);
-//
-//        // TODO: Check password
-
         try {
             Lecturer lecturer = new Lecturer();
             Scanner sc = new Scanner(System.in);
@@ -111,9 +121,7 @@ public class Lecturer {
             String qnaFile = sc.nextLine();
             lecturer.loadQuestions(qnaFile);
             System.out.println("Successful");
-            //view.Lecturer lecturerView = new view.Lecturer(lecturer);
         } catch (Exception error) {
-            // TODO: Show error box
             error.printStackTrace();
             System.exit(-1);
         }

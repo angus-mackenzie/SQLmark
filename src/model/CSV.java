@@ -16,55 +16,74 @@ public class CSV {
     private String filename;
     private Reader dataReader;
     private boolean isOpen = false;
-
+    private Writer dataWriter;
     /**
-     * Constructor - Takes in filename, checks if it is correct otherwise exception
-     * @param filename of the csv file
-     * @throws Exception
+     * Takes in filename, checks if it is correct, otherwise creates a reader
+     * @param filename of the csv file to read
+     * @throws Error if there is an issue opening the file
      */
-    public CSV(String filename) throws Exception{
-        this.filename = filename;
-        if(filename.equals("")){
-            System.err.println("You did not enter in a filename, please restart and enter one");
-            throw new FileNotFoundException();
-        }
-        if(!filename.contains(".csv")){
-            filename+=".csv";
-        }
+    public CSV(String filename) throws Error{
+        this.filename = checkFileName(filename);
         try{
             dataReader = new BufferedReader(new FileReader(new File(filename)));
             isOpen= true;
         }catch(Exception e){
-            System.err.println(e.getMessage());
-            throw e;
+            throw new Error("Problem opening file "+filename,e.getCause());
         }
     }
+
+    /**
+     * Takes in a file path, and writes the firstLine of the CSV
+     */
+    public CSV(String outputFile, List<String> heading) throws Error{
+        this.filename = checkFileName(outputFile);
+        try{
+            dataWriter = new BufferedWriter(new FileWriter(new File(filename)));
+            writeLine(heading);
+        }catch(Exception e){
+            throw new Error("Could not write to file "+filename, e.getCause());
+        }
+    }
+
+    /**
+     * Checks if the filename is blank or does not have the appropriate extension
+     * @param filename to be checked
+     * @return string
+     * @throws Error if there is no filename
+     */
+    public String checkFileName(String filename) throws Error{
+        if(filename.equals("")){
+            throw new Error("You did not enter in a filename, please restart and enter one");
+        }
+        if(!filename.contains(".csv")){
+            filename+=".csv";
+        }
+        return filename;
+    }
+
     /**
      * Writes a line of a CSV file
-     * @param w the writer used
      * @param values the values to be separated by commas
      * @throws Exception
      */
-    public static void writeLine(Writer w, List<String> values)
-            throws Exception
-    {
+    public void writeLine(List<String> values) throws Exception {
         boolean firstVal = true;
         for (String val : values)  {
             if (!firstVal) {
-                w.write(",");
+                dataWriter.write(",");
             }
-            w.write("\"");
+            dataWriter.write("\"");
             for (int i=0; i<val.length(); i++) {
                 char ch = val.charAt(i);
                 if (ch=='\"') {
-                    w.write("\"");  //extra quote
+                    dataWriter.write("\"");  //extra quote
                 }
-                w.write(ch);
+                dataWriter.write(ch);
             }
-            w.write("\"");
+            dataWriter.write("\"");
             firstVal = false;
         }
-        w.write("\n");
+        dataWriter.write("\n");
     }
 
     /**

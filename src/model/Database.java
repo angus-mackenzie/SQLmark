@@ -71,6 +71,8 @@ public class Database {
             System.out.println("FAILED");
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
+            //TODO comment this out once finished finding error
+            e.printStackTrace();
         }
 
     }
@@ -170,6 +172,8 @@ public class Database {
         }catch(SQLException e){
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
+            //TODO comment this out once finished finding error
+            e.printStackTrace();
         }
 
     }
@@ -252,7 +256,8 @@ public class Database {
         // TODO: Return the SQL command to recreate the table and contents of last query (null if no query run)
         // Use SHOW CREATE TABLE foobar
         // as well as some loop through the rows to create an insert statement
-        throw new UnsupportedOperationException();
+        return "Not done yet;";
+        //throw new UnsupportedOperationException();
     }
 
 
@@ -284,6 +289,8 @@ public class Database {
         }catch(SQLException e){
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
+            //TODO comment this out once finished finding error
+            e.printStackTrace();
         }
     }
 
@@ -296,6 +303,8 @@ public class Database {
         }catch(SQLException e){
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
+            //TODO comment this out once finished finding error
+            e.printStackTrace();
         }
     }
 

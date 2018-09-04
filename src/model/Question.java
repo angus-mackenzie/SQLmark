@@ -60,7 +60,7 @@ public class Question {
     public Question(int questionNum, String questionText, String correctAnswer, FeedbackType feedbackType) {
         this.questionNum = questionNum;
         this.questionText = questionText;
-        this.correctAnswer = new Dataset(correctAnswer);
+        this.correctAnswer = new Dataset(correctAnswer, "data_store");
         this.feedbackType = feedbackType;
     }
 }

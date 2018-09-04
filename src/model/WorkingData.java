@@ -15,7 +15,7 @@ public class WorkingData {
      * @throws SQLException
      */
     public static List<String> getTables() throws SQLException {
-        Database db = new Database();
+        Database db = new Database("admin_data");
         List<String> tables = new ArrayList<String>();
 
         db.prepareSelect("table_list");

@@ -1,2 +1,2 @@
 question_num,question_text,answer,feedback_type
-1,Get everything from the data_store table., SELECT * FROM data_store,2
+1,Get everything from the data_store table.,SELECT * FROM data_store,2

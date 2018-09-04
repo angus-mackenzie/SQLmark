@@ -53,6 +53,7 @@ public class Student {
         System.out.println(" - Exit (9)");
         System.out.print("Enter option: ");
         option = sc.nextInt();
+        sc.nextLine();
         return option;
     }
 
@@ -65,10 +66,7 @@ public class Student {
             System.out.println(question);
             System.out.print("Enter answer: ");
             String answer = sc.nextLine();
-            if(answer.equals("")){
-                System.out.println("You did not enter any input, please enter input");
-                sc.nextLine();
-            }
+
             try {
                 student.answerQuestion(answer);
             } catch (Error error) {
@@ -79,8 +77,10 @@ public class Student {
         try {
             System.out.println("Your mark: " + student.getMark());
             System.out.println();
-            System.out.println("Feedback:");
-            System.out.println(student.getFeedback());
+            if (student.getMark() != 2) {
+                System.out.println("Feedback:");
+                System.out.println(student.getFeedback());
+            }
         } catch (Error error) {
             System.err.println(error.getMessage());
         }

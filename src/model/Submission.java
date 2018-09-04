@@ -104,7 +104,7 @@ public class Submission {
     public Question getNextQuestion() {
         try {
             return assignment.getQuestion(currentQuestion);
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException ex) {
             return null;
         }
     }
@@ -133,7 +133,7 @@ public class Submission {
         System.out.println(); //2016/11/16 12:08:43
         List<String> row = new ArrayList<String>();
         row.add(studentNum);
-        row.add(dateFormat.format(this.date).toString());
+        row.add(dateFormat.format(this.date));
         db.prepareInsert(row);
         db.execute();
         return this;

@@ -40,7 +40,11 @@ public class Student {
     }
 
     public String getNextQuestion() {
-        return currentSubmission.getNextQuestion().getQuestionText();
+        try {
+            return currentSubmission.getNextQuestion().getQuestionText();
+        } catch (NullPointerException ex) {
+            return null;
+        }
     }
 
     public void answerQuestion(String answer) throws Error {

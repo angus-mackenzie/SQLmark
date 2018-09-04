@@ -52,11 +52,13 @@ public class Question {
 
     /**
      * Creates a question with its text, correct answer and feedback type
+     * @param questionNum
      * @param questionText
      * @param correctAnswer
      * @param feedbackType
      */
-    public Question(String questionText, String correctAnswer, FeedbackType feedbackType) {
+    public Question(int questionNum, String questionText, String correctAnswer, FeedbackType feedbackType) {
+        this.questionNum = questionNum;
         this.questionText = questionText;
         this.correctAnswer = new Dataset(correctAnswer);
         this.feedbackType = feedbackType;

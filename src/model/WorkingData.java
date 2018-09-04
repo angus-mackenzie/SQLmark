@@ -80,6 +80,7 @@ public class WorkingData {
                     break;
             }
             Question question = new Question(
+                    rs.getInt("question_num"),
                     rs.getString("question_text"),
                     rs.getString("answer"),
                     feedbackType);

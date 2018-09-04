@@ -134,6 +134,7 @@ public class Submission {
         row.add(dateFormat.format(this.date));
         db.prepareInsert(row);
         db.execute();*/
+        date = new Date();
         return this;
     }
 

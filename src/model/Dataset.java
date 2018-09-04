@@ -44,6 +44,45 @@ public class Dataset {
     }
 
     /**
+     * Creates a dataset with the given SQL statement
+     *
+     * @param sql
+     */
+    public Dataset(String sql, String databaseName) {
+        Database db = new Database(databaseName);
+        db.execute(sql);
+
+        this.compileMessage = db.getLastMessage();
+        this.compileStatus = db.getLastStatus();
+        this.dataset = null;
+        if (this.compileStatus == Database.CompileStatus.SUCCESS) {
+            try {
+                this.dataset = convertResultSet(db.getResultSet());
+            } catch (SQLException e) {
+                e.printStackTrace();
+                this.compileStatus = Database.CompileStatus.FAILURE;
+            }
+        }
+
+        db.closeRS();
+        db.close();
+    }
+
+    /**
+     * Creates a list of the dataset
+     *
+     * @return an Object[][] array
+     */
+    private Object[][] convertList() {
+        Object[][] array = new Object[dataset.size()][];
+        for (int i = 0; i < dataset.size(); i++) {
+            List<Object> row = dataset.get(i);
+            array[i] = row.toArray(new Object[0]);
+        }
+        return array;
+    }
+
+    /**
      * Creates a string representation of the data
      * @return output
      */
@@ -56,23 +95,17 @@ public class Dataset {
                     returnString.append(String.format("%-15s|", cell.toString()));
                 }
                 returnString.setLength(Math.max(returnString.length() - 1, 0));
-                returnString.append("/n");
+                returnString.append("\n");
             }
         }
         return returnString.toString();
     }
 
-    /**
-     * Creates a list of the dataset
-     * @return an Object[][] array
-     */
-    private Object[][] convertList() {
-        Object[][] array = new Object[dataset.size()][];
-        for (int i = 0; i < dataset.size(); i++) {
-            List<Object> row = dataset.get(i);
-            array[i] = row.toArray(new Object[0]);
-        }
-        return array;
+    // Is this needed?
+    public Dataset(List<List<Object>> dataset) {
+        this.compileMessage = null;
+        this.compileStatus = null;
+        this.dataset = dataset;
     }
 
     /**
@@ -87,46 +120,19 @@ public class Dataset {
         List<List<Object>> dataset = new ArrayList<>();
 
         List<Object> row = new ArrayList<>(columns);
-        for (int i = 0; i < columns; i++) {
+        for (int i = 1; i <= columns; i++) {
             row.add(metaData.getColumnName(i));
         }
         dataset.add(row);
 
         while (rs.next()) {
             row = new ArrayList<>(columns);
-            for (int i = 0; i < columns; i++) {
+            for (int i = 1; i <= columns; i++) {
                 row.add(rs.getObject(i));
             }
             dataset.add(row);
         }
 
         return dataset;
-    }
-
-    // Is this needed?
-    public Dataset(List<List<Object>> dataset) {
-        this.compileMessage = null;
-        this.compileStatus = null;
-        this.dataset = dataset;
-    }
-
-    /**
-     * Creates a dataset with the given SQL statement
-     * @param sql
-     */
-    public Dataset(String sql) {
-        Database db = new Database();
-        db.execute(sql);
-
-        this.compileMessage = db.getLastMessage();
-        this.compileStatus = db.getLastStatus();
-        this.dataset = null;
-        if (this.compileStatus == Database.CompileStatus.SUCCESS) {
-            try {
-                this.dataset = convertResultSet(db.getResultSet());
-            } catch (SQLException e) {
-                this.compileStatus = Database.CompileStatus.FAILURE;
-            }
-        }
     }
 }

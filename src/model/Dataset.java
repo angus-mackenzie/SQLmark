@@ -48,7 +48,7 @@ public class Dataset {
      *
      * @param sql
      */
-    public Dataset(String sql, String databaseName) {
+    public Dataset(String sql, String databaseName) throws Error{
         Database db = new Database(databaseName);
         db.execute(sql);
 

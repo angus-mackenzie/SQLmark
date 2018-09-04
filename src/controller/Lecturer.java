@@ -33,7 +33,7 @@ public class Lecturer {
      * Clears the data from the databases
      * @param tableName to clear data from
      */
-    public String clear(String tableName) {
+    public String clear(String tableName) throws Error{
         // TODO Fix
         Database db = new Database();
         return db.clear(tableName);
@@ -44,7 +44,7 @@ public class Lecturer {
      * @param filename to load in
      * @throws Exception if the file reader or DB break
      */
-    private void loadData(String filename) throws Exception{
+    public void loadData(String filename) throws Exception{
         CSV csvReader = new CSV(filename);
         List<String> columNames = csvReader.parseLine();
         Database db = new Database();

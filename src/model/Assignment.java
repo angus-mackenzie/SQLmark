@@ -13,9 +13,9 @@ public class Assignment {
 
     /**
      * Gets the questions from working data
-     * @throws SQLException
+     * @throws SQLException it can't fetch the
      */
-    public Assignment() throws SQLException {
+    public Assignment() throws Error {
         this.questions = WorkingData.getQuestions();
     }
 
@@ -29,7 +29,6 @@ public class Assignment {
 
     /**
      * Gets the number of questions
-     *
      * @return the number of questions
      */
     public int getTotalQuestions() {
@@ -38,8 +37,7 @@ public class Assignment {
 
     /**
      * Gets the current question
-     *
-     * @param currentQuestion
+     * @param currentQuestion to fetch
      * @return the question at that index
      */
     public Question getQuestion(int currentQuestion) {
@@ -47,7 +45,8 @@ public class Assignment {
     }
 
     /**
-     * Gets a string of the questions
+     * Gets a string representation of the questions
+     * @return String representation of the question
      */
     public String toString() {
         String output = "";
@@ -61,13 +60,13 @@ public class Assignment {
     /**
      * Creates random data for the user
      * TODO
-     *
-     * @return
-     * @throws SQLException
+     * @return random data
+     * @throws SQLException if something breaks
      */
-    public String getRandomData() throws SQLException {
+    public String getRandomData() throws Error {
         Database db = new Database();
         StringBuilder sqlString = new StringBuilder();
+
         for (String table : WorkingData.getTables()) {
             db.prepareSelect(table, null, 30);
             db.execute();

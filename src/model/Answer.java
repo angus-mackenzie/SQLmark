@@ -66,7 +66,7 @@ public class Answer {
      * @param answer to be stored
      * @param question to be stored
      */
-    public Answer(String answer, Question question) {
+    public Answer(String answer, Question question) throws Error{
         this.answer = answer;
         this.question = question;
 

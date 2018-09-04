@@ -7,7 +7,7 @@ import java.util.Vector;
 /**
  * Simple CSVReader for the Demo -> if we have time, implement SuperCSV
  * Reads in a CSV value, and understands information with commas
- * @Author Angus
+ * @author Angus Mackenzie
  * @version 16/08/2018
  * @see https://agiletribe.wordpress.com/2012/11/23/the-only-class-you-need-for-csv-files/
  */
@@ -25,7 +25,7 @@ public class CSV {
     public CSV(String filename) throws Error{
         this.filename = checkFileName(filename);
         try{
-            dataReader = new BufferedReader(new FileReader(new File(filename)));
+            dataReader = new BufferedReader(new FileReader(new File(this.filename)));
             isOpen= true;
         }catch(Exception e){
             throw new Error("Problem opening file "+filename,e.getCause());
@@ -59,7 +59,7 @@ public class CSV {
         if(filename.equals("")){
             throw new Error("You did not enter in a filename, please restart and enter one");
         }
-        if(!filename.contains(".csv")){
+        if(!filename.endsWith(".csv")){
             filename+=".csv";
         }
         return filename;

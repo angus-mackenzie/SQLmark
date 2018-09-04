@@ -57,7 +57,7 @@ public class Question {
      * @param correctAnswer
      * @param feedbackType
      */
-    public Question(int questionNum, String questionText, String correctAnswer, FeedbackType feedbackType) {
+    public Question(int questionNum, String questionText, String correctAnswer, FeedbackType feedbackType) throws Error{
         this.questionNum = questionNum;
         this.questionText = questionText;
         this.correctAnswer = new Dataset(correctAnswer, "data_store");

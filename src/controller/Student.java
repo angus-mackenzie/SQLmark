@@ -3,7 +3,6 @@ package controller;
 import model.Error;
 import model.Submission;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -23,13 +22,9 @@ public class Student {
      * @throws Error if there is a problem connecting to the database
      */
     public Student(String studentNum) throws Error {
-        try {
             this.assignmentModel = new model.Assignment();
             this.studentModel = new model.Student(studentNum, assignmentModel);
             this.randomData = assignmentModel.getRandomData();
-        } catch (SQLException e) {
-            throw new Error("Error connecting to database!", e);
-        }
     }
 
     /**

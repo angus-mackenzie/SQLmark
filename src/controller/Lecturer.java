@@ -150,7 +150,6 @@ public class Lecturer {
      * The driver that runs when the lecturer starts the application
      * @param args for commandline arguments (none)
      */
-    //TODO We need more options: export data, import data and clear data - some menu is necessary
     public static void main(String[] args) {
         try {
             Scanner sc = new Scanner(System.in);

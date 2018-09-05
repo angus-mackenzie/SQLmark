@@ -5,7 +5,6 @@ import model.Database;
 import model.Error;
 import model.WorkingData;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -24,18 +23,27 @@ public class Lecturer {
      * @throws Error if it cannot get the students
      */
     public Lecturer() throws Error {
-        this.assignmentModel = new model.Assignment();
+     //   this.assignmentModel = new model.Assignment();
         this.studentModels = WorkingData.getStudents();
     }
 
+
     /**
-     * Clears the data from the databases
+     * clears all databases
+     * @return output from the delete statement
+     * @throws Error if it can't delete
+     */
+    public String clearAll() throws Error{
+        Database db = new Database("");
+        return db.clearAll();
+    }
+    /**
+     * Clears the data from the a specific database
      * @param tableName to clear data from
      * @return output from delete query
      * @throws Error if cannot delete
      */
     public String clear(String tableName) throws Error{
-        // TODO Fix
         Database db = new Database();
         return db.clear(tableName);
     }
@@ -43,61 +51,74 @@ public class Lecturer {
     /**
      * Takes in a file and loads the data to run the assignment with
      * @param filename to load in
-     * @throws Exception if the file reader or DB break
+     * @throws Error if the file reader breaks
      */
-    public void loadData(String filename) throws Exception{
-        CSV csvReader = new CSV(filename);
-        List<String> columNames = csvReader.parseLine();
-        Database db = new Database();
-        db.prepareCreate(columNames, "data_store");
-        db.execute();
-        List<String> input = csvReader.parseLine();
-        while(input!=null){
-            db.prepareInsert(input);
+    public void loadData(String filename) throws Error{
+        try{
+            CSV csvReader = new CSV(filename);
+            List<String> columNames = csvReader.parseLine();
+            Database db = new Database();
+            db.prepareCreate(columNames, "data_store");
             db.execute();
-            input = csvReader.parseLine();
+            List<String> input = csvReader.parseLine();
+            while(input!=null){
+                db.prepareInsert(input);
+                db.execute();
+                input = csvReader.parseLine();
+            }
+        }catch (Exception e){
+            throw new Error("Couldn't read file "+filename,e);
         }
+
     }
 
     /**
      * Takes in the file with questions and answers
      * @param filename to read
-     * @throws Exception if the file reader or DB break
+     * @throws Error if the file reader breaks
      */
-    private void loadQuestions(String filename) throws Exception{
-        CSV csvReader = new CSV(filename);
-        List<String> columNames = csvReader.parseLine();
-        Database db = new Database("admin_data");
-        String tableName = "questions";
-        db.prepareCreate(columNames, tableName);
-        db.execute();
-        List<String> input = csvReader.parseLine();
-        while(input!=null){
-            db.prepareInsert(input);
+    public void loadQuestions(String filename) throws Error{
+        try{
+            CSV csvReader = new CSV(filename);
+            List<String> columNames = csvReader.parseLine();
+            Database db = new Database("admin_data");
+            String tableName = "questions";
+            db.prepareCreate(columNames, tableName);
             db.execute();
-            input = csvReader.parseLine();
+            List<String> input = csvReader.parseLine();
+            while(input!=null){
+                db.prepareInsert(input);
+                db.execute();
+                input = csvReader.parseLine();
+            }
+        }catch(Exception e){
+            throw new Error("Couldn't read filename "+filename,e);
         }
+
     }
 
     /**
      * Takes in the filename for the students
      * @param filename students to read
-     * @throws Exception if the file reader or DB break
+     * @throws Error if the file reader or DB break
      */
-    private void loadStudents(String filename) throws Exception{
+    public void loadStudents(String filename) throws Error{
         CSV csvReader = new CSV(filename);
-        List<String> columNames = csvReader.parseLine();
-        Database db = new Database("admin_data");
-        String tableName = "students";
-        db.prepareCreate(columNames, tableName);
-        db.execute();
-        List<String> input = csvReader.parseLine();
-        while(input!=null){
-            db.prepareInsert(input);
+        try {
+            List<String> columNames = csvReader.parseLine();
+            Database db = new Database("admin_data");
+            String tableName = "students";
+            db.prepareCreate(columNames, tableName);
             db.execute();
-            input = csvReader.parseLine();
+            List<String> input = csvReader.parseLine();
+            while (input != null) {
+                db.prepareInsert(input);
+                db.execute();
+                input = csvReader.parseLine();
+            }
+        }catch(Exception e){
+            throw new Error("Couldn't load csv file "+filename,e);
         }
-
     }
 
     //TODO Fix this
@@ -120,7 +141,7 @@ public class Lecturer {
                 csv.writeLine(row);
             }
         }catch(Exception e){
-            throw new Error("Couldn't find the file "+filename, e.getCause());
+            throw new Error("Couldn't find the file "+filename, e);
         }
     }
 
@@ -131,23 +152,11 @@ public class Lecturer {
     //TODO We need more options: export data, import data and clear data - some menu is necessary
     public static void main(String[] args) {
         try {
-            Lecturer lecturer = new Lecturer();
             Scanner sc = new Scanner(System.in);
-            System.out.println("Enter the data filename:");
-            String filename = sc.nextLine();
-            lecturer.loadData(filename);
-            System.out.println("Data loaded successfully!");
-            System.out.println("Enter the students filename:");
-            String studentFile = sc.nextLine();
-            lecturer.loadStudents(studentFile);
-            System.out.println("Loaded students successfully");
-            System.out.println("Enter question and answer filename:");
-            String qnaFile = sc.nextLine();
-            lecturer.loadQuestions(qnaFile);
-            System.out.println("Successful");
-        } catch (Exception error) {
+            Lecturer lecturer = new Lecturer();
+            view.Lecturer lectureView = new view.Lecturer(lecturer,sc);
+        } catch (Error error) {
             error.printStackTrace();
-            System.exit(-1);
         }
     }
 }

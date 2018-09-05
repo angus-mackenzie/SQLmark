@@ -37,6 +37,7 @@ CREATE TABLE `questions` (
 
 LOCK TABLES `questions` WRITE;
 /*!40000 ALTER TABLE `questions` DISABLE KEYS */;
+INSERT INTO `questions` VALUES (1,'Get everything from the data_store table.','SELECT * FROM data_store',2);
 /*!40000 ALTER TABLE `questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,11 +79,11 @@ DROP TABLE IF EXISTS `student_submissions`;
 CREATE TABLE `student_submissions` (
   `submission_id` int(11) NOT NULL AUTO_INCREMENT,
   `student_num` varchar(100) DEFAULT NULL,
-  `submission_date` date DEFAULT NULL,
+  `submission_date` datetime DEFAULT NULL,
   PRIMARY KEY (`submission_id`),
   KEY `student_submissions_students__fk` (`student_num`),
   CONSTRAINT `student_submissions_students__fk` FOREIGN KEY (`student_num`) REFERENCES `students` (`student_num`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,6 +92,7 @@ CREATE TABLE `student_submissions` (
 
 LOCK TABLES `student_submissions` WRITE;
 /*!40000 ALTER TABLE `student_submissions` DISABLE KEYS */;
+INSERT INTO `student_submissions` VALUES (1,'abrsas002','2018-09-05 00:00:00'),(2,'abrsas002','2018-09-05 00:00:00'),(3,'abrsas002','2018-09-05 00:00:00');
 /*!40000 ALTER TABLE `student_submissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,6 +116,7 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
+INSERT INTO `students` VALUES ('abrsas002','Abramowitz Sasha'),('actsha001','Acton Shane'),('addbra001','Addison Brandon'),('admcam003','Adams Cameron'),('amdmik002','Amod Mikhail'),('aswvic001','Asiwe Victor'),('bddakh001','Boddu Akhil'),('bdgmul001','Badugela Mulisa'),('bdnale004','Badenhorst Alec'),('bhgyas003','Bhaga Rama Yasheel'),('bjnalk001','Baijnath Alka'),('brnjes018','Bourn Jess'),('bssdin001','Bossi Dino'),('chlane001','Chila Anele'),('chnada002','Chin Adam'),('chnanr001','Chen Anran'),('chnjak001','Changfoot Jakon'),('chnlau010','Cohen Laura'),('chtjor001','Chetty Jordy'),('cshchr001','Cushway Chris'),('dlhqin001','De La Hunt Sela'),('dvdfaw002','Davids Fawaaz'),('dvdmoh003','Davidson Mohamed');
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,6 +139,7 @@ CREATE TABLE `table_list` (
 
 LOCK TABLES `table_list` WRITE;
 /*!40000 ALTER TABLE `table_list` DISABLE KEYS */;
+INSERT INTO `table_list` VALUES ('data_store');
 /*!40000 ALTER TABLE `table_list` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -148,4 +152,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-02 16:03:50
+-- Dump completed on 2018-09-05 16:34:45

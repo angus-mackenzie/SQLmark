@@ -3,7 +3,9 @@ package controller;
 import model.CSV;
 import model.Database;
 import model.Error;
+import model.WorkingData;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,16 +19,13 @@ public class Lecturer {
     private model.Assignment assignmentModel;
     private List<model.Student> studentModels;
 
-    //TODO Javadocs for this
+    /**
+     * Receives students from DB
+     * @throws Error if it cannot get the students
+     */
     public Lecturer() throws Error {
-        //TODO Is this necessary?
-//        try {
-//            this.assignmentModel = new model.Assignment();
-//
-//            this.studentModels = WorkingData.getStudents();
-//        } catch (SQLException e) {
-//            throw new Error("Error connecting to database!", e);
-//        }
+        this.assignmentModel = new model.Assignment();
+        this.studentModels = WorkingData.getStudents();
     }
 
     /**

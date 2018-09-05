@@ -44,7 +44,7 @@ public class WorkingData {
      * @throws Error if it cannot fetch students or DB cannot execute
      */
     public static List<Student> getStudents() throws Error {
-        Database db = new Database();
+        Database db = new Database("admin_data");
         List<Student> students = new ArrayList<>();
 
         db.prepareSelect("students");

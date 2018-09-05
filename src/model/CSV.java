@@ -16,12 +16,14 @@ public class CSV {
     private Reader dataReader;
     private boolean isOpen = false;
     private Writer dataWriter;
+    private char delimiter;
     /**
      * Takes in filename, checks if it is correct, otherwise creates a reader
      * @param filename of the csv file to read
      * @throws Error if there is an issue opening the file
      */
     public CSV(String filename) throws Error{
+        this.delimiter = ',';
         this.filename = checkFileName(filename);
         try{
             dataReader = new BufferedReader(new FileReader(new File(this.filename)));
@@ -53,6 +55,22 @@ public class CSV {
     }
 
     /**
+     * Creates the normal CSV reader, but uses the specified delimiter
+     * @param delimiter to use
+     * @param filename file to read
+     * @throws Error if it can't read
+     */
+    public CSV(char delimiter, String filename) throws Error{
+        this.delimiter = delimiter;
+        this.filename = checkFileName(filename);
+        try{
+            dataReader = new BufferedReader(new FileReader(new File(this.filename)));
+            isOpen= true;
+        }catch(Exception e){
+            throw new Error("Problem opening file "+filename,e.getCause());
+        }
+    }
+    /**
      * Checks if the filename is blank or does not have the appropriate extension
      * @param filename to be checked
      * @return string
@@ -67,6 +85,7 @@ public class CSV {
         }
         return filename;
     }
+
 
     /**
      * Writes a line of a CSV file
@@ -132,7 +151,7 @@ public class CSV {
                         curVal.append('\"');
                     }
                 }
-                else if (ch == ',') {
+                else if (ch == delimiter) {
                     store.add(curVal.toString());
                     curVal = new StringBuffer();
                     started = false;

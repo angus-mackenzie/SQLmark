@@ -78,7 +78,7 @@ public class CSV {
             if (!firstVal) {
                 dataWriter.write(",");
             }
-            dataWriter.write("\"");
+            //dataWriter.write("\"");
             for (int i=0; i<val.length(); i++) {
                 char ch = val.charAt(i);
                 if (ch=='\"') {
@@ -86,7 +86,7 @@ public class CSV {
                 }
                 dataWriter.write(ch);
             }
-            dataWriter.write("\"");
+            //dataWriter.write("\"");
             firstVal = false;
         }
         dataWriter.write("\n");

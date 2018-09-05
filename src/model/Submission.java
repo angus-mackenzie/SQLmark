@@ -2,6 +2,8 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +22,7 @@ public class Submission {
 
     public Submission(Assignment assignment, int submissionID) throws Error {
         this(assignment);
-        Database db = new Database();
+        Database db = new Database("admin_data");
 
         db.prepareSelect("student_answers", Map.of("submission_id", submissionID));
         db.execute();
@@ -90,6 +92,7 @@ public class Submission {
      * @param assignment that was submitted
      */
     public Submission(Assignment assignment) {
+        this.date = new Date();
         this.assignment = assignment;
         this.answers = new ArrayList<>();
         this.currentQuestion = 0;
@@ -126,17 +129,21 @@ public class Submission {
      * @param  studentNum to submit
      * @return the current submission
      */
-    public Submission submit(String studentNum) {
+    public Submission submit(String studentNum) throws Error{
 
-        /*Database db = new Database("student_submissions");
+        Database db = new Database("admin_data");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        System.out.println(); //2016/11/16 12:08:43
+        //System.out.println(); //2016/11/16 12:08:43
         List<String> row = new ArrayList<String>();
+        this.date = new Date();
+        List<String> columns = new ArrayList<>();
+        columns.add("student_num");
+        columns.add("submission_date");
         row.add(studentNum);
         row.add(dateFormat.format(this.date));
-        db.prepareInsert(row);
-        db.execute();*/
-        date = new Date();
+        String tableName = "student_submissions";
+        db.prepareInsert(tableName,columns,row);
+        db.execute();
         return this;
     }
 

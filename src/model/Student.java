@@ -84,7 +84,7 @@ public class Student {
      * Adds the submission to the submissions list
      * @param submission to be added
      */
-    public void addSubmission(Submission submission) {
+    public void addSubmission(Submission submission) throws Error{
         submissions.add(submission);
     }
 
@@ -100,6 +100,8 @@ public class Student {
                     mark = submission.getTotalMark();
                 }
             } catch (Error error) {
+                System.out.println("No Assignments to get");
+                //throw new Error("Assignment not completed",error);
                 // Mark not included as incomplete
             }
         }
@@ -112,6 +114,7 @@ public class Student {
      */
     public Student(String studentNum) {
         this.studentNum = studentNum;
+        this.submissions = new ArrayList<>();
     }
 
 }

@@ -86,10 +86,12 @@ public class Student {
                 System.out.println("Feedback:");
                 System.out.println(student.getFeedback());
             }
+            student.submitAssignment();
         } catch (Error error) {
+            System.out.println("Heyoo");
             System.err.println(error.getMessage());
         }
 
-        student.submitAssignment();
+
     }
 }

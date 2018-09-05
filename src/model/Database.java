@@ -94,6 +94,26 @@ public class Database {
         currentSQL = createStatement.toString();
     }
 
+    /**
+     * Prepare insert
+     * @param tableName to insert into
+     * @columns to insert into
+     * @param row to insert
+     */
+    public void prepareInsert(String tableName, List<String> columns, List<String> row){
+        this.tableName = tableName;
+        this.columnNames = columns;
+        prepareInsert(row);
+    }
+    /**
+     * creates an insert into statement dependent on the column names, and list of strings given to it
+     * @param row to be inserted
+     * @param columns to be inserted into
+     */
+    public void  prepareInsert(List<String> columns, List<String> row){
+        this.columnNames = columns;
+        prepareInsert(row);
+    }
     //TODO make this adhere to type set out above
     /**
      * creates an insert into statement dependent on the column names, and list of strings given to it

@@ -30,7 +30,6 @@ public class Lecturer {
                     setupAssignment();
                     break;
                 case 2:
-                    System.out.println("Export data");
                     exportMarks();
                     break;
                 case 3:
@@ -95,6 +94,10 @@ public class Lecturer {
     private void exportMarks() throws Error{
         System.out.println("Enter the name of the file you want to export to:");
         String filename = sc.nextLine();
+        if(filename.equals("")){
+            //TODO figure out why I have to do this
+            filename = sc.nextLine();
+        }
         lecturer.exportStudents(filename);
     }
 

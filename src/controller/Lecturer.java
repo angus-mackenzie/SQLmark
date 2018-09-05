@@ -29,8 +29,8 @@ public class Lecturer {
 
 
     /**
-     * Deletes all databases
-     * @returns output from the delete statement
+     * clears all databases
+     * @return output from the delete statement
      * @throws Error if it can't delete
      */
     public String clearAll() throws Error{
@@ -38,7 +38,7 @@ public class Lecturer {
         return db.clearAll();
     }
     /**
-     * Clears the data from the databases
+     * Clears the data from the a specific database
      * @param tableName to clear data from
      * @return output from delete query
      * @throws Error if cannot delete
@@ -141,7 +141,7 @@ public class Lecturer {
                 csv.writeLine(row);
             }
         }catch(Exception e){
-            throw new Error("Couldn't find the file "+filename, e.getCause());
+            throw new Error("Couldn't find the file "+filename, e);
         }
     }
 

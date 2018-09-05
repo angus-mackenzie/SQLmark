@@ -88,7 +88,6 @@ public class Student {
             }
             student.submitAssignment();
         } catch (Error error) {
-            System.out.println("Heyoo");
             System.err.println(error.getMessage());
         }
 

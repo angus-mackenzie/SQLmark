@@ -75,6 +75,7 @@ public class Lecturer {
             //TODO figure out why I have to do this
             filename = sc.nextLine();
         }
+        lecturer.clearAll();
         lecturer.loadData(filename);
         System.out.println("Data loaded successfully!");
         System.out.println("Enter the students filename:");

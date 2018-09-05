@@ -1,9 +1,7 @@
 package controller;
 
-import model.CSV;
-import model.Database;
+import model.*;
 import model.Error;
-import model.WorkingData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +21,27 @@ public class Lecturer {
      * @throws Error if it cannot get the students
      */
     public Lecturer() throws Error {
-        this.assignmentModel = new model.Assignment();
-        this.studentModels = WorkingData.getStudents();
+        try{
+            this.assignmentModel = new model.Assignment();
+            this.studentModels = WorkingData.getStudents();
+        }catch(Exception e){
+            Runner createAdminData = new Runner("admin_data","root","68(MNPq]+_9{fk>q","db/admin_data.sql",true);
+            createAdminData.executeScript();
+            Runner createDataStore = new Runner("data_store","root","68(MNPq]+_9{fk>q","db/data_store.sql",true);
+            createDataStore.executeScript();
+        }
+
     }
 
+    /**
+     * Clears all admin_data databases
+     * @return output from the clear function
+     * @throws Error if it can't delete
+     */
+    public String clearAdminData() throws Error{
+        Database db = new Database("");
+        return db.clearAdmin();
+    }
 
     /**
      * clears all databases

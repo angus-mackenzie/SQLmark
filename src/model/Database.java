@@ -121,7 +121,9 @@ public class Database {
      */
     public void  prepareInsert(List<String> row){
         StringBuilder insertStatement = new StringBuilder();
-        insertStatement.append("INSERT INTO ");
+
+        //TODO better implementation than using ignore to avoid primary key clashes?
+        insertStatement.append("INSERT IGNORE INTO ");
         insertStatement.append(tableName);
         insertStatement.append(" (");
         for(int i = 0; i< columnNames.size();i++) {
@@ -131,7 +133,7 @@ public class Database {
                 insertStatement.append(" VALUES (");
             } else {
                 insertStatement.append(columnNames.get(i));
-                insertStatement.append(" , ");
+                insertStatement.append(", ");
             }
         }
         for(int i = 0; i < row.size(); i++){
@@ -139,7 +141,7 @@ public class Database {
                 insertStatement.append("'");
                 insertStatement.append(row.get(i));
                 insertStatement.append("'");
-                insertStatement.append(" );");
+                insertStatement.append(" )");
             }else{
                 insertStatement.append("'");
                 insertStatement.append(row.get(i));
@@ -147,6 +149,8 @@ public class Database {
                 insertStatement.append(", ");
             }
         }
+        insertStatement.append(";");
+
         currentSQL= insertStatement.toString();
     }
 
@@ -315,7 +319,30 @@ public class Database {
             throw new Error("Not able to close connection to the DB",e.getCause());
         }
     }
+    /**
+     * Clears all the databases
+     * @return the last message
+     * @throws Error if the delete query fails
+     */
+    //TODO implement an overarching table that keeps track of the tables
+    public String clearAll() throws Error{
 
+        List<String> data_storeTables = WorkingData.getTables();
+        String[] admin_dataTables ={"admin_data.student_answers",
+                "admin_data.questions",
+                "admin_data.student_submissions",
+                "admin_data.students",
+                "admin_data.table_list"};
+        String[] tables = new String[data_storeTables.size()+admin_dataTables.length];
+        for(int i = 0; i < tables.length; i++){
+            if(i < data_storeTables.size()){
+                tables[i] = "data_store."+data_storeTables.get(i);
+            }else{
+                tables[i] = admin_dataTables[i-data_storeTables.size()];
+            }
+        }
+        return clearAll(tables);
+    }
     /**
      * Pass the table name to be cleared
      * @param  tableName to be deleted
@@ -335,18 +362,31 @@ public class Database {
     }
 
     /**
+     * Clears admin_data database
+     * @return the last message
+     * @throws Error if it cannot delete a database
+     */
+    public String clearAdmin() throws Error {
+        String[] tables = {"admin_data.student_answers",
+                "admin_data.questions",
+                "admin_data.student_submissions",
+                "admin_data.students",
+                "admin_data.table_list"};
+        return this.clearAll(tables);
+    }
+    /**
      * Clears all the databases
      * @return the last message
      * @throws Error if the query fails
      */
-    public String clearAll() throws Error{
-        String[] queries = {
-                "DELETE FROM admin_data.student_answers;",
-                "DELETE FROM admin_data.questions;",
-                "DELETE FROM admin_data.student_submissions;",
-                "DELETE FROM admin_data.students;",
-                "DELETE FROM admin_data.table_list;",
-                "DELETE FROM data_store.data_store;"};
+    private String clearAll(String[] tables) throws Error{
+        String queries[] = new String[tables.length];
+        int counter = 0;
+        for(String table : tables){
+            queries[counter] = "DELETE FROM "+table+";";
+            counter++;
+
+        }
         try{
             Statement delete = dbConnection.createStatement();
             for(String query : queries){
@@ -354,6 +394,7 @@ public class Database {
                 execute(query);
                 lastMessage = "Success";
             }
+
         }catch(Exception e){
             lastMessage = "Couldn't execute query";
             lastStatus = CompileStatus.FAILURE;

@@ -133,7 +133,6 @@ public class Submission {
 
         Database db = new Database("admin_data");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        //System.out.println(); //2016/11/16 12:08:43
         List<String> row = new ArrayList<String>();
         this.date = new Date();
         List<String> columns = new ArrayList<>();

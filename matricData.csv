@@ -1,8 +1,8 @@
-StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Year,ExaminingAuthority,OldExAuth,UCTScore
+StuID,Prefix,FirstName,LastName,Gender,Citizenship Status,SchoolName,SchoolCode,Year,ExaminingAuthority,OldExAuth,UCTScore
 1001,Mr,Aaron,Zwillig,M,C,Private Candidate,1004249,2007,,TR,34
 1002,Mr,Aarthi,Zulu,M,P,Crawford College,1000927,2006,GT,TR,48
 1003,Miss,Abeedah,Zowa,F,P,Parel Vallei High School,1004030,2006,WC,CA,42
-1004,Miss,Abigail,Zinn,F,F,St Cyprians School,1004983,2006,WC,CA,39
+1004,Miss,Abigail,Zinn,F,F,St Cyprian's School,1004983,2006,WC,CA,39
 1005,Mr,Adrienne,Zide,M,F,Legae Academy(Mogoditshane),1002532,2006,,,35
 1006,Miss,Aimee,Zalgaonker,F,F,Dominican Convent High (Harare,1001104,2006,,,
 1007,Miss,Akhona,Yende,F,F,Maru A Pula School,1003000,2006,,,
@@ -16,7 +16,7 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1015,Mr,Amy,Warner,M,F,Other - Zimbabwe,1003975,2006,,,
 1016,Ms,Amy,Wamani,F,F,International School Of Sa,1002009,2006,JM,,
 1017,Mr,Amy,Walland,M,F,The Heritage School,1005262,2006,,,
-1018,Miss,Amy,Wallace,F,F,St Andrews School - Mauritius,1004945,2006,,,
+1018,Miss,Amy,Wallace,F,F,St Andrew's School - Mauritius,1004945,2006,,,
 1019,Miss,Andrea,Wainwright,F,F,Dominican Convent High (Harare,1001104,2006,,,
 1020,Mr,Andrew,von Romburgh,M,F,Other - Mozambique,1003958,2006,,,
 1021,Miss,Angela,Von Fritschen,F,F,Other - Far East,1003949,2006,FO,,
@@ -31,7 +31,7 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1030,Miss,Austin,Van Jaarsveld,F,C,Fairbairn High School,1001384,2006,WC,CA,48
 1031,Mr,Ayanda,Van Gesselleen,M,C,Thomas More School,1005310,2006,IE,NA,48
 1032,Mr,Ayanda Candice,Van Der Veen,M,C,Westerford High School,1005743,2006,WC,CA,48
-1033,Mr,Babalwa,Van Der Bergh,M,C,St Cyprians School,1004983,2006,WC,CA,48
+1033,Mr,Babalwa,Van Der Bergh,M,C,St Cyprian's School,1004983,2006,WC,CA,48
 1034,Mr,Bakambamba,Van Den Berg,M,C,Clarendon Girls High School,1000854,2006,EC,CA,48
 1035,Miss,Banasha,Van Biljon,F,C,Rustenburg Girls High School,1004521,2006,WC,CA,48
 1036,Miss,Batsirai,Valentine,F,C,Roedean School,1004486,2006,IE,,48
@@ -63,7 +63,7 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1062,Miss,Caroline,Summers,F,C,Abbotts College - Claremont,1000276,2006,WC,NE,45
 1063,Miss,Carolyn,Sumbulu,F,C,Parklands College,1004033,2006,IE,CA,44
 1064,Miss,Carren,Strydom,F,C,Cornwall Hill College,1000912,2006,IE,,44
-1065,Mr,Caryn,Strauss,M,C,St Marys Diocesan School For,1005050,2006,IE,NA,44
+1065,Mr,Caryn,Strauss,M,C,St Mary's Diocesan School For,1005050,2006,IE,NA,44
 1066,Miss,Catherine,Steyn,F,C,Bergvliet High School,1000534,2006,WC,CA,44
 1067,Miss,Catherine,Steyn,F,C,Wynberg Girls High School,1005826,2006,WC,CA,44
 1068,Miss,Catherine,Sterley,F,C,Rustenburg Girls High School,1004521,2006,WC,CA,44
@@ -74,7 +74,7 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1073,Miss,Cayley,Smith,F,C,Springfield Convent,1004925,2006,WC,CA,44
 1074,Miss,Cecilia,Smith,F,C,Holy Rosary Convent,1001865,2006,IE,TR,44
 1075,Miss,Celeste,Smith,F,C,Wynberg Girls High School,1005826,2006,WC,CA,44
-1076,Miss,Chaantal,Smith,F,C,St Cyprians School,1004983,2006,WC,CA,44
+1076,Miss,Chaantal,Smith,F,C,St Cyprian's School,1004983,2006,WC,CA,44
 1077,Miss,Chandre,Smit,F,C,Roedean School,1004486,2006,IE,,43
 1078,Miss,Charli-Joy,Smit,F,C,Herzlia High School,1001753,2006,WC,CA,43
 1079,Miss,Charlotte,Smit,F,C,Rustenburg Girls High School,1004521,2006,WC,CA,43
@@ -86,21 +86,21 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1085,Miss,Chloe,Sirkhotte,F,C,Creston College,1000936,2006,IE,,43
 1086,Miss,Christine,Sibindi,F,C,Bergvliet High School,1000534,2006,WC,CA,43
 1087,Mr,Christopher,Sibanda,M,C,Df Malan High School - Bellvil,1001042,2006,WC,CA,43
-1088,Miss,Christopher,Sheppard,F,C,St Stithians Collegiate (Girl,1005082,2006,IE,,43
+1088,Miss,Christopher,Sheppard,F,C,St Stithian's Collegiate (Girl,1005082,2006,IE,,43
 1089,Miss,Cindy,Shaban,F,C,Roedean School,1004486,2006,IE,,43
 1090,Miss,Clair,Sewpersad,F,C,Crawford North Coast College,1000933,2006,KN,NA,43
 1091,Miss,Claire,Semmelink,F,C,Springfield Convent,1004925,2006,WC,CA,43
 1092,Miss,Clare,Sebata,F,C,Krugersdorp High School,1002375,2006,GT,TR,43
-1093,Miss,Clare,Scwebu,F,C,St Marys Schl For Girls-Wvley,1005052,2006,IE,,42
-1094,Miss,Clive,Scott,F,C,St Stithians Collegiate (Girl,1005082,2006,IE,,42
+1093,Miss,Clare,Scwebu,F,C,St Mary's Schl For Girls-Wvley,1005052,2006,IE,,42
+1094,Miss,Clive,Scott,F,C,St Stithian's Collegiate (Girl,1005082,2006,IE,,42
 1095,Miss,Craig,Scott,F,C,Fairmont High School,1001388,2006,WC,CA,42
-1096,Miss,Cynthia,Schrueder,F,C,St Johns College - Jhb,1005018,2006,IE,,42
+1096,Miss,Cynthia,Schrueder,F,C,St John's College - Jhb,1005018,2006,IE,,42
 1097,Miss,Dale,Schreuder,F,C,Sutherland High School - Wierd,1005171,2006,GT,TR,42
 1098,Miss,Daniel,Schiff,F,C,Westville Girls High School,1005759,2006,KN,NA,42
-1099,Miss,Daniela,Saw,F,C,St Martins School,1005041,2006,IE,TR,42
+1099,Miss,Daniela,Saw,F,C,St Martin's School,1005041,2006,IE,TR,42
 1100,Miss,Danielle,Sasman,F,C,Wynberg Girls High School,1005826,2006,WC,CA,42
 1101,Miss,Danielle,Sanders,F,C,Pietermaritzburg Girls High Sc,1004155,2006,KN,NA,42
-1102,Ms,David,Samuels,F,C,St Cyprians School,1004983,2006,WC,CA,42
+1102,Ms,David,Samuels,F,C,St Cyprian's School,1004983,2006,WC,CA,42
 1103,Miss,Denis,Samuels,F,C,Thekwini Community College,1005275,2006,,ET,41
 1104,Miss,Denry,Samuels,F,C,Redhill High School,1004410,2006,IE,TR,41
 1105,Miss,Desmond,Samjee,F,C,Collegiate Girls High School,1000878,2006,EC,CA,41
@@ -111,29 +111,29 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1110,Miss,Dullah,Rostance,F,C,Reddam House,1004408,2006,IE,CA,41
 1111,Miss,Dumisani,Rossouw,F,C,Other - Rsa Schools,1003963,2006,IE,,41
 1112,Mr,Dylan,Rossouw,M,C,Carter High School,1000754,2006,KN,NA,41
-1113,Mr,Dylan,Rood,M,C,St Andrews School - Bloemfont,1004944,2006,FS,OF,41
-1114,Miss,Eleanor,Robertson,F,C,St Annes Diocesan College,1004950,2006,IE,NA,41
+1113,Mr,Dylan,Rood,M,C,St Andrew's School - Bloemfont,1004944,2006,FS,OF,41
+1114,Miss,Eleanor,Robertson,F,C,St Anne's Diocesan College,1004950,2006,IE,NA,41
 1115,Miss,Elizabeth,Robertson,F,C,Abbotts College - Claremont,1000276,2006,WC,NE,41
 1116,Miss,Elizabeth,Richfield,F,C,Camps Bay High School,1000730,2006,WC,CA,41
-1117,Miss,Elizabeth,Richards,F,C,Wynberg Boys High School,1005825,2006,WC,CA,41
+1117,Miss,Elizabeth,Richards,F,C,Wynberg Boys' High School,1005825,2006,WC,CA,41
 1118,Miss,Emily,Renton,F,C,Westerford High School,1005743,2006,WC,CA,41
 1119,Miss,Emma,Reid,F,C,Hudson Park High School,1001890,2006,EC,CA,41
 1120,Miss,Emma,Reddy,F,C,Durban Girls` College,1001166,2006,IE,NA,41
 1121,Miss,Emma,Razak,F,C,Diocesan School For Girls,1001081,2006,IE,,41
 1122,Miss,Emmettkelly,Raymons,F,C,Victoria Park High School,1005628,2006,EC,CA,41
-1123,Miss,Erika,Randall,F,C,St Johns College - Jhb,1005018,2006,IE,,41
+1123,Miss,Erika,Randall,F,C,St John's College - Jhb,1005018,2006,IE,,41
 1124,Miss,Fadzai,Rama,F,C,South Peninsula Senior Sec Sch,1004909,2006,WC,CO,41
 1125,Miss,Farah,Rahim,F,C,Herzlia High School,1001753,2006,WC,CA,40
 1126,Miss,Faranaaz,Qolombeni,F,C,Tableview High School,1005193,2006,WC,CA,40
 1127,Miss,Farhana,Prince,F,C,Roedean School,1004486,2006,IE,,40
 1128,Miss,Farhana,Preyer,F,C,Westerford High School,1005743,2006,WC,CA,40
 1129,Miss,Farzaanah,Pooler,F,C,Sans Souci High School,1004578,2006,WC,CA,40
-1130,Miss,Fawwaz,Phiri,F,C,St Martins School,1005041,2006,IE,TR,40
+1130,Miss,Fawwaz,Phiri,F,C,St Martin's School,1005041,2006,IE,TR,40
 1131,Miss,Fazeelah,Phillips,F,C,Westerford High School,1005743,2006,WC,CA,40
 1132,Miss,Felix,Phillips,F,C,Edgemead High School,1001224,2006,WC,CA,40
 1133,Mr,Fezeka,Petersen,M,C,Parklands College,1004033,2006,IE,CA,40
 1134,Miss,Fiona,Petersen,F,C,Islamia College,1002048,2006,WC,IN,40
-1135,Miss,Firdose,Peters,F,C,St Andrews School - Senderwoo,1004946,2006,IE,,40
+1135,Miss,Firdose,Peters,F,C,St Andrew's School - Senderwoo,1004946,2006,IE,,40
 1136,Miss,Firdouz,Pereira,F,C,Potchefstroom Gymnasium,1004205,2006,NW,TR,40
 1137,Mr,Frances,Payne,M,C,Westerford High School,1005743,2006,WC,CA,40
 1138,Miss,Fritz,Patel,F,C,Rhenish Girls High School,1004446,2006,WC,CA,40
@@ -148,16 +148,16 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1147,Miss,Gillion,Osman,F,C,Wykeham Collegiate,1005824,2006,IE,,39
 1148,Miss,Glenn,Osborn,F,C,South African College High Sch,1004905,2006,WC,CA,39
 1149,Miss,Goitseone,Oosterberg,F,C,Other - Rsa Schools,1003963,2006,,,39
-1150,Miss,Grant,OLeary,F,C,Herschel School,1001751,2006,WC,CA,39
+1150,Miss,Grant,O'Leary,F,C,Herschel School,1001751,2006,WC,CA,39
 1151,Miss,Greg,Ohlsson,F,C,Herschel School,1001751,2006,WC,CA,39
-1152,Miss,Gregory,OCarroll,F,C,Rondebosch Boys High School,1004487,2006,WC,CA,39
+1152,Miss,Gregory,O'Carroll,F,C,Rondebosch Boys High School,1004487,2006,WC,CA,39
 1153,Miss,Haseenah,Oberem,F,C,South African College High Sch,1004905,2006,WC,CA,39
 1154,Ms,Hayley,Oakes,F,C,South Peninsula Senior Sec Sch,1004909,2006,WC,CO,39
 1155,Miss,Heather,Oakes,F,C,Sea Point High School,1004613,2006,WC,CA,38
 1156,Mr,Hilina,Ntshimane,M,C,South Peninsula Senior Sec Sch,1004909,2006,WC,CO,38
 1157,Miss,Hlalani,Ntlhaile,F,C,Embizweni High School,1001290,2006,KN,ET,38
-1158,Miss,Hosea,Ntanyana,F,C,St Teresas (Rosebank) Convent,1005085,2006,IE,TR,38
-1159,Miss,Ian,Nozibele,F,C,St Marys College - Jhb,1005046,2006,IE,ET,38
+1158,Miss,Hosea,Ntanyana,F,C,St Teresa's (Rosebank) Convent,1005085,2006,IE,TR,38
+1159,Miss,Ian,Nozibele,F,C,St Mary's College - Jhb,1005046,2006,IE,ET,38
 1160,Miss,Ilze,Nock,F,C,Rhenish Girls High School,1004446,2006,WC,CA,38
 1161,Miss,Inka,Nkomo,F,C,Groote Schuur High School,1001640,2006,WC,CA,38
 1162,Mr,Inken,Nkoebele,M,C,Settlers High School,1004713,2006,WC,CA,38
@@ -179,14 +179,14 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1178,Miss,Jeanette,Mvelase,F,C,South African College High Sch,1004905,2006,WC,CA,37
 1179,Miss,Jenny,Musa,F,C,Parklands College,1004033,2006,IE,CA,37
 1180,Miss,Jeremy,Muller,F,C,Christian Brothers College(Spr,1000830,2006,IE,TR,37
-1181,Mr,Jessa,Mukaiwa,M,C,Wynberg Boys High School,1005825,2006,WC,CA,37
+1181,Mr,Jessa,Mukaiwa,M,C,Wynberg Boys' High School,1005825,2006,WC,CA,37
 1182,Miss,Jesse,Mudhokwani,F,C,Livingstone Senior Secondary S,1002651,2006,WC,CO,37
 1183,Mr,Jessica,Mubaiwa,M,C,Winterberg Agricultural High S,1005785,2006,EC,CA,37
 1184,Miss,Jessica,Mtungwa,F,C,Riebeeck College,1004459,2006,EC,CA,37
 1185,Miss,Jessica,Mtshaka,F,C,Collegiate Girls High School,1000878,2006,EC,CA,37
 1186,Miss,Jessica,Mthembu,F,C,Reddam House,1004408,2006,IE,CA,37
 1187,Mr,Joanne,Mrubata,M,C,Groote Schuur High School,1001640,2006,WC,CA,36
-1188,Miss,Jocelyn,Mpobole,F,C,St Cyprians School,1004983,2006,IE,CA,36
+1188,Miss,Jocelyn,Mpobole,F,C,St Cyprian's School,1004983,2006,IE,CA,36
 1189,Miss,Jodilee,Moys,F,C,Fish Hoek High School,1001419,2006,WC,CA,36
 1190,Mr,Jody,Moyana,M,C,Siphesihle High School,1004812,2006,KN,ET,36
 1191,Miss,Johanna,Motala,F,C,Livingstone Senior Secondary S,1002651,2006,WC,CO,36
@@ -204,7 +204,7 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1203,Miss,Kate,Mngomezulu,F,C,Simonstown High School,1004795,2006,WC,CA,35
 1204,Miss,Kate,Miya,F,C,Herzlia High School,1001753,2006,WC,CA,35
 1205,Miss,Kate,Miya,F,C,Danville Park Girls High Schoo,1000984,2006,KN,NA,35
-1206,Miss,Kate,Milroy,F,C,Wynberg Boys High School,1005825,2006,WC,CA,35
+1206,Miss,Kate,Milroy,F,C,Wynberg Boys' High School,1005825,2006,WC,CA,35
 1207,Miss,Katelyn,Milovanovic,F,C,Other - Rsa Schools,1003963,2006,WC,,35
 1208,Miss,Katherine,Mills,F,C,Springfield Convent,1004925,2006,WC,CA,35
 1209,Mr,Kaydee,Miles,M,C,Rustenburg Girls High School,1004521,2006,WC,CA,34
@@ -258,14 +258,14 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1257,Mr,Lulama,Madolo,M,F,Edu-care College,1001227,2005,,,
 1258,Miss,Lulu,Machao,F,F,Eaglesvale High School,1001183,2005,CL,,
 1259,Miss,Lwazi,Mac Innes,F,F,Windhoek International High Sc,1005777,2005,FO,,
-1260,Miss,Lynn,Mabena,F,F,St Pauls College,1005070,2005,CL,CA,
+1260,Miss,Lynn,Mabena,F,F,St Paul's College,1005070,2005,CL,CA,
 1261,Miss,Madalitso,Mabelebele,F,F,Waterford Kamhlaba College,1005704,2005,FO,,
 1262,Mr,Maitreyi,Mabaye,M,F,Prince Edward Boys School,1004236,2005,CL,,
 1263,Miss,Maja,Lyons,F,F,Fletcher High School,1001422,2005,CL,,
 1264,Miss,Malebogo,Lumkwana,F,F,Other - Zimbabwe,1003975,2005,,,
 1265,Miss,Marcel,Loubser,F,F,Other - Africa,1003939,2005,FO,,
 1266,Miss,Maree-Louise,Loubser,F,F,Prince Edward Boys School,1004236,2005,,,
-1267,Ms,Mariam,Longe,F,F,St Georges College,1005003,2005,,,
+1267,Ms,Mariam,Longe,F,F,St George's College,1005003,2005,,,
 1268,Mr,Marshall,Loftus,M,F,Legae Academy(Mogoditshane),1002532,2005,CL,,
 1269,Mr,Matilda,Llewelyn-williams,M,F,Mazowe Boys High,1003129,2005,,,
 1270,Mr,Matthew,Lilley,M,F,Legae Academy(Mogoditshane),1002532,2005,JM,,
@@ -275,11 +275,11 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1274,Miss,Megan,Lesole,F,F,Gateway High School,1001508,2005,CL,,
 1275,Miss,Megan,Lesch,F,C,Springfield Convent,1004925,2005,WC,CA,48
 1276,Miss,Megan,Leech,F,C,Maritzburg College,1002985,2005,KN,NA,48
-1277,Miss,Megan,Leach,F,C,St Annes Diocesan College,1004950,2005,IE,NA,48
+1277,Miss,Megan,Leach,F,C,St Anne's Diocesan College,1004950,2005,IE,NA,48
 1278,Miss,Megan,Lazenby,F,C,Durban Girls` College,1001166,2005,IE,NA,48
 1279,Ms,Meghna,Lawson,F,C,Pretoria Girls High School,1004227,2005,,TR,48
 1280,Miss,Melissa,Lawrence,F,C,Woodridge College,1005811,2005,,,48
-1281,Mr,Melissa,Lawrence,M,C,St Johns Diocesan High School,1005021,2005,IE,NA,48
+1281,Mr,Melissa,Lawrence,M,C,St John's Diocesan High School,1005021,2005,IE,NA,48
 1282,Mr,Melissa,Lategan,M,C,Edgemead High School,1001224,2005,,CA,48
 1283,Miss,Melodie,Lamont,F,C,Westville Girls High School,1005759,2005,KN,NA,48
 1284,Ms,Melody,Kwiatkowski,F,C,Rustenburg Girls High School,1004521,2005,WC,CA,48
@@ -296,11 +296,11 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1295,Miss,Mitesh,Kona,F,C,Crawford College (La Lucia),1000928,2005,SLF,NA,45
 1296,Miss,Mitra,Kohler,F,C,School Of Tomorrow,1004602,2005,,,45
 1297,Mr,Mkhonzeni,Kivugo,M,C,Westerford High School,1005743,2005,,CA,44
-1298,Miss,Mlamli,King,F,C,St Marys Diocesan School For,1005050,2005,IE,NA,44
+1298,Miss,Mlamli,King,F,C,St Mary's Diocesan School For,1005050,2005,IE,NA,44
 1299,Miss,Mocheko,Kimmel,F,C,Bergvliet High School,1000534,2005,WC,CA,44
-1300,Miss,Mohamad,Khumalo,F,C,St Andrews College,1004942,2005,IE,,44
+1300,Miss,Mohamad,Khumalo,F,C,St Andrew's College,1004942,2005,IE,,44
 1301,Miss,Mona,Khobane,F,C,Garlandale Senior Secondary Sc,1001502,2005,,CO,44
-1302,Miss,Monica,Khoali,F,C,Wynberg Boys High School,1005825,2005,WC,CA,44
+1302,Miss,Monica,Khoali,F,C,Wynberg Boys' High School,1005825,2005,WC,CA,44
 1303,Mr,Monique,Khan,M,C,Westerford High School,1005743,2005,,CA,43
 1304,Miss,Morgan,Khan,F,C,Trinityhouse High School,1005411,2005,,,43
 1305,Miss,Mpone,Kgoadi-Molaba,F,C,Reddam House,1004408,2005,IE,CA,43
@@ -311,7 +311,7 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1310,Dr,Naadira,Katabua,F,C,Rondebosch Boys High School,1004487,2005,WC,CA,43
 1311,Mr,Naazneen,Kaszay,M,C,Westerford High School,1005743,2005,WC,CA,43
 1312,Miss,Nabeelah,Kassiri,F,C,Pinelands High School,1004164,2005,,CA,43
-1313,Miss,Nabet,Kariwo,F,C,St Stithians College,1005081,2005,IE,,42
+1313,Miss,Nabet,Kariwo,F,C,St Stithian's College,1005081,2005,IE,,42
 1314,Miss,Nadine,Karelse,F,C,Wynberg Girls High School,1005826,2005,,CA,42
 1315,Miss,Nana,Kamalie,F,C,Rhenish Girls High School,1004446,2005,WC,CA,42
 1316,Miss,Nashieetauh,Kaijage,F,C,Redhill High School,1004410,2005,,TR,42
@@ -320,9 +320,9 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1319,Mr,Natalie,Jooste,M,C,Clarendon Girls High School,1000854,2005,,CA,42
 1320,Mr,Natalie,Jones,M,C,Abbotts College - Durbanville,1000277,2005,WC,,42
 1321,Miss,Nayna,Jones,F,C,Rondebosch Boys High School,1004487,2005,WC,CA,42
-1322,Miss,Ndabanengi,Jolink,F,C,St Johns Diocesan High School,1005021,2005,,NA,42
-1323,Miss,Neelesh,Johnson,F,C,Kimberley Girls High School,1002313,2005,NC,CA,41
-1324,Miss,Neema,Jogie,F,C,St Johns Diocesan High School,1005021,2005,IE,NA,41
+1322,Miss,Ndabanengi,Jolink,F,C,St John's Diocesan High School,1005021,2005,,NA,42
+1323,Miss,Neelesh,Johnson,F,C,Kimberley Girls' High School,1002313,2005,NC,CA,41
+1324,Miss,Neema,Jogie,F,C,St John's Diocesan High School,1005021,2005,IE,NA,41
 1325,Miss,Nicola,Joemat,F,C,Westerford High School,1005743,2005,,CA,41
 1326,Miss,Nicola,Jivan Kalianjee,F,C,Fairmont High School,1001388,2005,WC,CA,40
 1327,Miss,Nicola,Jason,F,C,Springfield Convent,1004925,2005,,CA,40
@@ -345,16 +345,16 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1344,Miss,Nina,Hughes,F,C,South African College High Sch,1004905,2005,WC,CA,39
 1345,Miss,Nina,Hu,F,C,Banzana High School,1000461,2005,KN,,39
 1346,Miss,Nitah,Hove,F,C,Alexander Road High School,1000333,2005,EC,CA,39
-1347,Miss,Noeline,Hosking,F,C,Wynberg Boys High School,1005825,2005,,CA,38
+1347,Miss,Noeline,Hosking,F,C,Wynberg Boys' High School,1005825,2005,,CA,38
 1348,Miss,Nomathemba,Holloway,F,C,Herzlia High School,1001753,2005,,CA,38
 1349,Miss,Nomathemba,Hohlfeld,F,C,Livingstone Senior Secondary S,1002651,2005,,CO,38
 1350,Miss,Nomawethu,Hoffman,F,C,Ekangala Comprehensive High Sc,1001246,2005,,ET,38
-1351,Miss,Nomfundo,Hobbs,F,C,St Conrads College,1004980,2005,,TR,38
+1351,Miss,Nomfundo,Hobbs,F,C,St Conrad's College,1004980,2005,,TR,38
 1352,Miss,Nomsa,Hlombe,F,C,Marais Viljoen Tech High Schoo,1002946,2005,GT,TR,38
-1353,Mr,Nonkululeko,Hittler,M,C,St Michaels School (Bloemfont,1005058,2005,FS,OF,38
+1353,Mr,Nonkululeko,Hittler,M,C,St Michael's School (Bloemfont,1005058,2005,FS,OF,38
 1354,Miss,Nthatisi,Hinde,F,C,Rustenburg Girls High School,1004521,2005,,CA,38
 1355,Miss,Ntokozo,Hiliza-Ellensson,F,C,Bergvliet High School,1000534,2005,WC,CA,37
-1356,Miss,Olivia,Heyes,F,C,St Marys Schl For Girls-Wvley,1005052,2005,IE,,37
+1356,Miss,Olivia,Heyes,F,C,St Mary's Schl For Girls-Wvley,1005052,2005,IE,,37
 1357,Miss,Onkemetse,Hewitt,F,C,Rustenburg Girls High School,1004521,2005,WC,CA,37
 1358,Mr,Palesa,Herbert,M,C,Livingstone Senior Secondary S,1002651,2005,WC,CO,37
 1359,Mr,Patricia,Hendricks,M,C,Wynberg Girls High School,1005826,2005,IE,CA,37
@@ -370,10 +370,10 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1369,Mr,Raeesa,Hakimi,M,C,Springfield Convent,1004925,2005,WC,CA,36
 1370,Miss,Raymond,Hagues,F,C,Diocesan College (Bishops),1001080,2005,,CA,36
 1371,Miss,Razia,Haggie,F,C,Diocesan College (Bishops),1001080,2005,WC,CA,36
-1372,Miss,Reabetswekhumo,Guy,F,C,Wynberg Boys High School,1005825,2005,,CA,36
+1372,Miss,Reabetswekhumo,Guy,F,C,Wynberg Boys' High School,1005825,2005,,CA,36
 1373,Miss,Rebecca,Gumpo,F,C,Christian Brothers College(Blo,1000829,2005,,OF,36
 1374,Miss,Rebecca,Groenewald,F,C,Bergvliet High School,1000534,2005,WC,CA,36
-1375,Miss,Refilwe,Grist,F,C,St Josephs College - Rondebos,1005029,2005,,CA,36
+1375,Miss,Refilwe,Grist,F,C,St Joseph's College - Rondebos,1005029,2005,,CA,36
 1376,Mr,Reinhard,Gorgens,M,C,Sastri College,1004589,2005,,IN,36
 1377,Mr,Renee,Goodchild,M,C,Settlers High School,1004713,2005,,CA,36
 1378,Ms,Rethabile,Goedhals,F,C,Maritzburg College,1002985,2005,KN,NA,35
@@ -416,7 +416,7 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1415,Mr,Sarah,Du Preez,M,C,Huguenot High School,1001894,2005,,CA,31
 1416,Miss,Sarah-jane,Du Plessis,F,C,Cosat-cnt Of Sciene & Technolo,1000916,2005,,,31
 1417,Miss,Sarahkay,Douie,F,C,Bhukulani Jr Secondary State S,1000557,2005,,ET,31
-1418,Miss,Saul,Dollman,F,C,St Andrews School - Senderwoo,1004946,2005,,,31
+1418,Miss,Saul,Dollman,F,C,St Andrew's School - Senderwoo,1004946,2005,,,31
 1419,Miss,Schwarzenegerr,Doespiritosanto,F,C,Trafalgar Senior Secondary Sch,1005398,2005,,CO,30
 1420,Mr,Sehaam,Dlamini,M,C,Cape Town High School,1000738,2005,WC,CA,30
 1421,Mr,Shabeena,Diokane,M,C,Bergvliet High School,1000534,2005,WC,CA,30
@@ -444,18 +444,18 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1443,Miss,Sithabile,Cottle,F,C,Df Malan High School - Bellvil,1001042,2004,WC,CA,50
 1444,Miss,Sithabile,Corry,F,C,Milnerton High School,1003240,2004,WC,CA,47
 1445,Miss,Sithembinkosi,Cornelius,F,C,Crawford College Lonehill,1000931,2004,GT,,47
-1446,Miss,Sithembokuhle,Corin,F,C,St Stithians Collegiate (Girl,1005082,2004,IE,,47
+1446,Miss,Sithembokuhle,Corin,F,C,St Stithian's Collegiate (Girl,1005082,2004,IE,,47
 1447,Miss,Skye,Corder,F,C,Port Shepstone Secondary Schoo,1004198,2004,KN,IN,46
 1448,Mr,Sophy,Cooper,M,C,Crawford College - Durban,1000929,2004,KN,IN,45
 1449,Miss,Sorrel,Coombe,F,C,Rhenish Girls High School,1004446,2004,WC,CA,44
-1450,Ms,St. John,Cooke,F,C,St Marys Schl For Girls-Wvley,1005052,2004,IE,,44
+1450,Ms,St. John,Cooke,F,C,St Mary's Schl For Girls-Wvley,1005052,2004,IE,,44
 1451,Mr,Stacey-Ann,Coelho,M,C,Huguenot High School,1001894,2004,WC,CA,44
 1452,Mr,Stacey-Jane,Cockcroft,M,C,Grey Boys High School,1001628,2004,EC,CA,43
 1453,Miss,Staci,Cochrane,F,C,Hermanus High School,1001750,2004,WC,CA,42
 1454,Miss,Stephanie,Cloete,F,C,Northlands Girls High School,1003804,2004,KN,NA,41
 1455,Miss,Stephanie,Chown,F,C,Livingstone Senior Secondary S,1002651,2004,WC,CO,41
 1456,Miss,Stephanie,Chouhan,F,C,Penryn College,1004057,2004,IE,,41
-1457,Miss,Stephen,Childes,F,C,St Annes Diocesan College,1004950,2004,IE,NA,40
+1457,Miss,Stephen,Childes,F,C,St Anne's Diocesan College,1004950,2004,IE,NA,40
 1458,Mr,Steven,Chikwanda,M,C,Reddam House,1004408,2004,,CA,40
 1459,Mr,Steven-Jorg,Chidakwa,M,C,Drakensberg High School,1001139,2004,KN,ET,40
 1460,Miss,Storm,Cecchini,F,C,Springfield Convent,1004925,2004,WC,CA,40
@@ -473,9 +473,9 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1472,Miss,Tamuka,Brunette,F,C,Diocesan College (Bishops),1001080,2004,WC,CA,37
 1473,Miss,Tamzyn,Browning,F,C,Islamia College,1002048,2004,WC,IN,35
 1474,Miss,Tandiswa,Brown,F,C,Fairmont High School,1001388,2004,WC,CA,35
-1475,Mr,Tanya,Brown,M,C,St Marys Diocesan School For,1005050,2004,IE,NA,35
+1475,Mr,Tanya,Brown,M,C,St Mary's Diocesan School For,1005050,2004,IE,NA,35
 1476,Mr,Tarah,Braundi,M,C,Mafemani Senior Secondary Scho,1002781,2004,NP,ET,34
-1477,Mr,Tarah,Braig,M,C,Wynberg Boys High School,1005825,2004,WC,CA,34
+1477,Mr,Tarah,Braig,M,C,Wynberg Boys' High School,1005825,2004,WC,CA,34
 1478,Miss,Tara-Lee,Brache,F,C,Sans Souci High School,1004578,2004,WC,CA,34
 1479,Miss,Taraneh,Bowora,F,C,Springfield Convent,1004925,2004,,CA,33
 1480,Miss,Tariku,Botha,F,C,Norman Henshilwood High School,1003793,2004,WC,CA,32
@@ -495,7 +495,7 @@ StuID,Prefix,FirstName,LastName,Gender,CitizenshipStatus,SchoolName,SchoolCode,Y
 1494,Miss,Tessa,Bezuidenhoudt,F,C,Fairbairn High School,1001384,2003,WC,CA,35
 1495,Miss,Tessa,Berrington,F,C,Kwamfundo Sec School,1002430,2003,WC,ET,35
 1496,Miss,Tessa,Berman,F,C,Groenvlei Senior Secondary Sch,1001637,2003,WC,CO,33
-1497,Miss,Thaakirah,Benting,F,C,St Michaels School (Bloemfont,1005058,2003,FS,OF,32
+1497,Miss,Thaakirah,Benting,F,C,St Michael's School (Bloemfont,1005058,2003,FS,OF,32
 1498,Miss,Thabo,Bennett,F,C,Norman Henshilwood High School,1003793,2003,WC,CA,31
 1499,Miss,Thania,Behardien,F,C,Northlands Girls High School,1003804,2003,KN,NA,29
 1500,Miss,Thomas,Bayo,F,C,Immaculata Senior Secondary Sc,1001958,2003,WC,CO,24

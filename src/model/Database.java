@@ -49,7 +49,12 @@ public class Database {
      * @throws Error if database connection fails
      */
     public Database(String databaseName) throws Error{
-        String url = "jdbc:mariadb://localhost:3306/"+databaseName;
+        String url = "";
+        if(databaseName.equals("")){
+            url = "jdbc:mariadb://localhost:3306";
+        }else{
+            url = "jdbc:mariadb://localhost:3306/"+databaseName;
+        }
         try{
             dbConnection = DriverManager.getConnection(url, "root", "68(MNPq]+_9{fk>q");
         } catch(SQLException e){
@@ -292,14 +297,48 @@ public class Database {
     }
 
     /**
-     * Pass the table name to be deleted
+     * Pass the table name to be cleared
      * @param  tableName to be deleted
      * @return the last message
      * @throws Error if it query fails
      */
     public String clear(String tableName) throws Error{
-        String query = "DELETE FROM "+tableName+";";
+        String tableToDelete = "";
+        if(tableName.equals("data_store")){
+            tableToDelete+="data_store."+tableName;
+        }else{
+            tableToDelete+="admin_data."+tableName;
+        }
+        String query = "DELETE FROM "+tableToDelete+";";
         execute(query);
+        return lastMessage;
+    }
+
+    /**
+     * Clears all the databases
+     * @return the last message
+     * @throws Error if the query fails
+     */
+    public String clearAll() throws Error{
+        String[] queries = {
+                "DELETE FROM admin_data.student_answers;",
+                "DELETE FROM admin_data.questions;",
+                "DELETE FROM admin_data.student_submissions;",
+                "DELETE FROM admin_data.students;",
+                "DELETE FROM admin_data.table_list;",
+                "DELETE FROM data_store.data_store;"};
+        try{
+            Statement delete = dbConnection.createStatement();
+            for(String query : queries){
+                delete.executeQuery(query);
+                execute(query);
+                lastMessage = "Success";
+            }
+        }catch(Exception e){
+            lastMessage = "Couldn't execute query";
+            lastStatus = CompileStatus.FAILURE;
+            throw new Error("Couldn't execute query ", e);
+        }
         return lastMessage;
     }
 

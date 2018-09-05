@@ -36,13 +36,15 @@ public class Student {
                         System.err.println(error.getMessage());
                     }
                     break;
+                case 9:
+                    break;
                 default:
                     System.out.println("Please enter valid option!");
                     break;
             }
         }
 
-        System.out.println("Goodbye!");
+
     }
 
     private int showMenu() {

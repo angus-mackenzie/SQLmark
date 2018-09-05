@@ -33,4 +33,4 @@ We aim to develop a system to create and mark SQL assignments. A database of que
 **Tutor** Danielle Rose Nagar
 
 ## Project Structure
-This directory has three folders which are important. [src](/src), [test](/src/test) and [docs](/docs). The `src` directory, contains all the code for our project. It is laid out in the MVC architectural pattern. The `test` directory includes the tests for our code, and the `docs` directory contains our documentation for our code. 
+This directory has three folders which are important. [src](/src), [test](/test) and [docs](/docs). The `src` directory, contains all the code for our project. It is laid out in the MVC architectural pattern. The `test` directory includes the tests for our code, and the `docs` directory contains our documentation for our code. 

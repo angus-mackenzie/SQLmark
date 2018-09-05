@@ -44,7 +44,7 @@ public class Runner {
                     "\"source " + scriptpath + "\""
 
             };
-            System.err.println(cmd[0] + " " + cmd[1] + " " + cmd[2] + " " + cmd[3] + " " + cmd[4] + " " + cmd[5]);
+            //System.err.println(cmd[0] + " " + cmd[1] + " " + cmd[2] + " " + cmd[3] + " " + cmd[4] + " " + cmd[5]);
             Process proc = Runtime.getRuntime().exec(cmd);
             if (verbose) {
                 InputStream inputstream = proc.getInputStream();

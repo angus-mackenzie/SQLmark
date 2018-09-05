@@ -71,10 +71,10 @@ public class Lecturer {
     public void loadData(String filename) throws Error{
         try{
             CSV csvReader = new CSV(filename);
-            List<String> columNames = csvReader.parseLine();
-            List<String> columnTyes = csvReader.parseLine();
+            List<String> columnNames = csvReader.parseLine();
+            List<String> columnTypes = csvReader.parseLine();
             Database db = new Database();
-            db.prepareCreate(columNames, columnTyes,"data_store");
+            db.prepareCreate(columnNames, columnTypes,filename);
             db.execute();
             List<String> input = csvReader.parseLine();
             while(input!=null){

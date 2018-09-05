@@ -99,7 +99,7 @@ public class WorkingData {
                 questions.add(question);
             }
         }catch(Exception e){
-            throw new Error("Can't get feedback type",e.getCause());
+            throw new Error("Can't create assignment",e);
         }
         db.closeRS();
         db.close();

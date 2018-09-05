@@ -201,7 +201,7 @@ public class Database {
         }catch(SQLException e){
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
-            throw new Error(e.getCause());
+            throw new Error(e);
         }
 
     }
@@ -365,9 +365,10 @@ public class Database {
      * @throws Error if it query fails
      */
     public String clear(String tableName) throws Error{
+        List<String> data_storeTables = WorkingData.getTables();
         String tableToDelete = "";
-        if(tableName.equals("data_store")){
-            tableToDelete+="data_store."+tableName;
+        if(data_storeTables.contains(tableName)){
+            tableToDelete +="data_store."+tableName;
         }else{
             tableToDelete+="admin_data."+tableName;
         }

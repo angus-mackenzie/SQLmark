@@ -72,8 +72,9 @@ public class Lecturer {
         try{
             CSV csvReader = new CSV(filename);
             List<String> columNames = csvReader.parseLine();
+            List<String> columnTyes = csvReader.parseLine();
             Database db = new Database();
-            db.prepareCreate(columNames, "data_store");
+            db.prepareCreate(columNames, columnTyes,"data_store");
             db.execute();
             List<String> input = csvReader.parseLine();
             while(input!=null){
@@ -94,11 +95,12 @@ public class Lecturer {
      */
     public void loadQuestions(String filename) throws Error{
         try{
-            CSV csvReader = new CSV(filename);
-            List<String> columNames = csvReader.parseLine();
+            CSV csvReader = new CSV('|', filename);
+            List<String> columnNames = csvReader.parseLine();
+            List<String> columnTypes = csvReader.parseLine();
             Database db = new Database("admin_data");
             String tableName = "questions";
-            db.prepareCreate(columNames, tableName);
+            db.prepareCreate(columnNames, columnTypes, tableName);
             db.execute();
             List<String> input = csvReader.parseLine();
             while(input!=null){
@@ -122,8 +124,9 @@ public class Lecturer {
         try {
             List<String> columNames = csvReader.parseLine();
             Database db = new Database("admin_data");
+            List<String> columnTypes = csvReader.parseLine();
             String tableName = "students";
-            db.prepareCreate(columNames, tableName);
+            db.prepareCreate(columNames, columnTypes,tableName);
             db.execute();
             List<String> input = csvReader.parseLine();
             while (input != null) {

@@ -1,9 +1,7 @@
 package model;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Creates a connection to the database, and facilitates queries
@@ -18,7 +16,7 @@ public class Database {
     private String currentSQL;
     private Connection dbConnection;
     private List<String> columnNames;
-
+    private List<String> columnTypes;
     /**
      * Enum declaring different compile statuses
      */
@@ -72,20 +70,32 @@ public class Database {
      * @param tableName the table to create
      * @throws Error if it cannot update the table_list table after creating the table
      */
-    public void prepareCreate(List<String> columnNames, String tableName) throws Error{
+    public void prepareCreate(List<String> columnNames, List<String> columnTypes ,String tableName) throws Error{
+        if(columnNames.size()!=columnTypes.size()){
+            throw new Error("Column Names Array and Column Types Array do not match");
+        }
         this.columnNames = columnNames;
+        this.columnTypes = columnTypes;
         this.tableName = tableName;
         StringBuilder createStatement = new StringBuilder();
         createStatement.append("CREATE TABLE IF NOT EXISTS ");
         createStatement.append(tableName);
         createStatement.append(" (");
         for(int i = 0; i< columnNames.size();i++){
+            boolean isSpace = columnNames.get(i).contains(" ");
+            if(isSpace){ createStatement.append("\""); }
             if(i==columnNames.size()-1){
                 createStatement.append(columnNames.get(i));
-                createStatement.append(" VARCHAR(100));");
+                if(isSpace) createStatement.append("\"");
+                createStatement.append(" ");
+                createStatement.append(columnTypes.get(i));
+                createStatement.append(");");
             }else{
                 createStatement.append(columnNames.get(i));
-                createStatement.append(" VARCHAR(100), ");
+                if(isSpace) createStatement.append("\"");
+                createStatement.append(" ");
+                createStatement.append(columnTypes.get(i));
+                createStatement.append(", ");
             }
         }
         if(!tableName.equals("table_list")){
@@ -137,14 +147,19 @@ public class Database {
             }
         }
         for(int i = 0; i < row.size(); i++){
+            String valueToInsert = row.get(i);
+            if(valueToInsert.contains("'")){
+                //then we must escape it
+                valueToInsert = valueToInsert.replaceAll("'","''");
+            }
             if(i == row.size()-1){
                 insertStatement.append("'");
-                insertStatement.append(row.get(i));
+                insertStatement.append(valueToInsert);
                 insertStatement.append("'");
                 insertStatement.append(" )");
             }else{
                 insertStatement.append("'");
-                insertStatement.append(row.get(i));
+                insertStatement.append(valueToInsert);
                 insertStatement.append("'");
                 insertStatement.append(", ");
             }
@@ -281,7 +296,7 @@ public class Database {
             Database tableDB = new Database("admin_data");
             List<String> header = new ArrayList<String>();
             header.add("table_name");
-            tableDB.prepareCreate(header, "table_list");
+            tableDB.prepareCreate(header, Collections.singletonList("VARCHAR(100)"),"table_list");
             tableDB.execute();
             List<String> row = new ArrayList<String>();
             row.add(tableName);

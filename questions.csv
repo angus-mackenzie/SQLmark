@@ -1,2 +1,7 @@
-question_num,question_text,answer,feedback_type
-1,Get everything from the data_store table.,SELECT * FROM data_store,2
+question_num|question_text|answer|feedback_type
+INT|VARCHAR(500)|VARCHAR(500)|INT
+1|Output any one tuple from the Matric table.|SELECT * FROM Matric WHERE StuID = "1001";|2
+2|Output the number of tuples in the Matric table.|SELECT COUNT(*) FROM Matric;|2
+3|Show all entries where the gender disagrees with the prefix (e.g. someone is “Mr” but their gender is “F”).|SELECT * FROM Matric WHERE (Gender = "F" AND Prefix = "Mr") OR (Gender = "M" and (Prefix = "Miss" OR Prefix = "Ms"));|2
+4|List students from school “1000929” giving first name and last name in alphabetical order of last name.|SELECT FirstName, LastName FROM Matric WHERE SchoolCode = 1000929 ORDER BY LastName;|2
+5|For each course give course code and number of units. A unit is 6 credits|SELECT Course, round((Credits/6)) AS numberOfUnits FROM uniData GROUP BY COURSE;|2

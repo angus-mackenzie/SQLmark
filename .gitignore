@@ -39,7 +39,6 @@ gen/
 ######################
 log/
 *.log
-*.sql
 *.sqlite
 
 # OS generated files #
@@ -67,3 +66,8 @@ xcuserdata/
 
 # Project Specific #
 /bin
+*super-csv*
+docs/docs
+# Vagrant #
+*.vagrant/
+*.log

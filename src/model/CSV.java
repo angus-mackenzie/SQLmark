@@ -46,6 +46,7 @@ public class CSV {
             }
             dataWriter = new BufferedWriter(new FileWriter(new File(filename)));
             writeLine(heading);
+            isOpen = true;
         }catch(Exception e){
             throw new Error("Could not write to file "+filename, e.getCause());
         }
@@ -153,6 +154,25 @@ public class CSV {
         return store;
     }
 
+
+    /**
+     * Closes the file writer
+     */
+    public void closeWriter() throws IOException{
+        if(isOpen){
+            dataWriter.close();
+        }
+    }
+
+    /**
+     * Closes the file reader
+     */
+     public void closeReader() throws IOException{
+         if(isOpen){
+             dataReader.close();
+         }
+
+     }
     /**
      * Checks if the file is open
      * @return isOpen

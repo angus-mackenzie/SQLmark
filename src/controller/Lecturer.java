@@ -23,7 +23,7 @@ public class Lecturer {
      * @throws Error if it cannot get the students
      */
     public Lecturer() throws Error {
-     //   this.assignmentModel = new model.Assignment();
+        this.assignmentModel = new model.Assignment();
         this.studentModels = WorkingData.getStudents();
     }
 
@@ -121,7 +121,7 @@ public class Lecturer {
         }
     }
 
-    //TODO Fix this
+    //TODO Make This Get the Mark
     /**
      * Outputs all the students with their highest mark to the filename inputted
      * @param filename to write to
@@ -140,6 +140,7 @@ public class Lecturer {
                 row.add(student.getHighestMark()+"");
                 csv.writeLine(row);
             }
+            csv.closeWriter();
         }catch(Exception e){
             throw new Error("Couldn't find the file "+filename, e);
         }

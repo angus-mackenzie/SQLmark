@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
  * Runs the .SQL File setup scripts for the DB
  * @author Angus Mackenzie
  * @version 05/09/2018
- * @see @see <a href="http://www.tonyspencer.com/2005/01/20/execute-mysql-script-from-java/index.html">http://www.tonyspencer.com/2005/01/20/execute-mysql-script-from-java/index.html</a>
+ * @see <a href="http://www.tonyspencer.com/2005/01/20/execute-mysql-script-from-java/index.html">http://www.tonyspencer.com/2005/01/20/execute-mysql-script-from-java/index.html</a>
  */
 public class Runner {
     private static String dbname ="";

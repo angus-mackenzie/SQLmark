@@ -74,4 +74,12 @@ public class Answer {
         this.output = new Dataset(answer);
         this.mark = calculateMark();
     }
+
+
+    /**
+     * @return Student's Answer Text
+     */
+    public String getAnswerText(){
+        return this.answer;
+    }
 }

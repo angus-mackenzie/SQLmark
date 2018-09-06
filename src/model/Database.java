@@ -491,6 +491,14 @@ public class Database {
         return randomDB;
     }
 
+    public void changeDB(String name) throws Error {
+        try {
+            dbConnection.setCatalog(name);
+        } catch (SQLException e) {
+            throw new Error("Error changing database!", e);
+        }
+    }
+
     public void deleteDB(String name) throws Error {
         Statement statement = null;
         try {

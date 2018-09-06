@@ -45,13 +45,14 @@ public class Dataset {
     /**
      * Creates a dataSet with the given SQL statement
      * @param sql to be executed
-     * @param databaseName to execute statement on
      * @throws Error if it cannot connect to DB
      */
-    public Dataset(String sql, String databaseName) throws Error{
-        Database db = new Database(databaseName);
-        boolean type = db.execute(sql);
+    public Dataset(String sql) throws Error {
+        Database db = new Database("");
+        String newDB = db.duplicateDB();
+        db.changeDB(newDB);
 
+        boolean type = db.execute(sql);
         this.compileMessage = db.getLastMessage();
         this.compileStatus = db.getLastStatus();
         this.dataset = null;
@@ -59,6 +60,7 @@ public class Dataset {
             try {
                 if (type) {
                     this.dataset = convertResultSet(db.getResultSet());
+                    db.closeRS();
                 } else {
                     // TODO: INSERT, UPDATE, OR DELETE
                 }
@@ -68,7 +70,7 @@ public class Dataset {
             }
         }
 
-        db.closeRS();
+        db.deleteDB(newDB);
         db.close();
     }
 
@@ -103,13 +105,6 @@ public class Dataset {
             }
         }
         return returnString.toString();
-    }
-
-    // Is this needed?
-    public Dataset(List<List<Object>> dataset) {
-        this.compileMessage = null;
-        this.compileStatus = null;
-        this.dataset = dataset;
     }
 
     /**

@@ -136,6 +136,7 @@ public class CSV {
 
     /**
      * Closes the file writer
+     * @throws IOException if it cannot close the writer
      */
     public void closeWriter() throws IOException{
         if(isOpen){
@@ -145,6 +146,7 @@ public class CSV {
 
     /**
      * Closes the file reader
+     * @throws IOException if it cannot close the reader
      */
      public void closeReader() throws IOException{
          if(isOpen){

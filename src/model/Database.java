@@ -67,6 +67,7 @@ public class Database {
     /**
      * Change a list of Strings into a prepared statement for creating a table
      * @param columnNames to create DB from
+     * @param columnTypes to enforce the type of the DB
      * @param tableName the table to create
      * @throws Error if it cannot update the table_list table after creating the table
      */
@@ -107,7 +108,7 @@ public class Database {
     /**
      * Prepare insert
      * @param tableName to insert into
-     * @columns to insert into
+     * @param columns to insert into
      * @param row to insert
      */
     public void prepareInsert(String tableName, List<String> columns, List<String> row){

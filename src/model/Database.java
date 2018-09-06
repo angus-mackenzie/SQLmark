@@ -3,7 +3,11 @@ package model;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Creates a connection to the database, and facilitates queries
@@ -358,19 +362,32 @@ public class Database {
             ResultSetMetaData meta = getResultSet().getMetaData();
             String table = meta.getTableName(1);
             while (getResultSet().next()) {
-                sqlFile.append("INSERT INTO ").append(table).append("VALUES ");
-                StringJoiner sj = new StringJoiner(",", "(", ")");
+                List<String> columns = new ArrayList<>();
                 for (int i = 1; i <= meta.getColumnCount(); i++) {
-                    sj.add(getResultSet().getObject(i).toString());
+                    columns.add(meta.getColumnName(i));
                 }
-                sqlFile.append(sj.toString()).append(";\n");
+
+                while (getResultSet().next()) {
+                    String sql = "INSERT INTO " + table + " ("
+                            + String.join(", ", columns)
+                            + ") VALUES ("
+                            + columns.stream().map(c -> "?").collect(Collectors.joining(", "))
+                            + ");";
+                    List<Object> parameters = new ArrayList<>();
+                    for (int i = 1; i <= meta.getColumnCount(); i++) {
+                        parameters.add(getResultSet().getObject(i));
+                    }
+                    sqlFile.append(generateActualSql(sql, parameters)).append("\n");
+                }
+
+                sqlFile.append("\n");
             }
             closeRS();
             sqlFile.insert(0, "\n");
 
             execute("SHOW CREATE TABLE " + table + ";");
             while (getResultSet().next()) {
-                sqlFile.insert(0, getResultSet().getString(2));
+                sqlFile.insert(0, getResultSet().getString(2) + ";");
             }
             closeRS();
 
@@ -379,6 +396,37 @@ public class Database {
             throw new Error("Error exporting", ex);
         }
         return sqlFile.toString();
+    }
+
+    private String generateActualSql(String sqlQuery, List<Object> parameters) {
+        String[] parts = sqlQuery.split("\\?");
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < parts.length; i++) {
+            String part = parts[i];
+            sb.append(part);
+            if (i < parameters.size()) {
+                sb.append(formatParameter(parameters.get(i)));
+            }
+        }
+
+        return sb.toString();
+    }
+
+    private String formatParameter(Object parameter) {
+        if (parameter == null) {
+            return "NULL";
+        } else {
+            if (parameter instanceof String) {
+                return "'" + ((String) parameter).replace("'", "\\'") + "'";
+            } else if (parameter instanceof Timestamp || parameter instanceof Date) {
+                return "'" + parameter.toString() + "'";
+            } else if (parameter instanceof Boolean) {
+                return (Boolean) parameter ? "1" : "0";
+            } else {
+                return parameter.toString();
+            }
+        }
     }
 
 

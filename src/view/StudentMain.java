@@ -55,6 +55,8 @@ public class StudentMain {
     void downloadData(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose location to save SQL file");
+        fileChooser.setInitialFileName("exampleData.sql");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("sql file (*.sql)", "*.sql"));
         File file = fileChooser.showSaveDialog(btnDownloadData.getScene().getWindow());
         if (file != null) {
             try (PrintWriter outFile = new PrintWriter(file)) {

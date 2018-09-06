@@ -10,7 +10,6 @@ import model.Submission;
  * @version 04/09/2018
  */
 public class Student {
-    private String randomData;
     private model.Student studentModel;
     private model.Assignment assignmentModel;
     private model.Submission currentSubmission;
@@ -24,7 +23,6 @@ public class Student {
     public Student(String studentNum) throws Error {
         this.assignmentModel = new model.Assignment();
         this.studentModel = new model.Student(studentNum, assignmentModel);
-        this.randomData = assignmentModel.getRandomData();
     }
 
     /**

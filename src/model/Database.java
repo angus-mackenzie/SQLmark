@@ -484,4 +484,21 @@ public class Database {
             throw new Error("Error deleting database!", e);
         }
     }
+
+    public List<String> getAllTables() {
+        List<String> list = new ArrayList<>();
+
+        try {
+            DatabaseMetaData md = dbConnection.getMetaData();
+            ResultSet rs = md.getTables(null, null, "%", null);
+            while (rs.next()) {
+                list.add(rs.getString(3));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }

@@ -6,14 +6,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Error;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Optional;
 
 public class StudentAssignment {
     private Student student;
@@ -39,19 +41,43 @@ public class StudentAssignment {
     public StudentAssignment() {
     }
 
+    public static Alert createAlert(String title, String message, Error error, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(message);
+        if (error != null) {
+            alert.setContentText(error.toString());
+        }
+        return alert;
+    }
+
+    public static Alert createAlert(String message, Error error, Alert.AlertType type) {
+        return createAlert("Error", message, error, type);
+    }
+
     @FXML
     void downloadData(ActionEvent event) {
-        try{
-            student.getData();
-        }catch(Error e){
-            StudentMain.createAlert("Could not download the data!",e, Alert.AlertType.ERROR);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose location to save SQL file");
+        File file = fileChooser.showSaveDialog(btnDownloadData.getScene().getWindow());
+        if (file != null) {
+            try (PrintWriter outFile = new PrintWriter(file)) {
+                outFile.print(student.getData());
+            } catch (FileNotFoundException e) {
+                createAlert("Problem creating file", new Error(e), Alert.AlertType.ERROR);
+            } catch (Error error) {
+                createAlert("Problem creating file", error, Alert.AlertType.ERROR);
+            }
         }
-
     }
 
     @FXML
     void logout(ActionEvent event) {
-        StudentMain.createAlert("Are you sure you want to logout?",null, Alert.AlertType.CONFIRMATION);
+        Alert a = createAlert("Are you sure you want to logout?", null, Alert.AlertType.CONFIRMATION);
+        Optional<ButtonType> result = a.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            System.exit(0);
+        }
     }
 
     @FXML
@@ -60,14 +86,16 @@ public class StudentAssignment {
             student.answerQuestion(txaAnswer.getText());
             showNextQuestion();
         } catch (Error error) {
-            StudentMain.createAlert("Failed to save answer!",error, Alert.AlertType.ERROR).showAndWait();
+            StudentMain.createAlert("Failed to save answer!", error, Alert.AlertType.ERROR).showAndWait();
 
         }
     }
+
     private void showNextQuestion() {
         String question;
         if ((question = student.getNextQuestion()) != null) {
             lblQuestion.setText(question);
+            txaAnswer.setText("");
         } else {
             finishAssignment();
         }
@@ -75,8 +103,7 @@ public class StudentAssignment {
 
     private void finishAssignment() {
         try {
-            // TODO: Message box with mark and say feedback on next screen
-            System.out.println("Your mark: " + student.getMark());
+            createAlert("Complete!", "Your mark: " + student.getMark(), null, Alert.AlertType.INFORMATION);
             student.submitAssignment();
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StudentMain.fxml"));
@@ -87,11 +114,9 @@ public class StudentAssignment {
             Stage stage = (Stage) btnSubmitAnswer.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (Error error) {
-            //TODO
-            error.printStackTrace();
+            createAlert("Problem finishing assignment", error, Alert.AlertType.ERROR);
         } catch (IOException e) {
-            //TODO
-            e.printStackTrace();
+            createAlert("Problem finishing assignment", new Error(e), Alert.AlertType.ERROR);
         }
     }
 

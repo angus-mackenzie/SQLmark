@@ -4,10 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Tracks submissions for assignments
@@ -143,6 +140,23 @@ public class Submission {
         String tableName = "student_submissions";
         db.prepareInsert(tableName,columns,row);
         db.execute();
+        int mark = this.getTotalMark();
+        Map<String,Object> where = new HashMap<>();
+        where.put("student_num",studentNum);
+        db.prepareSelect(tableName,where);
+        db.execute();
+        ResultSet rs = db.getResultSet();
+        List<Integer> IDs = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                IDs.add(Integer.parseInt(rs.getString("submission_id")));
+            }
+        } catch (SQLException e) {
+            throw new Error("Can't get previous submission",e);
+        }
+        int submissionID = Collections.max(IDs);//gets the most recent ID for the student
+        System.out.println(mark);
+        System.out.println(submissionID);
         return this;
     }
 

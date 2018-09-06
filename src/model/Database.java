@@ -132,7 +132,7 @@ public class Database {
         this.columnNames = columns;
         prepareInsert(row);
     }
-    //TODO make this adhere to type set out above
+
 
     /**
      * creates an insert into statement dependent on the column names, and list of strings given to it
@@ -369,28 +369,26 @@ public class Database {
             throw new Error("Not able to close connection to the DB", e.getCause());
         }
     }
-
     /**
      * Clears all the databases
-     *
      * @return the last message
      * @throws Error if the delete query fails
      */
     //TODO implement an overarching table that keeps track of the tables
-    public String clearAll() throws Error {
+    public String clearAll() throws Error{
 
         List<String> data_storeTables = WorkingData.getTables();
-        String[] admin_dataTables = {"admin_data.student_answers",
+        String[] admin_dataTables ={"admin_data.student_answers",
                 "admin_data.questions",
                 "admin_data.student_submissions",
                 "admin_data.students",
                 "admin_data.table_list"};
-        String[] tables = new String[data_storeTables.size() + admin_dataTables.length];
-        for (int i = 0; i < tables.length; i++) {
-            if (i < data_storeTables.size()) {
-                tables[i] = "data_store." + data_storeTables.get(i);
-            } else {
-                tables[i] = admin_dataTables[i - data_storeTables.size()];
+        String[] tables = new String[data_storeTables.size()+admin_dataTables.length];
+        for(int i = 0; i < tables.length; i++){
+            if(i < data_storeTables.size()){
+                tables[i] = "data_store."+data_storeTables.get(i);
+            }else{
+                tables[i] = admin_dataTables[i-data_storeTables.size()];
             }
         }
         return clearAll(tables);

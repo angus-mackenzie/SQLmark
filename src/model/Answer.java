@@ -71,7 +71,7 @@ public class Answer {
         this.answer = answer;
         this.question = question;
 
-        this.output = new Dataset(answer, "data_store");
+        this.output = new Dataset(answer);
         this.mark = calculateMark();
     }
 }

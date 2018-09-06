@@ -17,7 +17,6 @@ public class Dataset {
     private String compileMessage;
     private Database.CompileStatus compileStatus;
 
-
     /**
      * Compares two datasets to one another
      * @param dataset to be compared to
@@ -46,41 +45,50 @@ public class Dataset {
     /**
      * Creates a dataSet with the given SQL statement
      * @param sql to be executed
-     * @param databaseName to execute statement on
      * @throws Error if it cannot connect to DB
      */
-    public Dataset(String sql, String databaseName) throws Error{
-        Database db = new Database(databaseName);
-        db.execute(sql);
+    public Dataset(String sql) throws Error {
+        Database db = new Database("");
+        String newDB = db.duplicateDB();
+        db.changeDB(newDB);
 
+        boolean type = db.execute(sql);
         this.compileMessage = db.getLastMessage();
         this.compileStatus = db.getLastStatus();
         this.dataset = null;
         if (this.compileStatus == Database.CompileStatus.SUCCESS) {
             try {
-                this.dataset = convertResultSet(db.getResultSet());
+                if (type) {
+                    this.dataset = convertResultSet(db.getResultSet());
+                    db.closeRS();
+                } else {
+                    // TODO: INSERT, UPDATE, OR DELETE
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
                 this.compileStatus = Database.CompileStatus.FAILURE;
             }
         }
 
-        db.closeRS();
+        db.deleteDB(newDB);
         db.close();
     }
 
     /**
      * Creates a list of the dataset
      *
-     * @return an Object[][] array
+     * @return an Object[][] array, null if there are no values in the dataset
      */
     private Object[][] convertList() {
-        Object[][] array = new Object[dataset.size()][];
-        for (int i = 0; i < dataset.size(); i++) {
-            List<Object> row = dataset.get(i);
-            array[i] = row.toArray(new Object[0]);
+        if(!(dataset==null)){
+            Object[][] array = new Object[dataset.size()][];
+            for (int i = 0; i < dataset.size(); i++) {
+                List<Object> row = dataset.get(i);
+                array[i] = row.toArray(new Object[0]);
+            }
+            return array;
         }
-        return array;
+        return null;
     }
 
     /**
@@ -100,13 +108,6 @@ public class Dataset {
             }
         }
         return returnString.toString();
-    }
-
-    // Is this needed?
-    public Dataset(List<List<Object>> dataset) {
-        this.compileMessage = null;
-        this.compileStatus = null;
-        this.dataset = dataset;
     }
 
     /**

@@ -57,8 +57,8 @@ public class Student {
         System.out.println(" - Get previous submissions (4)");
         System.out.println(" - Exit (9)");
         System.out.print("Enter option: ");
-        option = sc.nextInt();
-        sc.nextLine();
+        option = Integer.parseInt(sc.next());
+        //sc.nextLine();
         return option;
     }
 

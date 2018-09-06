@@ -22,7 +22,7 @@ public class CSV {
     private boolean isOpen = false;
     private Writer dataWriter;
     private char delimiter;
-
+    private File file;
     /**
      * Takes in filename, checks if it is correct, otherwise creates a reader
      * @param filename of the csv file to read
@@ -69,7 +69,7 @@ public class CSV {
     public CSV(String outputFile, List<String> heading) throws Error{
         this.filename = checkFileName(outputFile);
         try{
-            File file = new File(outputFile);
+            this.file = new File(outputFile);
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -204,5 +204,8 @@ public class CSV {
         } finally {
             is.close();
         }
+    }
+    protected boolean deleteFile(){
+        return file.delete();
     }
 }

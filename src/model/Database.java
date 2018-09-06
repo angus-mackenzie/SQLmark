@@ -23,6 +23,7 @@ public class Database {
     private Connection dbConnection;
     private List<String> columnNames;
     private List<String> columnTypes;
+    private int lastUpdateCount;
 
     /**
      * Enum declaring different compile statuses
@@ -203,11 +204,17 @@ public class Database {
      * @param sql string to execute
      * @throws Error if the statement fails
      */
-    public void execute(String sql) throws Error {
+    public boolean execute(String sql) throws Error {
         currentSQL = sql;
+        boolean type = false;
         try {
             Statement statement = dbConnection.createStatement();
-            lastResultSet = statement.executeQuery(sql);
+            type = statement.execute(sql);
+            if (type) {
+                lastResultSet = statement.getResultSet();
+            } else {
+                lastUpdateCount = statement.getUpdateCount();
+            }
             lastStatus = CompileStatus.SUCCESS;
             lastMessage = "Executed Successfully";
         } catch (SQLException e) {
@@ -215,7 +222,7 @@ public class Database {
             lastMessage = e.getStackTrace().toString();
             throw new Error(e);
         }
-
+        return type;
     }
 
     /**
@@ -243,6 +250,15 @@ public class Database {
      */
     public ResultSet getResultSet() {
         return lastResultSet;
+    }
+
+    /**
+     * Returns the last update count
+     *
+     * @return last update count
+     */
+    public int getUpdateCount() {
+        return lastUpdateCount;
     }
 
     /**

@@ -75,6 +75,7 @@ public class Answer {
         this.mark = calculateMark();
     }
 
+
     /**
      * @return Student's Answer Text
      */

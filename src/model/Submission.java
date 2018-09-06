@@ -28,7 +28,7 @@ public class Submission {
         ResultSet rs = db.getResultSet();
         try {
             while (rs.next()) {
-                answers.add(new Answer(rs.getString("answer"), assignment.getQuestion(rs.getInt("question_num"))));
+                answers.add(new Answer(rs.getString("answer"), assignment.getQuestion(rs.getInt("question_num")-1)));
             }
         } catch (SQLException e) {
             db.closeRS();
@@ -145,7 +145,22 @@ public class Submission {
         db.prepareInsert(tableName,columns,row);
         db.execute();
         columns.clear();
+        if(submissionID==0) {
+            db.prepareSelect("student_submissions", Map.of("student_num", studentNum));
+            db.execute();
+            ResultSet rs = db.getResultSet();
 
+            try {
+                while (rs.next()) {
+                    submissionID= rs.getInt("submission_id");//gets the latest submissionID for current student
+                }
+            } catch (SQLException e) {
+                db.closeRS();
+                db.close();
+                throw (new Error("Submission load error!", e));
+            }
+            db.closeRS();
+        }
         columns = Arrays.asList("submission_id","question_num","answer","mark");
         tableName = "student_answers";
         for(int i = 0; i< assignment.getTotalQuestions();i++){

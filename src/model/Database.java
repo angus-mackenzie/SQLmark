@@ -105,6 +105,7 @@ public class Database {
         currentSQL = createStatement.toString();
     }
 
+
     /**
      * Prepare insert
      * @param tableName to insert into
@@ -132,7 +133,6 @@ public class Database {
      */
     public void  prepareInsert(List<String> row){
         StringBuilder insertStatement = new StringBuilder();
-
         //TODO better implementation than using ignore to avoid primary key clashes?
         insertStatement.append("INSERT IGNORE INTO ");
         insertStatement.append(tableName);

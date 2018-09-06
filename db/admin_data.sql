@@ -48,14 +48,10 @@ DROP TABLE IF EXISTS `student_answers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `student_answers` (
-  `submission_id` int(11) NOT NULL,
+  `submission_id` int(11) DEFAULT NULL,
   `question_num` int(11) DEFAULT NULL,
   `answer` varchar(500) DEFAULT NULL,
-  `mark` int(11) DEFAULT NULL,
-  PRIMARY KEY (`submission_id`),
-  KEY `student_answers_questions_question_num_fk` (`question_num`),
-  CONSTRAINT `student_answers_questions_question_num_fk` FOREIGN KEY (`question_num`) REFERENCES `questions` (`question_num`),
-  CONSTRAINT `student_answers_student_submissions_submission_id_fk` FOREIGN KEY (`submission_id`) REFERENCES `student_submissions` (`submission_id`)
+  `mark` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -82,7 +78,7 @@ CREATE TABLE `student_submissions` (
   PRIMARY KEY (`submission_id`),
   KEY `student_submissions_students__fk` (`student_num`),
   CONSTRAINT `student_submissions_students__fk` FOREIGN KEY (`student_num`) REFERENCES `students` (`student_num`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,4 +144,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-06  0:47:08
+-- Dump completed on 2018-09-06 14:47:11

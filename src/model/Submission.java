@@ -16,9 +16,11 @@ public class Submission {
     private List<Answer> answers;
     private int currentQuestion;
     private Date date;
-
+    private int submissionID;
     public Submission(Assignment assignment, int submissionID) throws Error {
         this(assignment);
+        this.submissionID = submissionID;
+
         Database db = new Database("admin_data");
 
         db.prepareSelect("student_answers", Map.of("submission_id", submissionID));
@@ -120,7 +122,7 @@ public class Submission {
             throw new Error("Too many answers submitted!");
         }
     }
-    //TODO Fix this
+
     /**
      * Submits the student's submission and saves it to the db
      * @param  studentNum to submit
@@ -135,28 +137,27 @@ public class Submission {
         List<String> columns = new ArrayList<>();
         columns.add("student_num");
         columns.add("submission_date");
+        columns.add("total_mark");
         row.add(studentNum);
         row.add(dateFormat.format(this.date));
+        row.add(getTotalMark()+"");
         String tableName = "student_submissions";
         db.prepareInsert(tableName,columns,row);
         db.execute();
-        int mark = this.getTotalMark();
-        Map<String,Object> where = new HashMap<>();
-        where.put("student_num",studentNum);
-        db.prepareSelect(tableName,where);
-        db.execute();
-        ResultSet rs = db.getResultSet();
-        List<Integer> IDs = new ArrayList<>();
-        try {
-            while (rs.next()) {
-                IDs.add(Integer.parseInt(rs.getString("submission_id")));
-            }
-        } catch (SQLException e) {
-            throw new Error("Can't get previous submission",e);
+        columns.clear();
+
+        columns = Arrays.asList("submission_id","question_num","answer","mark");
+        tableName = "student_answers";
+        for(int i = 0; i< assignment.getTotalQuestions();i++){
+            List<String> saveSubmission = new ArrayList<>();
+            saveSubmission.add(submissionID+"");
+            saveSubmission.add(assignment.getQuestion(i).getQuestionNum()+"");
+            saveSubmission.add(answers.get(i).getAnswerText());
+            saveSubmission.add(answers.get(i).getMark()+"");
+            db.prepareInsert(tableName,columns,saveSubmission);
+            db.execute();
+            saveSubmission.clear();
         }
-        int submissionID = Collections.max(IDs);//gets the most recent ID for the student
-        System.out.println(mark);
-        System.out.println(submissionID);
         return this;
     }
 

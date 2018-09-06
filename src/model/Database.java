@@ -58,7 +58,7 @@ public class Database {
             dbConnection = DriverManager.getConnection(url, "root", "68(MNPq]+_9{fk>q");
         } catch (SQLException e) {
             lastStatus = CompileStatus.FAILURE;
-            lastMessage = e.getStackTrace().toString();
+            lastMessage = e.getMessage();
             throw new Error(e.getCause());
         }
 
@@ -177,7 +177,6 @@ public class Database {
             }
         }
         insertStatement.append(";");
-
         currentSQL = insertStatement.toString();
     }
 
@@ -218,10 +217,10 @@ public class Database {
                 lastUpdateCount = statement.getUpdateCount();
             }
             lastStatus = CompileStatus.SUCCESS;
-            lastMessage = "Executed Successfully";
+            lastMessage = "Executed successfully";
         } catch (SQLException e) {
             lastStatus = CompileStatus.FAILURE;
-            lastMessage = e.getStackTrace().toString();
+            lastMessage = e.getMessage();
             throw new Error(e);
         }
         return type;
@@ -352,7 +351,7 @@ public class Database {
             }
         } catch (SQLException e) {
             lastStatus = CompileStatus.FAILURE;
-            lastMessage = e.getStackTrace().toString();
+            lastMessage = e.getMessage();
             throw new Error("Couldn't close ResultSet", e.getCause());
         }
     }
@@ -367,7 +366,7 @@ public class Database {
             dbConnection.close();
         } catch (SQLException e) {
             lastStatus = CompileStatus.FAILURE;
-            lastMessage = e.getStackTrace().toString();
+            lastMessage = e.getMessage();
             throw new Error("Not able to close connection to the DB", e.getCause());
         }
     }
@@ -509,7 +508,7 @@ public class Database {
         }
     }
 
-    public List<String> getAllTables() {
+    public List<String> getAllTables() throws Error {
         List<String> list = new ArrayList<>();
 
         try {
@@ -520,7 +519,7 @@ public class Database {
             }
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new Error("Error getting tables!", e);
         }
 
         return list;

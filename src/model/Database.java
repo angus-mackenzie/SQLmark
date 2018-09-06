@@ -177,7 +177,6 @@ public class Database {
             }
         }
         insertStatement.append(";");
-
         currentSQL = insertStatement.toString();
     }
 

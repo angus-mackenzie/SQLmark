@@ -63,6 +63,7 @@ public class Lecturer {
         return db.clear(tableName);
     }
 
+    //TODO Make this use the same name as the database
     /**
      * Takes in a file and loads the data to run the assignment with
      * @param filename to load in
@@ -71,10 +72,15 @@ public class Lecturer {
     public void loadData(String filename) throws Error{
         try{
             CSV csvReader = new CSV(filename);
+            String tablename = filename;
+            if(filename.contains(".csv")){
+                //get rid of the csv part and simply use the filename
+                tablename = filename.substring(0,4);
+            }
             List<String> columnNames = csvReader.parseLine();
             List<String> columnTypes = csvReader.parseLine();
             Database db = new Database();
-            db.prepareCreate(columnNames, columnTypes,filename);
+            db.prepareCreate(columnNames, columnTypes,tablename);
             db.execute();
             List<String> input = csvReader.parseLine();
             while(input!=null){
@@ -114,6 +120,8 @@ public class Lecturer {
 
     }
 
+
+
     /**
      * Takes in the filename for the students
      * @param filename students to read
@@ -140,7 +148,7 @@ public class Lecturer {
     }
 
     //TODO Make This Get the Mark
-    /**
+     /**
      * Outputs all the students with their highest mark to the filename inputted
      * @param filename to write to
      * @throws Error if there is an issue writing to the file

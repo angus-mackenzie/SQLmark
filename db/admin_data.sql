@@ -78,11 +78,11 @@ DROP TABLE IF EXISTS `student_submissions`;
 CREATE TABLE `student_submissions` (
   `submission_id` int(11) NOT NULL AUTO_INCREMENT,
   `student_num` varchar(100) DEFAULT NULL,
-  `submission_date` date DEFAULT NULL,
+  `submission_date` datetime DEFAULT NULL,
   PRIMARY KEY (`submission_id`),
   KEY `student_submissions_students__fk` (`student_num`),
   CONSTRAINT `student_submissions_students__fk` FOREIGN KEY (`student_num`) REFERENCES `students` (`student_num`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,4 +148,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-02 16:03:50
+-- Dump completed on 2018-09-06  0:47:08

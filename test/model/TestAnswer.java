@@ -12,7 +12,6 @@ public class TestAnswer {
 
     @Before
     public void init(){
-        //TODO finish when Answer and Question are implemented
     }
 
     @Test

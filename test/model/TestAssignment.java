@@ -16,7 +16,6 @@ public class TestAssignment {
     }
     @Test
     public void testGetQuestion(){
-        //TODO test both questions
     }
 
     @Test

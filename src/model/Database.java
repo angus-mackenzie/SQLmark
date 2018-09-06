@@ -1,9 +1,7 @@
 package model;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Creates a connection to the database, and facilitates queries
@@ -18,7 +16,7 @@ public class Database {
     private String currentSQL;
     private Connection dbConnection;
     private List<String> columnNames;
-
+    private List<String> columnTypes;
     /**
      * Enum declaring different compile statuses
      */
@@ -49,7 +47,12 @@ public class Database {
      * @throws Error if database connection fails
      */
     public Database(String databaseName) throws Error{
-        String url = "jdbc:mariadb://localhost:3306/"+databaseName;
+        String url = "";
+        if(databaseName.equals("")){
+            url = "jdbc:mariadb://localhost:3306";
+        }else{
+            url = "jdbc:mariadb://localhost:3306/"+databaseName;
+        }
         try{
             dbConnection = DriverManager.getConnection(url, "root", "68(MNPq]+_9{fk>q");
         } catch(SQLException e){
@@ -67,20 +70,32 @@ public class Database {
      * @param tableName the table to create
      * @throws Error if it cannot update the table_list table after creating the table
      */
-    public void prepareCreate(List<String> columnNames, String tableName) throws Error{
+    public void prepareCreate(List<String> columnNames, List<String> columnTypes ,String tableName) throws Error{
+        if(columnNames.size()!=columnTypes.size()){
+            throw new Error("Column Names Array and Column Types Array do not match");
+        }
         this.columnNames = columnNames;
+        this.columnTypes = columnTypes;
         this.tableName = tableName;
         StringBuilder createStatement = new StringBuilder();
         createStatement.append("CREATE TABLE IF NOT EXISTS ");
         createStatement.append(tableName);
         createStatement.append(" (");
         for(int i = 0; i< columnNames.size();i++){
+            boolean isSpace = columnNames.get(i).contains(" ");
+            if(isSpace){ createStatement.append("\""); }
             if(i==columnNames.size()-1){
                 createStatement.append(columnNames.get(i));
-                createStatement.append(" VARCHAR(100));");
+                if(isSpace) createStatement.append("\"");
+                createStatement.append(" ");
+                createStatement.append(columnTypes.get(i));
+                createStatement.append(");");
             }else{
                 createStatement.append(columnNames.get(i));
-                createStatement.append(" VARCHAR(100), ");
+                if(isSpace) createStatement.append("\"");
+                createStatement.append(" ");
+                createStatement.append(columnTypes.get(i));
+                createStatement.append(", ");
             }
         }
         if(!tableName.equals("table_list")){
@@ -89,6 +104,26 @@ public class Database {
         currentSQL = createStatement.toString();
     }
 
+    /**
+     * Prepare insert
+     * @param tableName to insert into
+     * @columns to insert into
+     * @param row to insert
+     */
+    public void prepareInsert(String tableName, List<String> columns, List<String> row){
+        this.tableName = tableName;
+        this.columnNames = columns;
+        prepareInsert(row);
+    }
+    /**
+     * creates an insert into statement dependent on the column names, and list of strings given to it
+     * @param row to be inserted
+     * @param columns to be inserted into
+     */
+    public void  prepareInsert(List<String> columns, List<String> row){
+        this.columnNames = columns;
+        prepareInsert(row);
+    }
     //TODO make this adhere to type set out above
     /**
      * creates an insert into statement dependent on the column names, and list of strings given to it
@@ -96,7 +131,9 @@ public class Database {
      */
     public void  prepareInsert(List<String> row){
         StringBuilder insertStatement = new StringBuilder();
-        insertStatement.append("INSERT INTO ");
+
+        //TODO better implementation than using ignore to avoid primary key clashes?
+        insertStatement.append("INSERT IGNORE INTO ");
         insertStatement.append(tableName);
         insertStatement.append(" (");
         for(int i = 0; i< columnNames.size();i++) {
@@ -106,22 +143,29 @@ public class Database {
                 insertStatement.append(" VALUES (");
             } else {
                 insertStatement.append(columnNames.get(i));
-                insertStatement.append(" , ");
+                insertStatement.append(", ");
             }
         }
         for(int i = 0; i < row.size(); i++){
+            String valueToInsert = row.get(i);
+            if(valueToInsert.contains("'")){
+                //then we must escape it
+                valueToInsert = valueToInsert.replaceAll("'","''");
+            }
             if(i == row.size()-1){
                 insertStatement.append("'");
-                insertStatement.append(row.get(i));
+                insertStatement.append(valueToInsert);
                 insertStatement.append("'");
-                insertStatement.append(" );");
+                insertStatement.append(" )");
             }else{
                 insertStatement.append("'");
-                insertStatement.append(row.get(i));
+                insertStatement.append(valueToInsert);
                 insertStatement.append("'");
                 insertStatement.append(", ");
             }
         }
+        insertStatement.append(";");
+
         currentSQL= insertStatement.toString();
     }
 
@@ -157,7 +201,7 @@ public class Database {
         }catch(SQLException e){
             lastStatus = CompileStatus.FAILURE;
             lastMessage = e.getStackTrace().toString();
-            throw new Error(e.getCause());
+            throw new Error(e);
         }
 
     }
@@ -252,7 +296,7 @@ public class Database {
             Database tableDB = new Database("admin_data");
             List<String> header = new ArrayList<String>();
             header.add("table_name");
-            tableDB.prepareCreate(header, "table_list");
+            tableDB.prepareCreate(header, Collections.singletonList("VARCHAR(100)"),"table_list");
             tableDB.execute();
             List<String> row = new ArrayList<String>();
             row.add(tableName);
@@ -290,16 +334,88 @@ public class Database {
             throw new Error("Not able to close connection to the DB",e.getCause());
         }
     }
-
     /**
-     * Pass the table name to be deleted
+     * Clears all the databases
+     * @return the last message
+     * @throws Error if the delete query fails
+     */
+    //TODO implement an overarching table that keeps track of the tables
+    public String clearAll() throws Error{
+
+        List<String> data_storeTables = WorkingData.getTables();
+        String[] admin_dataTables ={"admin_data.student_answers",
+                "admin_data.questions",
+                "admin_data.student_submissions",
+                "admin_data.students",
+                "admin_data.table_list"};
+        String[] tables = new String[data_storeTables.size()+admin_dataTables.length];
+        for(int i = 0; i < tables.length; i++){
+            if(i < data_storeTables.size()){
+                tables[i] = "data_store."+data_storeTables.get(i);
+            }else{
+                tables[i] = admin_dataTables[i-data_storeTables.size()];
+            }
+        }
+        return clearAll(tables);
+    }
+    /**
+     * Pass the table name to be cleared
      * @param  tableName to be deleted
      * @return the last message
      * @throws Error if it query fails
      */
     public String clear(String tableName) throws Error{
-        String query = "DELETE FROM "+tableName+";";
+        List<String> data_storeTables = WorkingData.getTables();
+        String tableToDelete = "";
+        if(data_storeTables.contains(tableName)){
+            tableToDelete +="data_store."+tableName;
+        }else{
+            tableToDelete+="admin_data."+tableName;
+        }
+        String query = "DELETE FROM "+tableToDelete+";";
         execute(query);
+        return lastMessage;
+    }
+
+    /**
+     * Clears admin_data database
+     * @return the last message
+     * @throws Error if it cannot delete a database
+     */
+    public String clearAdmin() throws Error {
+        String[] tables = {"admin_data.student_answers",
+                "admin_data.questions",
+                "admin_data.student_submissions",
+                "admin_data.students",
+                "admin_data.table_list"};
+        return this.clearAll(tables);
+    }
+    /**
+     * Clears all the databases
+     * @return the last message
+     * @throws Error if the query fails
+     */
+    private String clearAll(String[] tables) throws Error{
+        String queries[] = new String[tables.length];
+        int counter = 0;
+        for(String table : tables){
+            queries[counter] = "DELETE FROM "+table+";";
+            counter++;
+
+        }
+        try{
+            Statement delete = dbConnection.createStatement();
+            for(String query : queries){
+                delete.executeQuery(query);
+                execute(query);
+                lastMessage = "Success";
+            }
+
+        }catch(Exception e){
+            lastMessage = "Couldn't execute query";
+            lastStatus = CompileStatus.FAILURE;
+            throw new Error("Couldn't execute query ", e);
+        }
         return lastMessage;
     }
 

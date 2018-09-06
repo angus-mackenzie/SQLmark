@@ -1,33 +1,62 @@
 package model;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 /**
- * Simple CSVReader. if we have time, implement SuperCSV
- * Reads in a CSV value, and understands information with commas
+ * Implementation of the OpenCSV CSVReader
  * @author Angus Mackenzie
- * @version 16/08/2018
- * @see <a href="https://agiletribe.wordpress.com/2012/11/23/the-only-class-you-need-for-csv-files/">https://agiletribe.wordpress.com/2012/11/23/the-only-class-you-need-for-csv-files/</a>
+ * @version 05/09/2018
+ * @see CSVReader
  */
 
 public class CSV {
     private String filename;
     private Reader dataReader;
+    private CSVReader csvReader;
     private boolean isOpen = false;
     private Writer dataWriter;
+    private char delimiter;
+
     /**
      * Takes in filename, checks if it is correct, otherwise creates a reader
      * @param filename of the csv file to read
      * @throws Error if there is an issue opening the file
      */
     public CSV(String filename) throws Error{
+        this.delimiter = ',';
         this.filename = checkFileName(filename);
         try{
-            dataReader = new BufferedReader(new FileReader(new File(this.filename)));
+            Reader dataReader = new BufferedReader(new FileReader(new File(this.filename)));
+            CSVParser parser = new CSVParserBuilder().withSeparator(delimiter).build();
+            csvReader = new CSVReaderBuilder(dataReader).withCSVParser(parser).build();
             isOpen= true;
         }catch(Exception e){
-            throw new Error("Problem opening file "+filename,e.getCause());
+            throw new Error("Problem opening file "+this.filename,e.getCause());
+        }
+    }
+
+    /**
+     * Creates the a CSV reader, but uses the specified delimiter
+     * @param delimiter to use
+     * @param filename file to read
+     * @throws Error if it can't read
+     */
+    public CSV(char delimiter, String filename) throws Error{
+        this.delimiter = delimiter;
+        this.filename = checkFileName(filename);
+        try{
+            Reader dataReader = new BufferedReader(new FileReader(new File(this.filename)));
+            CSVParser parser = new CSVParserBuilder().withSeparator(delimiter).build();
+            csvReader = new CSVReaderBuilder(dataReader).withCSVParser(parser).build();
+            isOpen= true;
+        }catch(Exception e){
+            throw new Error("Problem opening file "+this.filename,e.getCause());
         }
     }
 
@@ -46,10 +75,12 @@ public class CSV {
             }
             dataWriter = new BufferedWriter(new FileWriter(new File(filename)));
             writeLine(heading);
+            isOpen = true;
         }catch(Exception e){
             throw new Error("Could not write to file "+filename, e.getCause());
         }
     }
+
 
     /**
      * Checks if the filename is blank or does not have the appropriate extension
@@ -67,6 +98,7 @@ public class CSV {
         return filename;
     }
 
+
     /**
      * Writes a line of a CSV file
      * @param values the values to be separated by commas
@@ -78,7 +110,7 @@ public class CSV {
             if (!firstVal) {
                 dataWriter.write(",");
             }
-            dataWriter.write("\"");
+            //dataWriter.write("\"");
             for (int i=0; i<val.length(); i++) {
                 char ch = val.charAt(i);
                 if (ch=='\"') {
@@ -86,73 +118,40 @@ public class CSV {
                 }
                 dataWriter.write(ch);
             }
-            dataWriter.write("\"");
+            //dataWriter.write("\"");
             firstVal = false;
         }
         dataWriter.write("\n");
         dataWriter.flush();
     }
 
-    /**
-     * Reads a line of the CSV
-     * Returns a null when the input stream is empty
-     * @return List of strings
-     * @throws Exception if can't read line
-     */
-    public List<String> parseLine() throws Exception {
-        Reader r = dataReader;
-        int ch = r.read();
-        while (ch == '\r') {
-            ch = r.read();
-        }
-        if (ch<0) {
+
+    public List<String> parseLine() throws Exception{
+        String[] output = csvReader.readNext();
+        if(output==null){
             return null;
         }
-        Vector<String> store = new Vector<String>();
-        StringBuffer curVal = new StringBuffer();
-        boolean inquotes = false;
-        boolean started = false;
-        while (ch>=0) {
-            if (inquotes) {
-                started=true;
-                if (ch == '\"') {
-                    inquotes = false;
-                }
-                else {
-                    curVal.append((char)ch);
-                }
-            }
-            else {
-                if (ch == '\"') {
-                    inquotes = true;
-                    if (started) {
-                        // if this is the second quote in a value, add a quote
-                        // this is for the double quote in the middle of a value
-                        curVal.append('\"');
-                    }
-                }
-                else if (ch == ',') {
-                    store.add(curVal.toString());
-                    curVal = new StringBuffer();
-                    started = false;
-                }
-                else if (ch == '\r') {
-                    //ignore LF characters
-                }
-                else if (ch == '\n') {
-                    //end of a line, break out
-                    break;
-                }
-                else {
-                    curVal.append((char)ch);
-                }
-            }
-            ch = r.read();
-        }
-        store.add(curVal.toString());
-        return store;
+        return Arrays.asList(output);
     }
 
+    /**
+     * Closes the file writer
+     */
+    public void closeWriter() throws IOException{
+        if(isOpen){
+            dataWriter.close();
+        }
+    }
+
+    /**
+     * Closes the file reader
+     */
+     public void closeReader() throws IOException{
+         if(isOpen){
+             csvReader.close();
+         }
+
+     }
     /**
      * Checks if the file is open
      * @return isOpen

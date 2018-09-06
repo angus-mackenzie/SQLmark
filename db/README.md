@@ -47,7 +47,17 @@ To load the SQL file, either run the SQLImporter class and enter your root passw
 
 
 # SQL Files
+## Creating SQL Files
+If you want to change the DB structure somehow, and want to get your new `.sql` file. Simply use the following command:
+```
+mysqldump -u username -p data_store > data_store.sql
+```
+Where data_store is the name of your DB, and you can choose whatever name you like on the right hand side of the `>` operator as long
+as it ends with `.sql`
 
+These commands may take a few seconds/minutes to run
+
+## Importing SQL Files
 **Please note** in the `Database` class the password used is `68(MNPq]+_9{fk>q` -> Please be aware that your password must be the same in order to interface with the class; or change the password in the class to the one you are using. 
 
 Here is a brief description of how to get the db up and running.

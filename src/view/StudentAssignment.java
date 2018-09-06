@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -40,12 +41,17 @@ public class StudentAssignment {
 
     @FXML
     void downloadData(ActionEvent event) {
-        //TODO student.getData()
+        try{
+            student.getData();
+        }catch(Error e){
+            StudentMain.createAlert("Could not download the data!",e, Alert.AlertType.ERROR);
+        }
+
     }
 
     @FXML
     void logout(ActionEvent event) {
-        //TODO
+        StudentMain.createAlert("Are you sure you want to logout?",null, Alert.AlertType.CONFIRMATION);
     }
 
     @FXML
@@ -54,11 +60,10 @@ public class StudentAssignment {
             student.answerQuestion(txaAnswer.getText());
             showNextQuestion();
         } catch (Error error) {
-            //TODO
-            error.printStackTrace();
+            StudentMain.createAlert("Failed to save answer!",error, Alert.AlertType.ERROR).showAndWait();
+
         }
     }
-
     private void showNextQuestion() {
         String question;
         if ((question = student.getNextQuestion()) != null) {

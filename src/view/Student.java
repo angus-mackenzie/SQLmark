@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import model.Error;
@@ -33,17 +34,27 @@ public class Student extends Application {
         dialog.setContentText("Please enter your student number:");
 
         Optional<String> result = dialog.showAndWait();
-        try {
-            if (result.isPresent()) {
-                student = new controller.Student(result.get());
-            } else {
-                //TODO: exit
+        if(result.isPresent()) {
+            while (result.get().equals("")) {
+                dialog.setContentText("Please enter a valid student number:");
+                result = dialog.showAndWait();
             }
-        } catch (Error error) {
-            //TODO: error
-            error.printStackTrace();
-        }
+            try {
+                if (!result.get().equals("")) {
+                    student = new controller.Student(result.get());
 
+                } else {
+                    System.exit(0);
+                }
+            } catch (Error error) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(error.getMessage());
+                alert.setContentText(error.toString());
+                alert.showAndWait();
+                start(primaryStage);
+            }
+        }
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StudentMain.fxml"));
         Parent root = fxmlLoader.load();
         StudentMain controller = fxmlLoader.getController();

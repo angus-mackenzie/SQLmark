@@ -6,12 +6,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import model.Error;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class StudentMain {
     private Student student;
@@ -39,12 +42,36 @@ public class StudentMain {
 
     @FXML
     void downloadData(ActionEvent event) {
-        // TODO student.getData()
+            try{
+                System.out.println(student.getData());
+            }catch(Error e){
+                createAlert("Could not download the data!",e, Alert.AlertType.INFORMATION);
+            }
+
     }
 
+
+    public static Alert createAlert(String message, Error error, Alert.AlertType type){
+        Alert alert = new Alert(type);
+        alert.setTitle("Error");
+        alert.setHeaderText(message);
+        if(error==null){
+            //do nothing
+        }else{
+            alert.setContentText(error.toString());
+        }
+        return alert;
+    }
     @FXML
     void logout(ActionEvent event) {
-        //TODO: exit
+        Alert a = createAlert("Are you sure you want to logout?",null, Alert.AlertType.WARNING);
+        Optional<Boolean> result =a.showAndWait();
+        if (result.get()){
+            // ... user chose OK
+            System.exit(0);
+        } else {
+            // ... user chose CANCEL or closed the dialog
+        }
     }
 
     @FXML

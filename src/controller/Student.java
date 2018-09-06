@@ -50,9 +50,9 @@ public class Student {
      *
      * @return a string representation of the data
      */
-    public String getData() {
-        // Possibly download as File here, or in view
-        return randomData;
+    public String getData() throws Error{
+        // Possibly download as File here, or in vieww
+        return getPastSubmissions();
     }
 
     /**

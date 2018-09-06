@@ -67,7 +67,7 @@ public class Assignment {
         StringBuilder sqlString = new StringBuilder();
 
         for (String table : WorkingData.getTables()) {
-            db.prepareSelect(table, null, 30);
+            db.prepareSelect(table, null, 30, true);
             db.execute();
             sqlString.append(db.exportToSQL());
             db.closeRS();

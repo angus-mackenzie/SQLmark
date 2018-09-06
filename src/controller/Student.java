@@ -51,8 +51,7 @@ public class Student {
      * @return a string representation of the data
      */
     public String getData() throws Error{
-        // Possibly download as File here, or in vieww
-        return getPastSubmissions();
+        return assignmentModel.getRandomData();
     }
 
     /**

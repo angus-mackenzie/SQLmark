@@ -3,10 +3,7 @@ package model;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Creates a connection to the database, and facilitates queries
@@ -71,7 +68,7 @@ public class Database {
      *
      * @param columnNames to create DB from
      * @param columnTypes to enforce the type of the DB
-     * @param tableName the table to create
+     * @param tableName   the table to create
      * @throws Error if it cannot update the table_list table after creating the table
      */
     public void prepareCreate(List<String> columnNames, List<String> columnTypes, String tableName) throws Error {
@@ -115,9 +112,8 @@ public class Database {
      * Prepare insert
      *
      * @param tableName to insert into
-     * @param columns to insert into
-     * @param row to insert
-
+     * @param columns   to insert into
+     * @param row       to insert
      */
     public void prepareInsert(String tableName, List<String> columns, List<String> row) {
         this.tableName = tableName;
@@ -271,6 +267,10 @@ public class Database {
      * @param limit number of rows to limit by
      */
     public void prepareSelect(String table, Map<String, Object> where, int limit) {
+        prepareSelect(table, where, limit, false);
+    }
+
+    public void prepareSelect(String table, Map<String, Object> where, int limit, boolean random) {
         StringBuilder selectStatement = new StringBuilder();
         selectStatement.append("SELECT * FROM ");
         selectStatement.append(table);
@@ -293,6 +293,10 @@ public class Database {
                 counter++;
             }
         }
+        if (random) {
+            selectStatement.append(" ORDER BY RAND() ");
+        }
+
         if (limit != -1) {
             selectStatement.append(" LIMIT ");
             selectStatement.append(limit);
@@ -311,12 +315,70 @@ public class Database {
         execute(currentSQL);
     }
 
-    // TODO: Return the SQL command to recreate the table and contents of last query (null if no query run)
-    public String exportToSQL() {
-        // Use SHOW CREATE TABLE foobar
-        // as well as some loop through the rows to create an insert statement
-        return "Not done yet;";
-        //throw new UnsupportedOperationException();
+    /*
+    public String exportAllToSQL() throws Error {
+        StringBuilder sqlFile = new StringBuilder();
+        try {
+            for (String table : getAllTables()) {
+                execute("SHOW CREATE TABLE " + table + ";");
+                while (getResultSet().next()) {
+                    sqlFile.append(getResultSet().getString(2));
+                }
+                closeRS();
+
+                sqlFile.append("\n\n");
+
+                prepareSelect(table);
+                execute();
+                ResultSetMetaData meta = getResultSet().getMetaData();
+                while (getResultSet().next()) {
+                    sqlFile.append("INSERT INTO ").append(table).append("VALUES ");
+                    StringJoiner sj = new StringJoiner(",", "(", ")");
+                    for (int i = 1; i <= meta.getColumnCount(); i++) {
+                        sj.add(getResultSet().getObject(i).toString());
+                    }
+                    sqlFile.append(sj.toString()).append(";\n");
+                }
+                closeRS();
+
+                sqlFile.append("\n");
+            }
+        } catch (SQLException ex) {
+            throw new Error("Error exporting", ex);
+        }
+        return sqlFile.toString();
+    }*/
+
+    public String exportToSQL() throws Error {
+        StringBuilder sqlFile = new StringBuilder();
+        if (getResultSet() == null) {
+            return null;
+        }
+        try {
+            ResultSetMetaData meta = getResultSet().getMetaData();
+            String table = meta.getTableName(1);
+            while (getResultSet().next()) {
+                sqlFile.append("INSERT INTO ").append(table).append("VALUES ");
+                StringJoiner sj = new StringJoiner(",", "(", ")");
+                for (int i = 1; i <= meta.getColumnCount(); i++) {
+                    sj.add(getResultSet().getObject(i).toString());
+                }
+                sqlFile.append(sj.toString()).append(";\n");
+            }
+            closeRS();
+            sqlFile.insert(0, "\n");
+
+            execute("SHOW CREATE TABLE " + table + ";");
+            while (getResultSet().next()) {
+                sqlFile.insert(0, getResultSet().getString(2));
+            }
+            closeRS();
+
+            sqlFile.append("\n\n");
+        } catch (SQLException ex) {
+            throw new Error("Error exporting", ex);
+        }
+        return sqlFile.toString();
     }
 
 
@@ -371,26 +433,28 @@ public class Database {
             throw new Error("Not able to close connection to the DB", e.getCause());
         }
     }
+
     /**
      * Clears all the databases
+     *
      * @return the last message
      * @throws Error if the delete query fails
      */
     //TODO implement an overarching table that keeps track of the tables
-    public String clearAll() throws Error{
+    public String clearAll() throws Error {
 
         List<String> data_storeTables = WorkingData.getTables();
-        String[] admin_dataTables ={"admin_data.student_answers",
+        String[] admin_dataTables = {"admin_data.student_answers",
                 "admin_data.questions",
                 "admin_data.student_submissions",
                 "admin_data.students",
                 "admin_data.table_list"};
-        String[] tables = new String[data_storeTables.size()+admin_dataTables.length];
-        for(int i = 0; i < tables.length; i++){
-            if(i < data_storeTables.size()){
-                tables[i] = "data_store."+data_storeTables.get(i);
-            }else{
-                tables[i] = admin_dataTables[i-data_storeTables.size()];
+        String[] tables = new String[data_storeTables.size() + admin_dataTables.length];
+        for (int i = 0; i < tables.length; i++) {
+            if (i < data_storeTables.size()) {
+                tables[i] = "data_store." + data_storeTables.get(i);
+            } else {
+                tables[i] = admin_dataTables[i - data_storeTables.size()];
             }
         }
         return clearAll(tables);

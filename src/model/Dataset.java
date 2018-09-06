@@ -17,7 +17,6 @@ public class Dataset {
     private String compileMessage;
     private Database.CompileStatus compileStatus;
 
-
     /**
      * Compares two datasets to one another
      * @param dataset to be compared to
@@ -51,14 +50,18 @@ public class Dataset {
      */
     public Dataset(String sql, String databaseName) throws Error{
         Database db = new Database(databaseName);
-        db.execute(sql);
+        boolean type = db.execute(sql);
 
         this.compileMessage = db.getLastMessage();
         this.compileStatus = db.getLastStatus();
         this.dataset = null;
         if (this.compileStatus == Database.CompileStatus.SUCCESS) {
             try {
-                this.dataset = convertResultSet(db.getResultSet());
+                if (type) {
+                    this.dataset = convertResultSet(db.getResultSet());
+                } else {
+                    // TODO: INSERT, UPDATE, OR DELETE
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
                 this.compileStatus = Database.CompileStatus.FAILURE;

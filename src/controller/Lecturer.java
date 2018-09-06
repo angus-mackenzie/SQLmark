@@ -74,7 +74,7 @@ public class Lecturer {
             List<String> columnNames = csvReader.parseLine();
             List<String> columnTypes = csvReader.parseLine();
             Database db = new Database();
-            db.prepareCreate(columnNames, columnTypes,filename);
+            db.prepareCreate(columnNames, columnTypes,"data");
             db.execute();
             List<String> input = csvReader.parseLine();
             while(input!=null){

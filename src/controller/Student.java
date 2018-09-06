@@ -82,6 +82,7 @@ public class Student {
 
     /**
      * Submits a whole assignment to the student
+     * @throws Error if it cannot submit the assignment
      */
     public void submitAssignment() throws Error{
         studentModel.addSubmission(currentSubmission.submit(getStudentNum()));

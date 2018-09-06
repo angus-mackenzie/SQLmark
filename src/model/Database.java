@@ -70,7 +70,8 @@ public class Database {
      * Change a list of Strings into a prepared statement for creating a table
      *
      * @param columnNames to create DB from
-     * @param tableName   the table to create
+     * @param columnTypes to enforce the type of the DB
+     * @param tableName the table to create
      * @throws Error if it cannot update the table_list table after creating the table
      */
     public void prepareCreate(List<String> columnNames, List<String> columnTypes, String tableName) throws Error {
@@ -109,12 +110,14 @@ public class Database {
         currentSQL = createStatement.toString();
     }
 
+
     /**
      * Prepare insert
      *
      * @param tableName to insert into
-     * @param row       to insert
-     * @columns to insert into
+     * @param columns to insert into
+     * @param row to insert
+
      */
     public void prepareInsert(String tableName, List<String> columns, List<String> row) {
         this.tableName = tableName;
@@ -141,7 +144,6 @@ public class Database {
      */
     public void prepareInsert(List<String> row) {
         StringBuilder insertStatement = new StringBuilder();
-
         //TODO better implementation than using ignore to avoid primary key clashes?
         insertStatement.append("INSERT IGNORE INTO ");
         insertStatement.append(tableName);

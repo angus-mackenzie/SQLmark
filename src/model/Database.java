@@ -465,8 +465,6 @@ public class Database {
                 statement2 = dbConnection.createStatement();
                 statement2.executeUpdate("CREATE TABLE " + table + " LIKE data_store." + table);
                 statement2.executeUpdate("INSERT INTO " + table + " SELECT * FROM data_store." + table);
-
-                System.out.println(rs.getString(3));
             }
 
             rs.close();
@@ -477,7 +475,13 @@ public class Database {
         return randomDB;
     }
 
-    public void deleteDB(String name) {
-
+    public void deleteDB(String name) throws Error {
+        Statement statement = null;
+        try {
+            statement = dbConnection.createStatement();
+            statement.executeUpdate("DROP DATABASE " + name);
+        } catch (SQLException e) {
+            throw new Error("Error deleting database!", e);
+        }
     }
 }

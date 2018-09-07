@@ -16,6 +16,7 @@ public class Lecturer {
     /**
      * Constructs a view given a Controller.lecturer
      * @param lecturer to be viewed
+     * @param sc scanner for the input
      * @throws Error one of the methods doesn't work
      */
     public Lecturer(controller.Lecturer lecturer, Scanner sc) throws  Error{

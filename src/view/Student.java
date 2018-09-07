@@ -29,7 +29,7 @@ public class Student extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Text Input Dialog");
+        dialog.setTitle("SQLmark");
         dialog.setHeaderText("Welcome to the SQL Automarker");
         dialog.setContentText("Please enter your student number:");
 

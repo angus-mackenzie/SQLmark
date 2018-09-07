@@ -1,0 +1,2 @@
+# Images
+This is where we store the images for our [wiki](https://github.com/AngusTheMack/SQLmark/wiki) and our [contributing file](https://github.com/AngusTheMack/SQLmark/blob/master/contributing.md).

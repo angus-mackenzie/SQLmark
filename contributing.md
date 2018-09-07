@@ -7,6 +7,7 @@
     - [Pushing your branch](#pushing-your-branch)
     - [Listing Branches](#listing-branches)
     - [Changing Branches](#changing-branches)
+    - [Transferring changes from master to branch](#transferring-changes-from-master-to-branch)
     - [Transferring changes from branch to master](#transferring-changes-from-branch-to-master)
     - [Deleting Branches](#deleting-branches)
 - [Pull-Requests](#pull-requests)
@@ -40,7 +41,7 @@ That is the basic startup, now lets get into the workflow.
 ## Workflow
 If something is going on the **master** branch it should be:
 * Reviewed by a teammate
-* Unit Tested
+* Tested
 * Compilable
 * Deployable
 

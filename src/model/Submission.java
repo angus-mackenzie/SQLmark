@@ -68,9 +68,17 @@ public class Submission {
             for (Answer answer : answers) {
                 feedback.append("Question ")
                         .append(answer.getQuestionNum())
-                        .append(":\n")
-                        .append(answer.getFeedback())
-                        .append("\n\n");
+                        .append(":\n");
+                if(answer.getMark()==2){
+                    feedback.append("100% Well Done!")
+                    .append("\n");
+                }else{
+                    feedback.append(answer.getFeedback())
+                            .append("\n\n");
+                }
+
+
+
             }
             return feedback.toString();
         } else {
@@ -112,14 +120,14 @@ public class Submission {
     /**
      * Adds the student's answer to the answers
      * @param answer to be added
-     * @throws Error if there are too many answers
+     * @throws ArrayIndexOutOfBoundsException if there are too many answers
      */
-    public void addAnswer(Answer answer) throws Error {
+    public void addAnswer(Answer answer) throws ArrayIndexOutOfBoundsException {
         if (!checkComplete()) {
             answers.add(answer);
             currentQuestion++;
         } else {
-            throw new Error("Too many answers submitted!");
+            throw new ArrayIndexOutOfBoundsException("Too many answers submitted!");
         }
     }
 
@@ -127,6 +135,7 @@ public class Submission {
      * Submits the student's submission and saves it to the db
      * @param  studentNum to submit
      * @return the current submission
+     * @throws Error if it cannot save submission
      */
     public Submission submit(String studentNum) throws Error{
 
@@ -137,14 +146,13 @@ public class Submission {
         List<String> columns = new ArrayList<>();
         columns.add("student_num");
         columns.add("submission_date");
-        columns.add("total_mark");
         row.add(studentNum);
         row.add(dateFormat.format(this.date));
-        row.add(getTotalMark()+"");
         String tableName = "student_submissions";
         db.prepareInsert(tableName,columns,row);
         db.execute();
         columns.clear();
+
         if(submissionID==0) {
             db.prepareSelect("student_submissions", Map.of("student_num", studentNum));
             db.execute();
@@ -176,7 +184,7 @@ public class Submission {
         return this;
     }
 
-    public String getDate() {
+    public String toString() {
         return date.toString();
     }
 }

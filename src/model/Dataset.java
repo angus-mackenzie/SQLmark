@@ -9,11 +9,14 @@ import java.util.List;
 
 /**
  * A dataset that holds a result for a question/answer
+ *
  * @author Matthew Poulter
  * @version 15/09/2018
  */
 public class Dataset {
     private List<List<Object>> dataset;
+    private List<Dataset> datasets;
+    private Integer rowsUpdated;
     private String compileMessage;
     private Database.CompileStatus compileStatus;
 
@@ -44,34 +47,41 @@ public class Dataset {
 
     /**
      * Creates a dataSet with the given SQL statement
+     *
      * @param sql to be executed
-     * @throws Error if it cannot connect to DB
      */
-    public Dataset(String sql) throws Error {
-        Database db = new Database("");
-        String newDB = db.duplicateDB();
-        db.changeDB(newDB);
+    public Dataset(String sql)  {
+        Database db = null;
+        try{
+            db = new Database("");
+            String newDB = db.duplicateDB();
+            db.changeDB(newDB);
 
-        boolean type = db.execute(sql);
-        this.compileMessage = db.getLastMessage();
-        this.compileStatus = db.getLastStatus();
-        this.dataset = null;
-        if (this.compileStatus == Database.CompileStatus.SUCCESS) {
-            try {
-                if (type) {
-                    this.dataset = convertResultSet(db.getResultSet());
-                    db.closeRS();
-                } else {
-                    // TODO: INSERT, UPDATE, OR DELETE
+            boolean type = db.execute(sql);
+            this.compileMessage = db.getLastMessage();
+            this.compileStatus = db.getLastStatus();
+            this.dataset = null;
+            if (this.compileStatus == Database.CompileStatus.SUCCESS) {
+                try {
+                    if (type) {
+                        this.dataset = convertResultSet(db.getResultSet());
+                        db.closeRS();
+                    } else {
+                        // TODO: INSERT, UPDATE, OR DELETE
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    this.compileStatus = Database.CompileStatus.FAILURE;
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                this.compileStatus = Database.CompileStatus.FAILURE;
             }
-        }
 
-        db.deleteDB(newDB);
-        db.close();
+            db.deleteDB(newDB);
+            db.close();
+        }catch(Error e){
+            this.compileMessage = db.getLastMessage();
+            this.compileStatus = db.getLastStatus();
+            this.dataset = null;
+        }
     }
 
     /**
@@ -80,7 +90,7 @@ public class Dataset {
      * @return an Object[][] array, null if there are no values in the dataset
      */
     private Object[][] convertList() {
-        if(!(dataset==null)){
+        if (!(dataset == null)) {
             Object[][] array = new Object[dataset.size()][];
             for (int i = 0; i < dataset.size(); i++) {
                 List<Object> row = dataset.get(i);
@@ -93,6 +103,7 @@ public class Dataset {
 
     /**
      * Creates a string representation of the data
+     *
      * @return output
      */
     @Override
@@ -101,7 +112,7 @@ public class Dataset {
         if (dataset != null) {
             for (List<Object> row : dataset) {
                 for (Object cell : row) {
-                    returnString.append(String.format("%-15s|", cell.toString()));
+                    returnString.append(String.format("%-25s|", cell.toString()));
                 }
                 returnString.setLength(Math.max(returnString.length() - 1, 0));
                 returnString.append("\n");
@@ -112,6 +123,7 @@ public class Dataset {
 
     /**
      * Converts a result set to a list
+     *
      * @param rs result set
      * @return a list of the result set
      * @throws SQLException

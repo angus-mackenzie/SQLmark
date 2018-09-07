@@ -49,7 +49,6 @@ public class Dataset {
      * Creates a dataSet with the given SQL statement
      *
      * @param sql to be executed
-     * @throws Error if it cannot connect to DB
      */
     public Dataset(String sql)  {
         Database db = null;

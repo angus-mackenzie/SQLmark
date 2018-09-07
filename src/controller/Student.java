@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 /**
- * Class for each student, created when the student logs ins
+ * Class for each student, created when the student logs in
  *
  * @author Matthew Poulter
  * @version 04/09/2018
@@ -53,8 +53,8 @@ public class Student {
     /**
      * Get the data given to the student for the assignment
      *
-     * @return a string representation of the data
-     * @param window
+     * @param window pop up interface
+     * @throws Error if there is an issue making the .sql file
      */
     public void getData(Window window) throws Error {
         FileChooser fileChooser = new FileChooser();
@@ -133,7 +133,6 @@ public class Student {
      * Loads the previous submissions
      *
      * @return string representation of the previous submissions
-     * @throws Error if there are no submissions
      */
     public List<Submission> getPastSubmissions() {
         return studentModel.getSubmissions();

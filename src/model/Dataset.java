@@ -26,9 +26,6 @@ public class Dataset {
         if(dataset==null || this.dataset==null){
             return false;
         }
-        System.out.println(dataset.toString());
-        System.out.println("\n\n\n");
-        System.out.println(this.toString());
         return Arrays.deepEquals(dataset.convertList(), convertList());
     }
 

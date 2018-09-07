@@ -71,9 +71,7 @@ public class StudentAssignment {
 
     @FXML
     void submitAnswer(ActionEvent event) {
-        System.out.println(txaAnswer.getText());
         student.answerQuestion(txaAnswer.getText());
-        System.out.println("hey");
         showNextQuestion();
     }
 
@@ -88,13 +86,9 @@ public class StudentAssignment {
     }
 
     private void finishAssignment() {
-        System.out.println("Breaks here in FA");
         try {
-            System.out.println("Breaks here in Before Alert");
             createAlert("Complete!", "Your mark: " + student.getMark(), null, Alert.AlertType.INFORMATION);
-            System.out.println("Breaks here in After Alert");
             student.submitAssignment();
-            System.out.println("Breaks here in During Save");
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StudentMain.fxml"));
             Parent root = fxmlLoader.load();

@@ -1,7 +1,14 @@
 package controller;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import model.Error;
 import model.Submission;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * Class for each student, created when the student logs ins
@@ -47,9 +54,21 @@ public class Student {
      * Get the data given to the student for the assignment
      *
      * @return a string representation of the data
+     * @param window
      */
-    public String getData() throws Error{
-        return assignmentModel.getRandomData();
+    public void getData(Window window) throws Error {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose location to save SQL file");
+        fileChooser.setInitialFileName("exampleData.sql");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("sql file (*.sql)", "*.sql"));
+        File file = fileChooser.showSaveDialog(window);
+        if (file != null) {
+            try (PrintWriter outFile = new PrintWriter(file)) {
+                outFile.print(assignmentModel.getRandomData());
+            } catch (FileNotFoundException e) {
+                throw new Error(e);
+            }
+        }
     }
 
     /**
@@ -117,11 +136,7 @@ public class Student {
      * @return string representation of the previous submissions
      * @throws Error if there are no submissions
      */
-    public String getPastSubmissions() throws Error {
-        StringBuilder returnString = new StringBuilder();
-        for (Submission submission : studentModel.getSubmissions()) {
-            returnString.append(String.format("%s: %d\n", submission.getDate(), submission.getTotalMark()));
-        }
-        return returnString.toString();
+    public List<Submission> getPastSubmissions() {
+        return studentModel.getSubmissions();
     }
 }

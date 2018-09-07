@@ -101,7 +101,7 @@ public class Dataset {
         if (dataset != null) {
             for (List<Object> row : dataset) {
                 for (Object cell : row) {
-                    returnString.append(String.format("%-15s|", cell.toString()));
+                    returnString.append(String.format("%-25s|", cell.toString()));
                 }
                 returnString.setLength(Math.max(returnString.length() - 1, 0));
                 returnString.append("\n");

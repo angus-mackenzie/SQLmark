@@ -7,14 +7,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Error;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Optional;
 
 public class StudentAssignment {
@@ -57,17 +53,10 @@ public class StudentAssignment {
 
     @FXML
     void downloadData(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose location to save SQL file");
-        File file = fileChooser.showSaveDialog(btnDownloadData.getScene().getWindow());
-        if (file != null) {
-            try (PrintWriter outFile = new PrintWriter(file)) {
-                outFile.print(student.getData());
-            } catch (FileNotFoundException e) {
-                createAlert("Problem creating file", new Error(e), Alert.AlertType.ERROR);
-            } catch (Error error) {
-                createAlert("Problem creating file", error, Alert.AlertType.ERROR);
-            }
+        try {
+            student.getData(btnDownloadData.getScene().getWindow());
+        } catch (Error error) {
+            createAlert("Problem creating file", error, Alert.AlertType.ERROR);
         }
     }
 

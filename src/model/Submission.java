@@ -176,7 +176,7 @@ public class Submission {
         return this;
     }
 
-    public String getDate() {
+    public String toString() {
         return date.toString();
     }
 }

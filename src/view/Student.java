@@ -32,7 +32,6 @@ public class Student extends Application {
         dialog.setTitle("SQLmark");
         dialog.setHeaderText("Welcome to the SQL Automarker");
         dialog.setContentText("Please enter your student number:");
-
         Optional<String> result = dialog.showAndWait();
         if(result.isPresent()) {
             while (result.get().equals("")) {
@@ -54,6 +53,8 @@ public class Student extends Application {
                 alert.showAndWait();
                 start(primaryStage);
             }
+        }else{
+            System.exit(0);
         }
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StudentMain.fxml"));
         Parent root = fxmlLoader.load();

@@ -68,9 +68,17 @@ public class Submission {
             for (Answer answer : answers) {
                 feedback.append("Question ")
                         .append(answer.getQuestionNum())
-                        .append(":\n")
-                        .append(answer.getFeedback())
-                        .append("\n\n");
+                        .append(":\n");
+                if(answer.getMark()==2){
+                    feedback.append("100% Well Done!")
+                    .append("\n");
+                }else{
+                    feedback.append(answer.getFeedback())
+                            .append("\n\n");
+                }
+
+
+
             }
             return feedback.toString();
         } else {
@@ -112,14 +120,14 @@ public class Submission {
     /**
      * Adds the student's answer to the answers
      * @param answer to be added
-     * @throws Error if there are too many answers
+     * @throws ArrayIndexOutOfBoundsException if there are too many answers
      */
-    public void addAnswer(Answer answer) throws Error {
+    public void addAnswer(Answer answer) throws ArrayIndexOutOfBoundsException {
         if (!checkComplete()) {
             answers.add(answer);
             currentQuestion++;
         } else {
-            throw new Error("Too many answers submitted!");
+            throw new ArrayIndexOutOfBoundsException("Too many answers submitted!");
         }
     }
 
@@ -175,7 +183,7 @@ public class Submission {
         return this;
     }
 
-    public String getDate() {
+    public String toString() {
         return date.toString();
     }
 }

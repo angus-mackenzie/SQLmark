@@ -21,70 +21,16 @@ public class Dataset {
     private Database.CompileStatus compileStatus;
 
     /**
-     * Creates a dataSet with the given SQL statement
-     *
-     * @param sql to be executed
-     * @throws Error if it cannot connect to DB
-     */
-    public Dataset(String sql) throws Error {
-        Database db = new Database("");
-        String newDB = db.duplicateDB();
-        db.changeDB(newDB);
-
-        boolean type = db.execute(sql);
-        this.compileMessage = db.getLastMessage();
-        this.compileStatus = db.getLastStatus();
-        this.dataset = null;
-        if (this.compileStatus == Database.CompileStatus.SUCCESS) {
-            try {
-                if (type) {
-                    this.dataset = convertResultSet(db.getResultSet());
-                    db.closeRS();
-                } else {
-                    this.rowsUpdated = db.getUpdateCount();
-                    this.datasets = new ArrayList<>();
-
-                    for (String table : db.getAllTables()) {
-                        this.datasets.add(new Dataset("SELECT * FROM " + table + ";"));
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                this.compileStatus = Database.CompileStatus.FAILURE;
-            }
-        }
-
-        db.deleteDB(newDB);
-        db.close();
-    }
-
-    /**
      * Compares two datasets to one another
-     *
      * @param dataset to be compared to
      * @return true or false
      */
     public boolean equals(Dataset dataset) {
-        if (rowsUpdated == null && dataset.rowsUpdated == null && Arrays.deepEquals(dataset.convertList(), convertList())) {
-            return true;
-        } else if (rowsUpdated != null && dataset.rowsUpdated != null && rowsUpdated.equals(dataset.rowsUpdated) && datasets.size() == dataset.datasets.size()) {
-            boolean check = true;
-
-            for (int i = 0; i < datasets.size(); i++) {
-                if (!datasets.get(i).equals(dataset.datasets.get(i))) {
-                    check = false;
-                    break;
-                }
-            }
-
-            return check;
-        }
-        return false;
+        return Arrays.deepEquals(dataset.convertList(), convertList());
     }
 
     /**
      * Return the compile time message
-     *
      * @return compile message
      */
     public String getCompileMessage() {
@@ -93,11 +39,50 @@ public class Dataset {
 
     /**
      * Returns the compile status
-     *
      * @return compile status
      */
     public Database.CompileStatus getCompileStatus() {
         return compileStatus;
+    }
+
+    /**
+     * Creates a dataSet with the given SQL statement
+     *
+     * @param sql to be executed
+     * @throws Error if it cannot connect to DB
+     */
+    public Dataset(String sql)  {
+        Database db = null;
+        try{
+            db = new Database("");
+            String newDB = db.duplicateDB();
+            db.changeDB(newDB);
+
+            boolean type = db.execute(sql);
+            this.compileMessage = db.getLastMessage();
+            this.compileStatus = db.getLastStatus();
+            this.dataset = null;
+            if (this.compileStatus == Database.CompileStatus.SUCCESS) {
+                try {
+                    if (type) {
+                        this.dataset = convertResultSet(db.getResultSet());
+                        db.closeRS();
+                    } else {
+                        // TODO: INSERT, UPDATE, OR DELETE
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    this.compileStatus = Database.CompileStatus.FAILURE;
+                }
+            }
+
+            db.deleteDB(newDB);
+            db.close();
+        }catch(Error e){
+            this.compileMessage = db.getLastMessage();
+            this.compileStatus = db.getLastStatus();
+            this.dataset = null;
+        }
     }
 
     /**
@@ -128,7 +113,7 @@ public class Dataset {
         if (dataset != null) {
             for (List<Object> row : dataset) {
                 for (Object cell : row) {
-                    returnString.append(String.format("%-15s|", cell.toString()));
+                    returnString.append(String.format("%-25s|", cell.toString()));
                 }
                 returnString.setLength(Math.max(returnString.length() - 1, 0));
                 returnString.append("\n");

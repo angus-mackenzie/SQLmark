@@ -28,12 +28,7 @@ public class TestLecturer{
     public void testExportData() throws Exception {
         String filename = "output.csv";
         lecturer.exportStudents(filename);
-<<<<<<< HEAD:test/controller/testLecturer.java
-        File file = new File("output.csv");
-        assertTrue("The file should be deleted",file.delete());
-=======
         File file = new File(filename);
         assertTrue("File should be delete",file.delete());
->>>>>>> develop:test/controller/TestLecturer.java
     }
 }

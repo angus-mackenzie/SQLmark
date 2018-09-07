@@ -221,7 +221,7 @@ public class Database {
             lastMessage = "Executed Successfully";
         } catch (SQLException e) {
             lastStatus = CompileStatus.FAILURE;
-            lastMessage = e.getStackTrace().toString();
+            lastMessage =  "Execution failed!";
             throw new Error(e);
         }
         return type;
@@ -488,7 +488,6 @@ public class Database {
      * @return the last message
      * @throws Error if the delete query fails
      */
-    //TODO implement an overarching table that keeps track of the tables
     public String clearAll() throws Error {
 
         List<String> data_storeTables = WorkingData.getTables();

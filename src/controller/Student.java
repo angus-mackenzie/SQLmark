@@ -95,9 +95,8 @@ public class Student {
      * Adds the student's answer to the students, gets the next question
      *
      * @param answer the student entered
-     * @throws Error if there is an issue getting the next question, or storing the answer
      */
-    public void answerQuestion(String answer) throws Error {
+    public void answerQuestion(String answer) {
         currentSubmission.addAnswer(new model.Answer(answer, currentSubmission.getNextQuestion()));
     }
 

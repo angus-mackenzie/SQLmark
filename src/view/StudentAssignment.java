@@ -56,7 +56,7 @@ public class StudentAssignment {
         try {
             student.getData(btnDownloadData.getScene().getWindow());
         } catch (Error error) {
-            createAlert("Problem creating file", error, Alert.AlertType.ERROR);
+            Alert a = createAlert("Problem creating file", error, Alert.AlertType.ERROR);
         }
     }
 
@@ -71,13 +71,10 @@ public class StudentAssignment {
 
     @FXML
     void submitAnswer(ActionEvent event) {
-        try {
-            student.answerQuestion(txaAnswer.getText());
-            showNextQuestion();
-        } catch (Error error) {
-            StudentMain.createAlert("Failed to save answer!", error, Alert.AlertType.ERROR).showAndWait();
-
-        }
+        System.out.println(txaAnswer.getText());
+        student.answerQuestion(txaAnswer.getText());
+        System.out.println("hey");
+        showNextQuestion();
     }
 
     private void showNextQuestion() {
@@ -91,9 +88,13 @@ public class StudentAssignment {
     }
 
     private void finishAssignment() {
+        System.out.println("Breaks here in FA");
         try {
+            System.out.println("Breaks here in Before Alert");
             createAlert("Complete!", "Your mark: " + student.getMark(), null, Alert.AlertType.INFORMATION);
+            System.out.println("Breaks here in After Alert");
             student.submitAssignment();
+            System.out.println("Breaks here in During Save");
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StudentMain.fxml"));
             Parent root = fxmlLoader.load();

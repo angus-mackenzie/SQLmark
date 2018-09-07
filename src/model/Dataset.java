@@ -23,6 +23,12 @@ public class Dataset {
      * @return true or false
      */
     public boolean equals(Dataset dataset) {
+        if(dataset==null || this.dataset==null){
+            return false;
+        }
+        System.out.println(dataset.toString());
+        System.out.println("\n\n\n");
+        System.out.println(this.toString());
         return Arrays.deepEquals(dataset.convertList(), convertList());
     }
 
@@ -47,31 +53,38 @@ public class Dataset {
      * @param sql to be executed
      * @throws Error if it cannot connect to DB
      */
-    public Dataset(String sql) throws Error {
-        Database db = new Database("");
-        String newDB = db.duplicateDB();
-        db.changeDB(newDB);
+    public Dataset(String sql)  {
+        Database db = null;
+        try{
+            db = new Database("");
+            String newDB = db.duplicateDB();
+            db.changeDB(newDB);
 
-        boolean type = db.execute(sql);
-        this.compileMessage = db.getLastMessage();
-        this.compileStatus = db.getLastStatus();
-        this.dataset = null;
-        if (this.compileStatus == Database.CompileStatus.SUCCESS) {
-            try {
-                if (type) {
-                    this.dataset = convertResultSet(db.getResultSet());
-                    db.closeRS();
-                } else {
-                    // TODO: INSERT, UPDATE, OR DELETE
+            boolean type = db.execute(sql);
+            this.compileMessage = db.getLastMessage();
+            this.compileStatus = db.getLastStatus();
+            this.dataset = null;
+            if (this.compileStatus == Database.CompileStatus.SUCCESS) {
+                try {
+                    if (type) {
+                        this.dataset = convertResultSet(db.getResultSet());
+                        db.closeRS();
+                    } else {
+                        // TODO: INSERT, UPDATE, OR DELETE
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    this.compileStatus = Database.CompileStatus.FAILURE;
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                this.compileStatus = Database.CompileStatus.FAILURE;
             }
-        }
 
-        db.deleteDB(newDB);
-        db.close();
+            db.deleteDB(newDB);
+            db.close();
+        }catch(Error e){
+            this.compileMessage = db.getLastMessage();
+            this.compileStatus = db.getLastStatus();
+            this.dataset = null;
+        }
     }
 
     /**

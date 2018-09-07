@@ -124,7 +124,20 @@ public class Database {
         this.columnNames = columns;
         prepareInsert(row);
     }
-
+    /**
+     * @returns connection whether the DB is connected
+     */
+    protected boolean isConnected(){
+        try{
+            if(dbConnection.isClosed()){
+                return false;
+            }else{
+                return true;
+            }
+        }catch(Exception e){
+            return false;
+        }
+    }
     /**
      * creates an insert into statement dependent on the column names, and list of strings given to it
      *

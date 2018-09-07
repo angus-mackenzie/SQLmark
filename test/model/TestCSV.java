@@ -2,7 +2,9 @@ package model;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,17 +12,9 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-/**
- * Testing for the CSV class
- * @author Angus Mackenzie
- * @version 12/08/2018
- */
-
 public class TestCSV{
     private CSV csvReader;
-    /**
-     * Sets up test environment for basic tests
-     */
+
     @Before
     public void init(){
         String filename = "data.csv";
@@ -33,9 +27,7 @@ public class TestCSV{
 
     }
 
-    /**
-     * Test that none of the other rows are larger than the initial amount of columns
-     */
+
     @Test
     public void testAmountColumns() throws Exception{
         List<String> input = csvReader.parseLine();
@@ -46,21 +38,15 @@ public class TestCSV{
         }
     }
 
-    /**
-     * Tests no file entered, expects Exception
-     * @throws Exception
-     */
-    @Test(expected = FileNotFoundException.class)
+
+    @Test(expected = Error.class)
     public void testNoFile() throws Exception{
         String filename = "";
         CSV csvReader = new CSV(filename);
         assertFalse("The file should not be open",csvReader.isOpen());
     }
 
-    /**
-     * Tests a file with no extension, will run as usual
-     * @throws Exception
-     */
+
     @Test
     public void testNoExtension() throws Exception{
         String filename = "matricData";
@@ -68,20 +54,15 @@ public class TestCSV{
         assertTrue("The CSV should be open",csvReader.isOpen());
     }
 
-    /**
-     * Tests if the filename is invalid, expects exception
-     * @throws Exception
-     */
-    @Test(expected = FileNotFoundException.class)
+
+    @Test(expected = Error.class)
     public void testWrongFileName() throws Exception{
         String filename = "this is not valid";
         CSV csvReader = new CSV(filename);
         assertFalse("The file should not be open",csvReader.isOpen());
     }
 
-    /**
-     * Creates and populates file, checks file size
-     */
+
     @Test
     public void testWriteFile() throws Exception{
         List<String> testHeadings = new ArrayList<>();
@@ -95,7 +76,8 @@ public class TestCSV{
             csvWriter.writeLine(fakeData);
         }
         assertEquals("The number of lines in the file should equal 6",6,csvWriter.countLines());
-
+        csvWriter.closeWriter();
+        assertTrue("The file should be deleted",csvWriter.deleteFile());
     }
 
 }

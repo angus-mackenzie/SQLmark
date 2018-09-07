@@ -69,15 +69,21 @@ public class Lecturer {
      * @throws Error if the file isn't found, or the DB cannot be inserted into
      */
     private void setupAssignment() throws Error {
-        System.out.println("Enter the data filename:");
-        String filename = sc.nextLine();
-        if(filename.equals("")){
-            //TODO figure out why I have to do this
-            filename = sc.nextLine();
-        }
+        System.out.println("Data files represent the data to be used by the students for the assignment");
+        System.out.println("How many data files are there?");
+        int numFiles = sc.nextInt();
         lecturer.clearAll();
-        lecturer.loadData(filename);
-        System.out.println("Data loaded successfully!");
+        for(int i = 1; i <= numFiles; i++){
+            System.out.println("Enter data file "+i+":");
+            String filename = sc.nextLine();
+            if(filename.equals("")){
+                //TODO figure out why I have to do this
+                filename = sc.nextLine();
+            }
+            lecturer.loadData(filename);
+            System.out.println("Data file "+i+" loaded successfully");
+        }
+        System.out.println("All data files loaded successfully!");
         System.out.println("Enter the students filename:");
         String studentFile = sc.nextLine();
         lecturer.loadStudents(studentFile);

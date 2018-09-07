@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Creates a connection to the database, and facilitates queries
@@ -58,7 +59,7 @@ public class Database {
             dbConnection = DriverManager.getConnection(url, "root", "68(MNPq]+_9{fk>q");
         } catch (SQLException e) {
             lastStatus = CompileStatus.FAILURE;
-            lastMessage = e.getStackTrace().toString();
+            lastMessage = e.getMessage();
             throw new Error(e.getCause());
         }
 
@@ -71,7 +72,7 @@ public class Database {
      *
      * @param columnNames to create DB from
      * @param columnTypes to enforce the type of the DB
-     * @param tableName the table to create
+     * @param tableName   the table to create
      * @throws Error if it cannot update the table_list table after creating the table
      */
     public void prepareCreate(List<String> columnNames, List<String> columnTypes, String tableName) throws Error {
@@ -115,9 +116,8 @@ public class Database {
      * Prepare insert
      *
      * @param tableName to insert into
-     * @param columns to insert into
-     * @param row to insert
-
+     * @param columns   to insert into
+     * @param row       to insert
      */
     public void prepareInsert(String tableName, List<String> columns, List<String> row) {
         this.tableName = tableName;
@@ -177,7 +177,6 @@ public class Database {
             }
         }
         insertStatement.append(";");
-
         currentSQL = insertStatement.toString();
     }
 
@@ -218,10 +217,10 @@ public class Database {
                 lastUpdateCount = statement.getUpdateCount();
             }
             lastStatus = CompileStatus.SUCCESS;
-            lastMessage = "Executed Successfully";
+            lastMessage = "Executed successfully";
         } catch (SQLException e) {
             lastStatus = CompileStatus.FAILURE;
-            lastMessage = e.getStackTrace().toString();
+            lastMessage =  "Execution failed!";
             throw new Error(e);
         }
         return type;
@@ -271,6 +270,10 @@ public class Database {
      * @param limit number of rows to limit by
      */
     public void prepareSelect(String table, Map<String, Object> where, int limit) {
+        prepareSelect(table, where, limit, false);
+    }
+
+    public void prepareSelect(String table, Map<String, Object> where, int limit, boolean random) {
         StringBuilder selectStatement = new StringBuilder();
         selectStatement.append("SELECT * FROM ");
         selectStatement.append(table);
@@ -293,6 +296,10 @@ public class Database {
                 counter++;
             }
         }
+        if (random) {
+            selectStatement.append(" ORDER BY RAND() ");
+        }
+
         if (limit != -1) {
             selectStatement.append(" LIMIT ");
             selectStatement.append(limit);
@@ -311,12 +318,114 @@ public class Database {
         execute(currentSQL);
     }
 
-    // TODO: Return the SQL command to recreate the table and contents of last query (null if no query run)
-    public String exportToSQL() {
-        // Use SHOW CREATE TABLE foobar
-        // as well as some loop through the rows to create an insert statement
-        return "Not done yet;";
-        //throw new UnsupportedOperationException();
+    /*
+    public String exportAllToSQL() throws Error {
+        StringBuilder sqlFile = new StringBuilder();
+        try {
+            for (String table : getAllTables()) {
+                execute("SHOW CREATE TABLE " + table + ";");
+                while (getResultSet().next()) {
+                    sqlFile.append(getResultSet().getString(2));
+                }
+                closeRS();
+
+                sqlFile.append("\n\n");
+
+                prepareSelect(table);
+                execute();
+                ResultSetMetaData meta = getResultSet().getMetaData();
+                while (getResultSet().next()) {
+                    sqlFile.append("INSERT INTO ").append(table).append("VALUES ");
+                    StringJoiner sj = new StringJoiner(",", "(", ")");
+                    for (int i = 1; i <= meta.getColumnCount(); i++) {
+                        sj.add(getResultSet().getObject(i).toString());
+                    }
+                    sqlFile.append(sj.toString()).append(";\n");
+                }
+                closeRS();
+
+                sqlFile.append("\n");
+            }
+        } catch (SQLException ex) {
+            throw new Error("Error exporting", ex);
+        }
+        return sqlFile.toString();
+    }*/
+
+    public String exportToSQL() throws Error {
+        StringBuilder sqlFile = new StringBuilder();
+        if (getResultSet() == null) {
+            return null;
+        }
+        try {
+            ResultSetMetaData meta = getResultSet().getMetaData();
+            String table = meta.getTableName(1);
+            while (getResultSet().next()) {
+                List<String> columns = new ArrayList<>();
+                for (int i = 1; i <= meta.getColumnCount(); i++) {
+                    columns.add(meta.getColumnName(i));
+                }
+
+                while (getResultSet().next()) {
+                    String sql = "INSERT INTO " + table + " ("
+                            + String.join(", ", columns)
+                            + ") VALUES ("
+                            + columns.stream().map(c -> "?").collect(Collectors.joining(", "))
+                            + ");";
+                    List<Object> parameters = new ArrayList<>();
+                    for (int i = 1; i <= meta.getColumnCount(); i++) {
+                        parameters.add(getResultSet().getObject(i));
+                    }
+                    sqlFile.append(generateActualSql(sql, parameters)).append("\n");
+                }
+
+                sqlFile.append("\n");
+            }
+            closeRS();
+            sqlFile.insert(0, "\n");
+
+            execute("SHOW CREATE TABLE " + table + ";");
+            while (getResultSet().next()) {
+                sqlFile.insert(0, getResultSet().getString(2) + ";");
+            }
+            closeRS();
+
+            sqlFile.append("\n\n");
+        } catch (SQLException ex) {
+            throw new Error("Error exporting", ex);
+        }
+        return sqlFile.toString();
+    }
+
+    private String generateActualSql(String sqlQuery, List<Object> parameters) {
+        String[] parts = sqlQuery.split("\\?");
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < parts.length; i++) {
+            String part = parts[i];
+            sb.append(part);
+            if (i < parameters.size()) {
+                sb.append(formatParameter(parameters.get(i)));
+            }
+        }
+
+        return sb.toString();
+    }
+
+    private String formatParameter(Object parameter) {
+        if (parameter == null) {
+            return "NULL";
+        } else {
+            if (parameter instanceof String) {
+                return "'" + ((String) parameter).replace("'", "\\'") + "'";
+            } else if (parameter instanceof Timestamp || parameter instanceof Date) {
+                return "'" + parameter.toString() + "'";
+            } else if (parameter instanceof Boolean) {
+                return (Boolean) parameter ? "1" : "0";
+            } else {
+                return parameter.toString();
+            }
+        }
     }
 
 
@@ -352,7 +461,7 @@ public class Database {
             }
         } catch (SQLException e) {
             lastStatus = CompileStatus.FAILURE;
-            lastMessage = e.getStackTrace().toString();
+            lastMessage = e.getMessage();
             throw new Error("Couldn't close ResultSet", e.getCause());
         }
     }
@@ -367,30 +476,31 @@ public class Database {
             dbConnection.close();
         } catch (SQLException e) {
             lastStatus = CompileStatus.FAILURE;
-            lastMessage = e.getStackTrace().toString();
+            lastMessage = e.getMessage();
             throw new Error("Not able to close connection to the DB", e.getCause());
         }
     }
+
     /**
      * Clears all the databases
+     *
      * @return the last message
      * @throws Error if the delete query fails
      */
-    //TODO implement an overarching table that keeps track of the tables
-    public String clearAll() throws Error{
+    public String clearAll() throws Error {
 
         List<String> data_storeTables = WorkingData.getTables();
-        String[] admin_dataTables ={"admin_data.student_answers",
+        String[] admin_dataTables = {"admin_data.student_answers",
                 "admin_data.questions",
                 "admin_data.student_submissions",
                 "admin_data.students",
                 "admin_data.table_list"};
-        String[] tables = new String[data_storeTables.size()+admin_dataTables.length];
-        for(int i = 0; i < tables.length; i++){
-            if(i < data_storeTables.size()){
-                tables[i] = "data_store."+data_storeTables.get(i);
-            }else{
-                tables[i] = admin_dataTables[i-data_storeTables.size()];
+        String[] tables = new String[data_storeTables.size() + admin_dataTables.length];
+        for (int i = 0; i < tables.length; i++) {
+            if (i < data_storeTables.size()) {
+                tables[i] = "data_store." + data_storeTables.get(i);
+            } else {
+                tables[i] = admin_dataTables[i - data_storeTables.size()];
             }
         }
         return clearAll(tables);
@@ -509,7 +619,7 @@ public class Database {
         }
     }
 
-    public List<String> getAllTables() {
+    public List<String> getAllTables() throws Error {
         List<String> list = new ArrayList<>();
 
         try {
@@ -520,7 +630,7 @@ public class Database {
             }
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new Error("Error getting tables!", e);
         }
 
         return list;

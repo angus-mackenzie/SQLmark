@@ -36,7 +36,8 @@ public class Answer {
             case COMPILE:
                 return output.getCompileMessage();
             case VERBOSE:
-                return String.format("%s\nExpected output:\n%s\nYour output:\n%s",
+                return String.format("Your Input:\n%s\n\n%s\nExpected output:\n%s\nYour output:\n%s",
+                        getAnswerText(),
                         output.getCompileMessage(),
                         question.getCorrectAnswer().toString(),
                         output.toString());
@@ -53,6 +54,7 @@ public class Answer {
         switch (output.getCompileStatus()) {
             case SUCCESS:
                 if (output.equals(question.getCorrectAnswer())) {
+
                     return 2;
                 }
                 return 1;
@@ -67,7 +69,7 @@ public class Answer {
      * @param question to be stored
      * @throws Error if cannot store
      */
-    public Answer(String answer, Question question) throws Error{
+    public Answer(String answer, Question question){
         this.answer = answer;
         this.question = question;
 

@@ -1,96 +1,68 @@
 package view;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
+import javafx.stage.Stage;
 import model.Error;
 
-import java.util.Scanner;
+import java.util.Optional;
 
 /**
  * We are still implementing a better UI, hence this will not contain javadocs
  */
-public class Student {
-    private final Scanner sc;
+public class Student extends Application {
     private controller.Student student;
 
-    public Student(controller.Student student, Scanner sc) {
-        this.student = student;
-        this.sc = sc;
+    /**
+     * The driver for our program
+     *
+     * @param args given by commandline, not used
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-        int option = 0;
-        while (option != 9) {
-            option = showMenu();
-            System.out.println();
-            switch (option) {
-                case 1:
-                    System.out.println(this.student.loadAssignment());
-                    break;
-                case 2:
-                    System.out.println(this.student.getData());
-                    break;
-                case 3:
-                    runAssignment();
-                    break;
-                case 4:
-                    try {
-                        System.out.println(this.student.getPastSubmissions());
-                    } catch (Error error) {
-                        System.err.println(error.getMessage());
-                    }
-                    break;
-                case 9:
-                    break;
-                default:
-                    System.out.println("Please enter valid option!");
-                    break;
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Text Input Dialog");
+        dialog.setHeaderText("Welcome to the SQL Automarker");
+        dialog.setContentText("Please enter your student number:");
+
+        Optional<String> result = dialog.showAndWait();
+        if(result.isPresent()) {
+            while (result.get().equals("")) {
+                dialog.setContentText("Please enter a valid student number:");
+                result = dialog.showAndWait();
             }
-        }
-
-
-    }
-
-    private int showMenu() {
-        int option = 0;
-        System.out.println();
-        System.out.println("Menu:");
-        System.out.println(" - Get questions (1)");
-        System.out.println(" - Get data (2)");
-        System.out.println(" - Start submission (3)");
-        System.out.println(" - Get previous submissions (4)");
-        System.out.println(" - Exit (9)");
-        System.out.print("Enter option: ");
-        option = Integer.parseInt(sc.next());
-        //sc.nextLine();
-        return option;
-    }
-
-    private void runAssignment() {
-        student.createSubmission();
-
-        String question;
-        while ((question = student.getNextQuestion()) != null) {
-            System.out.println();
-            System.out.println(question);
-            System.out.print("Enter answer: ");
-            String answer = sc.nextLine();
-
             try {
-                student.answerQuestion(answer);
+                if (!result.get().equals("")) {
+                    student = new controller.Student(result.get());
+
+                } else {
+                    System.exit(0);
+                }
             } catch (Error error) {
-                System.err.println(error.getMessage());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(error.getMessage());
+                alert.setContentText(error.toString());
+                alert.showAndWait();
+                start(primaryStage);
             }
         }
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StudentMain.fxml"));
+        Parent root = fxmlLoader.load();
+        StudentMain controller = fxmlLoader.getController();
+        controller.setStudent(student);
 
-        try {
-            System.out.println("Your mark: " + student.getMark());
-            System.out.println();
-            if (student.getMark() != 2) {
-                System.out.println("Feedback:");
-                System.out.println(student.getFeedback());
-            }
-            student.submitAssignment();
-        } catch (Error error) {
-            System.err.println(error.getMessage());
-        }
-
-
+        primaryStage.setTitle("SQL Automarker");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
+        primaryStage.show();
     }
 }

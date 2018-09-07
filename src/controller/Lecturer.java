@@ -75,7 +75,7 @@ public class Lecturer {
             String tablename = filename;
             if(filename.contains(".csv")){
                 //get rid of the csv part and simply use the filename
-                tablename = filename.substring(0,4);
+                tablename = filename.substring(0,filename.length()-4);
             }
             List<String> columnNames = csvReader.parseLine();
             List<String> columnTypes = csvReader.parseLine();

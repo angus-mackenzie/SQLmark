@@ -1,6 +1,6 @@
 ﻿# Installation of MariaDB server
 
-Hopefully fairly simple to follow to setup a MariaDB server for the application, and then a walkthrough on importing the `.sql` files.
+Hopefully fairly simple to follow to setup a MariaDB server for the application, and then a walk through on importing the `.sql` files.
 
 # Installation
 This relates to the actual installation of the server.
@@ -34,7 +34,12 @@ The following should give you a status output on the server.
 
     mysql>  status;
 
-# Setup
+# Conclusion
+At this point the Database is setup enough to run the assignment, however - if you want to add more code to SQLmark, please read the following sections. 
+
+# Development
+
+## Setup
 At this point you can connect to the server from your local machine with the following details:
 Server: `localhost`
 Port: `3306`
@@ -46,8 +51,8 @@ To load the SQL file, either run the SQLImporter class and enter your root passw
     mysql>  source [full path to SQL file];
 
 
-# SQL Files
-## Creating SQL Files
+## SQL Files
+### Creating SQL Files
 If you want to change the DB structure somehow, and want to get your new `.sql` file. Simply use the following command:
 ```
 mysqldump -u username -p data_store > data_store.sql
@@ -57,7 +62,7 @@ as it ends with `.sql`
 
 These commands may take a few seconds/minutes to run
 
-## Importing SQL Files
+### Importing SQL Files
 **Please note** in the `Database` class the password used is `68(MNPq]+_9{fk>q` -> Please be aware that your password must be the same in order to interface with the class; or change the password in the class to the one you are using. 
 
 Here is a brief description of how to get the db up and running.
@@ -91,16 +96,3 @@ SQLmark\db
 λ mysql -u root -p data_store < data_store.sql
 Enter password: ****************
 ```
-
-# To Do
-Complete the SQL file to do the following:
-
- - Create the databases
- - Create the users and assign users correct privileges
- - Create the table schema
- - Import any default data required
-Still to complete
-## SQL Importer
-
-Create a Java controller to run and import the SQL file once the root password has been entered.
-

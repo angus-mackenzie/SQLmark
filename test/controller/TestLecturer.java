@@ -2,7 +2,11 @@ package controller;
 import org.junit.Before;
 import org.junit.Test;
 
-public class testLecturer{
+import java.io.File;
+
+import static junit.framework.TestCase.assertTrue;
+
+public class TestLecturer{
     Lecturer lecturer;
     @Before
     public void init(){
@@ -23,5 +27,7 @@ public class testLecturer{
     public void testExportData() throws Exception {
         String filename = "output.csv";
         lecturer.exportStudents(filename);
+        File file = new File(filename);
+        assertTrue("File should be delete",file.delete());
     }
 }

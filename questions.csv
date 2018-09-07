@@ -4,3 +4,6 @@ INT|VARCHAR(500)|VARCHAR(500)|INT
 2|Output the number of tuples in the matricData table.|SELECT COUNT(*) FROM matricData;|2
 3|Show all entries where the gender disagrees with the prefix (e.g. someone is “Mr” but their gender is “F”).|SELECT * FROM matricData WHERE (Gender = "F" AND Prefix = "Mr") OR (Gender = "M" and (Prefix = "Miss" OR Prefix = "Ms"));|2
 4|List students from school “1000929” giving first name and last name in alphabetical order of last name.|SELECT FirstName, LastName FROM matricData WHERE SchoolCode = 1000929 ORDER BY LastName;|2
+5|Delete all students who matriculated before the year 2000|DELETE FROM matricData WHERE Year<2000;|2
+6|Change all the UCTScore's in the database by multiplying them by 10 and adding 30|UPDATE matricData SET UCTScore = 10*UCTScore+30;|2
+7|Insert a student into matricData with StuID 1522, title Mr, Firstname Matthew, Lastname Poulter, Gender M, Citizenship Status C, SchoolName SJC, Schoolcode 1005018, Year 2018|INSERT INTO matricdata (StuID, Prefix, FirstName, LastName, Gender, CitizenshipStatus, SchoolName, SchoolCode, Year) VALUES (1522,"Mr","Matthew","Poulter","M","C","SJC",1005018,2018);|2

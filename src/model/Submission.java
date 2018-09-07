@@ -145,14 +145,13 @@ public class Submission {
         List<String> columns = new ArrayList<>();
         columns.add("student_num");
         columns.add("submission_date");
-        //columns.add("total_mark");
         row.add(studentNum);
         row.add(dateFormat.format(this.date));
-        //row.add(getTotalMark()+"");
         String tableName = "student_submissions";
         db.prepareInsert(tableName,columns,row);
         db.execute();
         columns.clear();
+
         if(submissionID==0) {
             db.prepareSelect("student_submissions", Map.of("student_num", studentNum));
             db.execute();

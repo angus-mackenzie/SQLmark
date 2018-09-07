@@ -201,7 +201,7 @@ public class Database {
 
     /**
      * Executes a sql query on the database
-     *
+     * @return boolean depending on the type of execution. True for select, false for update
      * @param sql string to execute
      * @throws Error if the statement fails
      */

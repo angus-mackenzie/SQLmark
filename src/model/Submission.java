@@ -127,6 +127,7 @@ public class Submission {
      * Submits the student's submission and saves it to the db
      * @param  studentNum to submit
      * @return the current submission
+     * @throws Error if it cannot save submission
      */
     public Submission submit(String studentNum) throws Error{
 

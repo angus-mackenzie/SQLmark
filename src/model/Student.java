@@ -83,6 +83,7 @@ public class Student {
     /**
      * Adds the submission to the submissions list
      * @param submission to be added
+     * @throws Error if can't save and then add submission
      */
     public void addSubmission(Submission submission) throws Error{
         submissions.add(submission);

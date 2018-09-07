@@ -86,11 +86,7 @@ public class StudentMain {
     }
 
     private void print(String text) {
-        if (txaContentPane != null) {
-            txaContentPane.setText(txaContentPane.getText() + text);
-        } else {
-            txaContentPane.setText(text);
-        }
+        txaContentPane.setText(txaContentPane.getText() + text);
     }
 
     private void println(String text) {
@@ -99,6 +95,10 @@ public class StudentMain {
 
     private void println() {
         println("");
+    }
+
+    private void clean() {
+        txaContentPane.setText("");
     }
 
     public void setStudent(Student student) {
@@ -114,6 +114,7 @@ public class StudentMain {
             if (newValue != null) {
                 Platform.runLater(() -> {
                     try {
+                        clean();
                         println("Total mark: " + newValue.getTotalMark());
                         println();
                         println(newValue.getFeedback());
